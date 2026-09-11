@@ -1,1 +1,921 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BOXVERSE</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:white;
+    background:
+      radial-gradient(circle at 50% 20%,#253b72 0%,transparent 35%),
+      radial-gradient(circle at 10% 90%,#34155e 0%,transparent 35%),
+      #070912;
+    overflow-x:hidden;
+}
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:45px 45px;
+}
+
+header{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:rgba(5,7,15,.82);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:#7c5cff;
+}
+
+.stats{
+    display:flex;
+    gap:12px;
+}
+
+.stat{
+    padding:10px 16px;
+    border-radius:13px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    padding:18px;
+    position:relative;
+    z-index:5;
+}
+
+nav button{
+    border:0;
+    color:white;
+    background:rgba(255,255,255,.07);
+    padding:12px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+nav button:hover,
+nav button.active{
+    background:#7357ff;
+    transform:translateY(-2px);
+}
+
+.page{
+    max-width:1250px;
+    margin:auto;
+    padding:10px 20px 50px;
+}
+
+.hero{
+    text-align:center;
+    padding:25px 0 35px;
+}
+
+.hero h1{
+    font-size:clamp(40px,7vw,78px);
+    font-weight:1000;
+    letter-spacing:-3px;
+    background:linear-gradient(90deg,#fff,#a995ff,#55d9ff,#fff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:#9ba4bd;
+    margin-top:10px;
+}
+
+.boxGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:18px;
+}
+
+.box{
+    position:relative;
+    min-height:270px;
+    border-radius:24px;
+    padding:20px;
+    overflow:hidden;
+    cursor:pointer;
+    background:linear-gradient(145deg,#171d34,#0c1020);
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+    transition:.25s;
+}
+
+.box:hover{
+    transform:translateY(-7px) scale(1.015);
+    border-color:#8068ff;
+    box-shadow:0 20px 55px rgba(102,75,255,.25);
+}
+
+.boxVisual{
+    height:135px;
+    display:grid;
+    place-items:center;
+    font-size:75px;
+    filter:drop-shadow(0 12px 20px rgba(0,0,0,.5));
+}
+
+.box h3{
+    font-size:19px;
+    margin-bottom:6px;
+}
+
+.box small{
+    color:#929bb3;
+}
+
+.price{
+    margin-top:14px;
+    color:#69e6a5;
+    font-weight:bold;
+}
+
+.openBtn{
+    width:100%;
+    margin-top:13px;
+    border:0;
+    padding:11px;
+    border-radius:11px;
+    color:white;
+    background:linear-gradient(90deg,#694cff,#936fff);
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.inventory{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
+}
+
+.item{
+    position:relative;
+    border-radius:18px;
+    padding:15px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.09);
+    overflow:hidden;
+}
+
+.itemIcon{
+    height:100px;
+    display:grid;
+    place-items:center;
+    font-size:55px;
+}
+
+.item h3{
+    font-size:16px;
+}
+
+.rarity{
+    font-size:12px;
+    margin-top:5px;
+    font-weight:bold;
+}
+
+.itemValue{
+    color:#68e5a5;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.sell{
+    width:100%;
+    margin-top:10px;
+    border:0;
+    border-radius:9px;
+    padding:8px;
+    cursor:pointer;
+    background:#222a42;
+    color:white;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(12px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.openPanel{
+    width:min(620px,92vw);
+    min-height:480px;
+    padding:30px;
+    border-radius:30px;
+    background:linear-gradient(145deg,#151b32,#090c18);
+    border:1px solid rgba(255,255,255,.13);
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
+    text-align:center;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:20px;
+    top:18px;
+    border:0;
+    background:transparent;
+    color:#aaa;
+    font-size:28px;
+    cursor:pointer;
+}
+
+.boxSpin{
+    height:260px;
+    display:grid;
+    place-items:center;
+    font-size:140px;
+    transition:.1s;
+}
+
+.spin{
+    animation:spinBox .7s infinite alternate;
+}
+
+@keyframes spinBox{
+    from{transform:rotate(-7deg) scale(.95)}
+    to{transform:rotate(7deg) scale(1.05)}
+}
+
+.result{
+    display:none;
+}
+
+.result.show{
+    display:block;
+    animation:resultIn .5s;
+}
+
+@keyframes resultIn{
+    from{transform:scale(.3);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+
+.resultIcon{
+    font-size:100px;
+    margin:10px;
+    filter:drop-shadow(0 0 25px currentColor);
+}
+
+.result h2{
+    font-size:30px;
+}
+
+.result p{
+    margin-top:7px;
+    color:#aab2c8;
+}
+
+.action{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+}
+
+.action button{
+    border:0;
+    border-radius:12px;
+    padding:13px 20px;
+    color:white;
+    background:#7055ff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.collection{
+    text-align:center;
+    margin:25px 0;
+    color:#929bb3;
+}
+
+.search{
+    width:100%;
+    padding:14px 18px;
+    margin-bottom:18px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.06);
+    color:white;
+    outline:none;
+}
+
+@media(max-width:600px){
+    header{
+        padding:0 14px;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    .stats{
+        gap:5px;
+    }
+
+    .stat{
+        padding:8px 9px;
+        font-size:12px;
+    }
+
+    nav{
+        overflow:auto;
+        justify-content:flex-start;
+    }
+
+    .boxGrid{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .box{
+        min-height:235px;
+        padding:13px;
+    }
+
+    .boxVisual{
+        height:105px;
+        font-size:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BOX<span>VERSE</span></div>
+
+    <div class="stats">
+        <div class="stat">🪙 <span id="coins">10000</span></div>
+        <div class="stat">📦 <span id="opened">0</span></div>
+    </div>
+</header>
+
+<nav>
+    <button class="active" onclick="showPage('boxes',this)">📦 Boxen</button>
+    <button onclick="showPage('inventory',this)">🎒 Inventar</button>
+    <button onclick="showPage('collection',this)">🏆 Sammlung</button>
+</nav>
+
+<main class="page">
+
+<section id="boxes">
+
+    <div class="hero">
+        <h1>OPEN YOUR BOX</h1>
+        <p>Entdecke seltene Items und vervollständige deine Sammlung.</p>
+    </div>
+
+    <div class="boxGrid" id="boxGrid"></div>
+
+</section>
+
+<section id="inventory" class="hidden">
+
+    <div class="hero">
+        <h1>INVENTAR</h1>
+        <p>Deine gesammelten Items.</p>
+    </div>
+
+    <input
+        class="search"
+        id="search"
+        placeholder="🔎 Item suchen..."
+        oninput="renderInventory()"
+    >
+
+    <div class="inventory" id="inventoryGrid"></div>
+
+</section>
+
+<section id="collection" class="hidden">
+
+    <div class="hero">
+        <h1>SAMMLUNG</h1>
+        <p>Entdecke mehr als 100 verschiedene Items.</p>
+    </div>
+
+    <div class="collection" id="collectionText"></div>
+
+    <div class="inventory" id="collectionGrid"></div>
+
+</section>
+
+</main>
+
+<div class="modal" id="modal">
+
+    <div class="openPanel">
+
+        <button class="close" onclick="closeModal()">×</button>
+
+        <h2 id="modalTitle">Box öffnen</h2>
+
+        <div id="boxAnimation" class="boxSpin">📦</div>
+
+        <div id="result" class="result">
+
+            <div class="resultIcon" id="resultIcon">💎</div>
+
+            <h2 id="resultName">Item</h2>
+
+            <p id="resultRarity">Legendary</p>
+
+            <p id="resultValue">Wert: 1000 🪙</p>
+
+            <div class="action">
+                <button onclick="keepItem()">🎒 Behalten</button>
+                <button onclick="sellCurrent()">🪙 Verkaufen</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* ==============================
+   SPIELDATEN
+============================== */
+
+let coins = Number(localStorage.getItem("coins") || 10000);
+let opened = Number(localStorage.getItem("opened") || 0);
+let inventory = JSON.parse(localStorage.getItem("inventory") || "[]");
+
+const rarities = [
+    {name:"Common", chance:55, multiplier:1},
+    {name:"Uncommon", chance:25, multiplier:2},
+    {name:"Rare", chance:12, multiplier:5},
+    {name:"Epic", chance:5, multiplier:15},
+    {name:"Legendary", chance:2.5, multiplier:50},
+    {name:"Mythic", chance:.5, multiplier:250}
+];
+
+const icons = [
+    "💎","💠","🔮","🌟","⭐","🪐","🌌","👑",
+    "🧪","🛸","🤖","🎮","🧊","🔥","⚡","🌙",
+    "☄️","💫","🎲","🎧","🕶️","⌚","📱","💿",
+    "🧸","🎁","🏆","🎨","🚀","🛰️","🔭","🧬"
+];
+
+const prefixes = [
+    "Neon","Shadow","Cyber","Crystal","Galaxy",
+    "Quantum","Phantom","Solar","Titan","Hyper",
+    "Royal","Frozen","Inferno","Digital","Void",
+    "Cosmic","Turbo","Golden","Plasma","Omega"
+];
+
+const names = [
+    "Core","Cube","Orb","Chip","Module","Engine",
+    "Token","Crystal","Drone","Bot","Scanner",
+    "Device","Relic","Artifact","Sphere","Gem",
+    "Fragment","Controller","PowerCell","Beacon"
+];
+
+/* 20.000 Boxen */
+const boxes = [];
+
+for(let i=1;i<=20000;i++){
+
+    let tier =
+        i < 5000 ? "Starter" :
+        i < 10000 ? "Advanced" :
+        i < 15000 ? "Elite" :
+        i < 19000 ? "Ultra" :
+        "Infinity";
+
+    boxes.push({
+        id:i,
+        name:`${tier} Box #${i}`,
+        icon:
+            tier==="Starter" ? "📦" :
+            tier==="Advanced" ? "🎁" :
+            tier==="Elite" ? "💎" :
+            tier==="Ultra" ? "🔷" : "🌌",
+        price:
+            tier==="Starter" ? 100 :
+            tier==="Advanced" ? 500 :
+            tier==="Elite" ? 2500 :
+            tier==="Ultra" ? 10000 : 50000
+    });
+}
+
+/* Mehr als 100 Items */
+const items = [];
+
+for(let i=0;i<180;i++){
+
+    const rarityIndex = i % rarities.length;
+
+    items.push({
+        id:i,
+        name:`${prefixes[i % prefixes.length]} ${names[Math.floor(i / prefixes.length) % names.length]} ${i+1}`,
+        icon:icons[i % icons.length],
+        rarity:rarities[rarityIndex].name,
+        baseValue:25 + (i * 8),
+        rarityIndex
+    });
+}
+
+/* ==============================
+   UI
+============================== */
+
+function updateStats(){
+
+    document.getElementById("coins").textContent =
+        coins.toLocaleString("de-DE");
+
+    document.getElementById("opened").textContent =
+        opened.toLocaleString("de-DE");
+
+    localStorage.setItem("coins",coins);
+    localStorage.setItem("opened",opened);
+    localStorage.setItem("inventory",JSON.stringify(inventory));
+}
+
+function showPage(page,button){
+
+    document.querySelectorAll("main section").forEach(x=>{
+        x.classList.add("hidden");
+    });
+
+    document.getElementById(page).classList.remove("hidden");
+
+    document.querySelectorAll("nav button").forEach(x=>{
+        x.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    if(page==="inventory") renderInventory();
+    if(page==="collection") renderCollection();
+}
+
+/* ==============================
+   BOXEN
+============================== */
+
+function renderBoxes(){
+
+    const grid=document.getElementById("boxGrid");
+
+    /* Nur die ersten Boxen sichtbar laden.
+       Alle 20.000 existieren trotzdem im Spiel. */
+
+    grid.innerHTML="";
+
+    boxes.slice(0,24).forEach(box=>{
+
+        const div=document.createElement("div");
+
+        div.className="box";
+
+        div.innerHTML=`
+            <div class="boxVisual">${box.icon}</div>
+            <h3>${box.name}</h3>
+            <small>180 mögliche Items</small>
+            <div class="price">${box.price.toLocaleString("de-DE")} 🪙</div>
+            <button class="openBtn"
+                onclick="openBox(${box.id})">
+                ÖFFNEN
+            </button>
+        `;
+
+        grid.appendChild(div);
+    });
+}
+
+/* ==============================
+   BOX ÖFFNEN
+============================== */
+
+let currentItem=null;
+
+function openBox(id){
+
+    const box=boxes[id-1];
+
+    if(coins < box.price){
+
+        alert("Du hast nicht genug Coins!");
+
+        return;
+    }
+
+    coins-=box.price;
+    opened++;
+
+    updateStats();
+
+    document.getElementById("modal").classList.add("show");
+
+    document.getElementById("modalTitle").textContent =
+        box.name;
+
+    document.getElementById("boxAnimation").classList.remove("hidden");
+    document.getElementById("boxAnimation").classList.add("spin");
+
+    document.getElementById("result").classList.remove("show");
+
+    setTimeout(()=>{
+
+        document.getElementById("boxAnimation").classList.remove("spin");
+        document.getElementById("boxAnimation").classList.add("hidden");
+
+        currentItem=getRandomItem();
+
+        document.getElementById("resultIcon").textContent=
+            currentItem.icon;
+
+        document.getElementById("resultName").textContent=
+            currentItem.name;
+
+        document.getElementById("resultRarity").textContent=
+            currentItem.rarity;
+
+        document.getElementById("resultValue").textContent=
+            "Wert: "+currentItem.value.toLocaleString("de-DE")+" 🪙";
+
+        document.getElementById("result").classList.add("show");
+
+    },1500);
+}
+
+function getRandomItem(){
+
+    let roll=Math.random()*100;
+    let cumulative=0;
+    let rarity;
+
+    for(const r of rarities){
+
+        cumulative+=r.chance;
+
+        if(roll<=cumulative){
+
+            rarity=r;
+
+            break;
+        }
+    }
+
+    const possible=items.filter(x=>x.rarity===rarity.name);
+
+    const item=possible[
+        Math.floor(Math.random()*possible.length)
+    ];
+
+    return {
+        ...item,
+        value:Math.floor(
+            item.baseValue * rarity.multiplier
+        )
+    };
+}
+
+/* ==============================
+   ITEM SPEICHERN
+============================== */
+
+function keepItem(){
+
+    if(!currentItem) return;
+
+    inventory.push({
+        ...currentItem,
+        uid:Date.now()+Math.random()
+    });
+
+    updateStats();
+
+    closeModal();
+
+    renderInventory();
+}
+
+/* ==============================
+   ITEM VERKAUFEN
+============================== */
+
+function sellCurrent(){
+
+    if(!currentItem) return;
+
+    coins+=currentItem.value;
+
+    updateStats();
+
+    closeModal();
+}
+
+function sellInventoryItem(index){
+
+    const item=inventory[index];
+
+    coins+=item.value;
+
+    inventory.splice(index,1);
+
+    updateStats();
+
+    renderInventory();
+}
+
+/* ==============================
+   INVENTAR
+============================== */
+
+function renderInventory(){
+
+    const grid=document.getElementById("inventoryGrid");
+
+    const search=
+        document.getElementById("search").value.toLowerCase();
+
+    grid.innerHTML="";
+
+    const filtered=inventory.filter(item=>
+        item.name.toLowerCase().includes(search)
+    );
+
+    if(filtered.length===0){
+
+        grid.innerHTML=`
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:60px;
+                color:#788198;
+            ">
+                Noch keine Items gefunden.
+            </div>
+        `;
+
+        return;
+    }
+
+    filtered.forEach((item)=>{
+
+        const originalIndex=inventory.indexOf(item);
+
+        const div=document.createElement("div");
+
+        div.className="item";
+
+        div.innerHTML=`
+            <div class="itemIcon">${item.icon}</div>
+            <h3>${item.name}</h3>
+
+            <div class="rarity">
+                ${item.rarity}
+            </div>
+
+            <div class="itemValue">
+                ${item.value.toLocaleString("de-DE")} 🪙
+            </div>
+
+            <button class="sell"
+                onclick="sellInventoryItem(${originalIndex})">
+                Verkaufen
+            </button>
+        `;
+
+        grid.appendChild(div);
+    });
+}
+
+/* ==============================
+   SAMMLUNG
+============================== */
+
+function renderCollection(){
+
+    const grid=document.getElementById("collectionGrid");
+
+    const unique=new Set(
+        inventory.map(x=>x.id)
+    );
+
+    document.getElementById("collectionText").textContent=
+        `${unique.size} / ${items.length} Items entdeckt`;
+
+    grid.innerHTML="";
+
+    items.forEach(item=>{
+
+        const found=unique.has(item.id);
+
+        const div=document.createElement("div");
+
+        div.className="item";
+
+        div.style.opacity=found?"1":".35";
+
+        div.innerHTML=`
+            <div class="itemIcon">
+                ${found ? item.icon : "❓"}
+            </div>
+
+            <h3>
+                ${found ? item.name : "Unbekanntes Item"}
+            </h3>
+
+            <div class="rarity">
+                ${found ? item.rarity : "???"}
+            </div>
+        `;
+
+        grid.appendChild(div);
+    });
+}
+
+/* ==============================
+   MODAL
+============================== */
+
+function closeModal(){
+
+    document.getElementById("modal").classList.remove("show");
+
+    currentItem=null;
+}
+
+document.getElementById("modal").addEventListener("click",e=>{
+
+    if(e.target.id==="modal"){
+        closeModal();
+    }
+
+});
+
+/* ==============================
+   START
+============================== */
+
+updateStats();
+renderBoxes();
+
+</script>
+
+</body>
+</html>
+```
 
