@@ -1,4038 +1,1514 @@
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#04070d">
-<meta name="description" content="VOID ARMORY X — Futuristic Weapon Case System">
-
-<title>VOID ARMORY X</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#070b16">
+<title>VOID COSMOS X</title>
 
 <style>
-
+*{box-sizing:border-box}
 :root{
---bg:#03050a;
---panel:#08111d;
---panel2:#0d1827;
---line:#203851;
---text:#eef7ff;
---muted:#71839c;
-
---cyan:#45eaff;
---blue:#4b91ff;
---purple:#a56cff;
---gold:#ffd05b;
---pink:#ff4db8;
---red:#ff596e;
---green:#55e58b;
+  --bg:#050711;
+  --panel:rgba(13,18,35,.82);
+  --panel2:rgba(20,27,50,.9);
+  --line:rgba(120,150,255,.18);
+  --text:#f5f7ff;
+  --muted:#8993b5;
+  --cyan:#36e8ff;
+  --purple:#9d5cff;
+  --pink:#ff4fd8;
+  --green:#38f29a;
+  --gold:#ffd75a;
+  --red:#ff5577;
+}
+html,body{
+  margin:0;
+  min-height:100%;
+  background:
+    radial-gradient(circle at 10% 10%,rgba(54,232,255,.12),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(157,92,255,.15),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(255,79,216,.08),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+}
+body{overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--cyan),var(--purple));
+  border-radius:20px;
 }
 
-*{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+.bg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:#fff;
+  border-radius:50%;
+  opacity:.5;
+  animation:float 7s infinite alternate;
+}
+@keyframes float{
+  from{transform:translateY(0);opacity:.2}
+  to{transform:translateY(-35px);opacity:.8}
 }
 
-html,
-body{
-margin:0;
-padding:0;
-min-height:100%;
-background:var(--bg);
-color:var(--text);
-font-family:Inter,Arial,sans-serif;
-overflow-x:hidden;
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:16px 22px;
+  border-bottom:1px solid var(--line);
+  background:rgba(4,7,16,.78);
+  backdrop-filter:blur(22px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.logo{
+  font-weight:1000;
+  letter-spacing:3px;
+  font-size:21px;
+}
+.logo span{
+  color:var(--cyan);
+  text-shadow:0 0 20px var(--cyan);
+}
+.coins{
+  padding:10px 16px;
+  border:1px solid rgba(255,215,90,.25);
+  background:rgba(255,215,90,.08);
+  border-radius:14px;
+  color:var(--gold);
+  font-weight:900;
+  box-shadow:0 0 25px rgba(255,215,90,.08);
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-z-index:-3;
-
-background:
-radial-gradient(
-circle at 50% -10%,
-#193967 0,
-transparent 38%
-),
-radial-gradient(
-circle at 100% 100%,
-#24104b 0,
-transparent 35%
-),
-radial-gradient(
-circle at 0% 70%,
-#063344 0,
-transparent 30%
-),
-linear-gradient(
-#060b14,
-#02040a
-);
+nav{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  position:sticky;
+  top:72px;
+  z-index:40;
+  background:rgba(5,7,17,.72);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  overflow:auto;
+}
+nav button{
+  flex:0 0 auto;
+  border:1px solid var(--line);
+  color:var(--muted);
+  background:rgba(255,255,255,.035);
+  padding:11px 16px;
+  border-radius:12px;
+  font-weight:800;
+}
+nav button.active,
+nav button:hover{
+  color:white;
+  border-color:rgba(54,232,255,.45);
+  background:rgba(54,232,255,.09);
+  box-shadow:0 0 22px rgba(54,232,255,.1);
 }
 
-body:after{
-content:"";
-position:fixed;
-inset:0;
-z-index:-2;
-opacity:.055;
-
-background-image:
-linear-gradient(
-#fff 1px,
-transparent 1px
-),
-linear-gradient(
-90deg,
-#fff 1px,
-transparent 1px
-);
-
-background-size:44px 44px;
-pointer-events:none;
+main{
+  max-width:1450px;
+  margin:auto;
+  padding:25px;
 }
-
-button{
-font:inherit;
-cursor:pointer;
-}
-
-button:disabled{
-opacity:.45;
-cursor:not-allowed;
-}
-
-/* ==============================
-TOP BAR
-============================== */
-
-.top{
-height:72px;
-
-position:sticky;
-top:0;
-z-index:50;
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-
-padding:0 28px;
-
-background:#050914dd;
-border-bottom:1px solid #1c3049;
-
-backdrop-filter:blur(20px);
--webkit-backdrop-filter:blur(20px);
-}
-
-.brand{
-font-size:23px;
-font-weight:1000;
-letter-spacing:3px;
-}
-
-.brand i{
-font-style:normal;
-color:var(--cyan);
-
-text-shadow:
-0 0 15px #45eaff88,
-0 0 35px #45eaff44;
-}
-
-.money{
-display:flex;
-align-items:center;
-gap:8px;
-
-padding:10px 16px;
-
-border:1px solid #29415e;
-background:
-linear-gradient(
-135deg,
-#101d2d,
-#08111d
-);
-
-border-radius:13px;
-
-color:var(--gold);
-font-weight:1000;
-
-box-shadow:
-0 8px 30px #0006,
-inset 0 0 20px #ffd05b08;
-}
-
-/* ==============================
-MAIN
-============================== */
-
-.wrap{
-width:min(1400px,94%);
-margin:auto;
-padding:30px 0 90px;
-}
-
-/* ==============================
-HERO
-============================== */
+.page{display:none}
+.page.active{display:block}
 
 .hero{
-text-align:center;
-padding:20px 0 35px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:30px;
+  background:
+    linear-gradient(135deg,rgba(54,232,255,.08),rgba(157,92,255,.08)),
+    var(--panel);
+  box-shadow:0 25px 80px rgba(0,0,0,.35);
+  margin-bottom:25px;
 }
-
-.eyebrow{
-display:inline-block;
-
-border:1px solid #315478;
-color:#70c7ff;
-
-border-radius:999px;
-
-padding:7px 14px;
-
-font-size:11px;
-font-weight:900;
-letter-spacing:2px;
-
-background:#0b1724aa;
-
-box-shadow:
-0 0 25px #45eaff0b;
-}
-
 .hero h1{
-font-size:clamp(42px,7vw,82px);
-
-line-height:.92;
-
-margin:18px 0 13px;
-
-letter-spacing:-4px;
-font-weight:1000;
+  margin:0 0 8px;
+  font-size:clamp(32px,6vw,70px);
+  line-height:.95;
+  letter-spacing:-3px;
 }
-
-.hero h1 span{
-color:var(--cyan);
-
-text-shadow:
-0 0 20px #45eaff55,
-0 0 50px #45eaff22;
+.gradient{
+  background:linear-gradient(90deg,var(--cyan),#fff,var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  color:transparent;
 }
-
-.hero p{
-color:var(--muted);
-max-width:680px;
-margin:auto;
-line-height:1.6;
-}
-
-/* ==============================
-TABS
-============================== */
-
-.tabs{
-display:flex;
-gap:8px;
-overflow:auto;
-margin-bottom:22px;
-padding-bottom:2px;
-}
-
-.tabs button{
-white-space:nowrap;
-
-border:1px solid #20344d;
-background:#09101b;
-
-color:#8192aa;
-
-border-radius:11px;
-
-padding:11px 18px;
-
-font-weight:900;
-
-transition:.2s;
-}
-
-.tabs button.active,
-.tabs button:hover{
-color:#fff;
-
-border-color:#4386c8;
-
-background:
-linear-gradient(
-135deg,
-#102238,
-#0d1a2b
-);
-
-box-shadow:
-0 0 25px #45eaff0d;
-}
-
-/* ==============================
-VIEWS
-============================== */
-
-.view{
-display:none;
-}
-
-.view.active{
-display:block;
-}
-
-.title{
-display:flex;
-justify-content:space-between;
-align-items:end;
-
-margin:20px 0 15px;
-}
-
-.title h2{
-margin:0;
-font-size:28px;
-font-weight:1000;
-}
-
-.title small{
-color:#65758d;
-}
-
-/* ==============================
-CASES
-============================== */
-
-.cases{
-display:grid;
-grid-template-columns:
-repeat(
-auto-fill,
-minmax(235px,1fr)
-);
-
-gap:17px;
-}
-
-.case{
-position:relative;
-overflow:hidden;
-
-min-height:345px;
-
-padding:17px;
-
-border:1px solid #213650;
-border-radius:20px;
-
-background:
-linear-gradient(
-145deg,
-#101b2c,
-#070c15
-);
-
-box-shadow:
-0 12px 40px #0004,
-inset 0 0 35px #ffffff03;
-
-transition:.22s;
-}
-
-.case:hover{
-transform:translateY(-6px);
-
-border-color:#4a8fd2;
-
-box-shadow:
-0 20px 60px #0007,
-0 0 30px #45eaff0a;
-}
-
-.case:before{
-content:"";
-
-position:absolute;
-
-width:180px;
-height:180px;
-
-border-radius:50%;
-
-right:-70px;
-top:-70px;
-
-background:var(--glow);
-
-filter:blur(55px);
-
-opacity:.25;
-}
-
-.caseVisual{
-height:155px;
-
-display:grid;
-place-items:center;
-
-position:relative;
-z-index:1;
-}
-
-.caseBox{
-width:132px;
-height:104px;
-
-border-radius:18px;
-
-display:grid;
-place-items:center;
-
-font-size:54px;
-
-background:
-linear-gradient(
-145deg,
-#203b5d,
-#091321
-);
-
-border:1px solid #ffffff20;
-
-box-shadow:
-inset 0 0 35px #ffffff08,
-0 18px 40px #0008,
-0 0 35px var(--glow);
-}
-
-.caseName{
-font-weight:1000;
-font-size:19px;
-}
-
-.caseDesc{
-height:32px;
-
-color:#6e819b;
-
-font-size:12px;
-
-margin-top:6px;
-}
-
-.caseFoot{
-display:flex;
-align-items:center;
-justify-content:space-between;
-
-gap:8px;
-
-margin-top:17px;
-}
-
-.price{
-color:var(--gold);
-font-weight:1000;
-}
-
-.open{
-border:0;
-
-border-radius:10px;
-
-padding:11px 16px;
-
-color:#fff;
-
-font-weight:1000;
-
-background:
-linear-gradient(
-100deg,
-#237ee9,
-#814cff
-);
-
-box-shadow:
-0 7px 25px #347cff2b;
-
-transition:.2s;
-}
-
-.open:hover{
-filter:brightness(1.15);
-
-transform:translateY(-1px);
-
-box-shadow:
-0 10px 30px #347cff40;
-}
-
-/* ==============================
-INVENTORY
-============================== */
+.hero p{color:var(--muted);max-width:700px}
 
 .grid{
-display:grid;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
+}
+.card{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--panel);
+  padding:18px;
+  transition:.2s;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(54,232,255,.4);
+  box-shadow:0 15px 45px rgba(0,0,0,.3);
+}
+.caseIcon{
+  height:150px;
+  display:grid;
+  place-items:center;
+  font-size:74px;
+  border-radius:16px;
+  background:
+    radial-gradient(circle,rgba(255,255,255,.1),transparent 55%),
+    linear-gradient(135deg,rgba(54,232,255,.1),rgba(157,92,255,.13));
+  margin-bottom:15px;
+}
+.card h3{margin:5px 0}
+.muted{color:var(--muted)}
+.price{
+  color:var(--gold);
+  font-weight:1000;
+}
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,#167caa,#6538c8);
+  box-shadow:0 7px 25px rgba(54,232,255,.1);
+}
+.btn:hover{filter:brightness(1.18)}
+.btn.green{background:linear-gradient(135deg,#159d65,#20d58d)}
+.btn.red{background:linear-gradient(135deg,#9e294a,#ff5577)}
+.btn.dark{
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--line);
+}
+.btn.gold{
+  background:linear-gradient(135deg,#a97800,#ffd75a);
+  color:#15100a;
+}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 
-grid-template-columns:
-repeat(
-auto-fill,
-minmax(185px,1fr)
-);
-
-gap:13px;
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.space{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.sectionTitle{
+  margin:10px 0 18px;
+  font-size:25px;
+}
+.stat{
+  font-size:30px;
+  font-weight:1000;
+}
+.statLabel{
+  color:var(--muted);
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
+.panel{
+  border:1px solid var(--line);
+  border-radius:22px;
+  background:var(--panel);
+  padding:20px;
+  margin-bottom:18px;
+}
+label{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:7px;
+}
+input,select{
+  width:100%;
+  background:#080c18;
+  border:1px solid var(--line);
+  color:white;
+  padding:12px;
+  border-radius:12px;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 20px rgba(54,232,255,.1);
+}
+.formGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:14px;
+}
+.switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.switch input{width:auto}
+
+.badge{
+  display:inline-block;
+  padding:5px 8px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:1000;
+  text-transform:uppercase;
+}
+.common{background:#263047;color:#b8c0d4}
+.uncommon{background:#143b35;color:#47e8b0}
+.rare{background:#123b62;color:#4eb8ff}
+.epic{background:#38205f;color:#c184ff}
+.legendary{background:#57400c;color:#ffd75a}
+.mythic{background:#5b183b;color:#ff6db7}
+.ancient{background:#173d46;color:#6ff5ff}
+
+.itemIcon{
+  font-size:54px;
+  width:100px;
+  height:100px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:rgba(255,255,255,.045);
+}
 .item{
-padding:11px;
-
-border:1px solid #1c3047;
-
-background:
-linear-gradient(
-145deg,
-#09111d,
-#060c14
-);
-
-border-radius:15px;
-
-cursor:pointer;
-
-transition:.2s;
-
-box-shadow:
-0 8px 25px #0004;
+  display:flex;
+  gap:15px;
+  align-items:center;
 }
+.itemInfo{flex:1}
 
-.item:hover{
-transform:translateY(-3px);
-
-border-color:var(--r);
-
-box-shadow:
-0 12px 35px #0006,
-0 0 25px var(--g);
+#rollerWrap{
+  display:none;
+  margin-top:20px;
 }
-
-.visual{
-height:125px;
-
-border-radius:11px;
-
-display:grid;
-place-items:center;
-
-background:
-radial-gradient(
-circle,
-var(--g),
-transparent 65%
-),
-#070c14;
+.roller{
+  height:230px;
+  overflow:hidden;
+  position:relative;
+  border-radius:22px;
+  border:1px solid rgba(54,232,255,.3);
+  background:#050812;
 }
-
-.icon{
-font-size:58px;
-
-filter:
-drop-shadow(
-0 0 18px var(--g)
-);
+.pointer{
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:3px;
+  background:white;
+  z-index:5;
+  box-shadow:0 0 20px white;
 }
-
-.name{
-font-weight:900;
-
-margin-top:11px;
-
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
+.track{
+  position:absolute;
+  top:20px;
+  left:0;
+  height:190px;
+  display:flex;
+  gap:12px;
+  align-items:center;
 }
-
-.rarity{
-font-size:11px;
-
-font-weight:1000;
-
-letter-spacing:1px;
-
-color:var(--r);
-
-margin-top:5px;
+.rollItem{
+  flex:0 0 155px;
+  height:170px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#10172b,#080b15);
 }
-
-.value{
-font-size:12px;
-
-color:#8494aa;
-
-margin-top:5px;
+.rollItem div:first-child{font-size:54px}
+.spinBtn{
+  width:100%;
+  margin-top:14px;
+  font-size:17px;
 }
-
-.sell{
-width:100%;
-
-margin-top:9px;
-
-padding:8px;
-
-border:1px solid #29415c;
-
-background:#101b2a;
-
-color:#d6e1ef;
-
-border-radius:8px;
-
-font-weight:900;
-
-transition:.2s;
-}
-
-.sell:hover{
-border-color:var(--red);
-
-color:#fff;
-
-background:#24131b;
-}
-
-/* ==============================
-AUTO SELL
-============================== */
-
-.autoSellPanel{
-position:relative;
-overflow:hidden;
-
-margin:0 0 25px;
-
-padding:22px;
-
-border:1px solid #294b70;
-
-border-radius:22px;
-
-background:
-linear-gradient(
-135deg,
-#0c1b2eec,
-#070c16ee
-);
-
-box-shadow:
-0 20px 70px #0008,
-inset 0 0 50px #45eaff08;
-}
-
-.autoSellPanel:before{
-content:"";
-
-position:absolute;
-
-width:280px;
-height:280px;
-
-right:-100px;
-top:-150px;
-
-border-radius:50%;
-
-background:#45eaff;
-
-filter:blur(90px);
-
-opacity:.12;
-
-pointer-events:none;
-}
-
-.autoSellPanel:after{
-content:"";
-
-position:absolute;
-
-left:-20%;
-right:-20%;
-
-bottom:0;
-
-height:1px;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-#45eaff,
-#a56cff,
-transparent
-);
-
-opacity:.8;
-}
-
-.autoHeader{
-display:flex;
-
-justify-content:space-between;
-align-items:center;
-
-gap:15px;
-
-position:relative;
-z-index:2;
-}
-
-.autoTitle{
-display:flex;
-
-align-items:center;
-
-gap:13px;
-}
-
-.autoIcon{
-width:48px;
-height:48px;
-
-display:grid;
-place-items:center;
-
-border-radius:14px;
-
-border:1px solid #2d6683;
-
-background:
-radial-gradient(
-circle,
-#45eaff33,
-transparent 70%
-),
-#0b1725;
-
-font-size:24px;
-
-box-shadow:
-0 0 30px #45eaff18;
-}
-
-.autoTitle h3{
-margin:0;
-
-font-size:18px;
-
-letter-spacing:1px;
-}
-
-.autoTitle p{
-margin:4px 0 0;
-
-color:#70839d;
-
-font-size:12px;
-}
-
-/* TOGGLE */
-
-.autoToggle{
-position:relative;
-
-width:62px;
-height:32px;
-
-flex:0 0 auto;
-}
-
-.autoToggle input{
-display:none;
-}
-
-.autoSlider{
-position:absolute;
-
-inset:0;
-
-border:1px solid #31445c;
-
-border-radius:999px;
-
-background:#101a28;
-
-cursor:pointer;
-
-transition:.25s;
-}
-
-.autoSlider:before{
-content:"";
-
-position:absolute;
-
-width:24px;
-height:24px;
-
-left:3px;
-top:3px;
-
-border-radius:50%;
-
-background:#64758d;
-
-transition:.25s;
-
-box-shadow:
-0 3px 10px #0008;
-}
-
-.autoToggle input:checked + .autoSlider{
-background:#063c49;
-
-border-color:#45eaff;
-
-box-shadow:
-0 0 20px #45eaff35,
-inset 0 0 15px #45eaff15;
-}
-
-.autoToggle input:checked + .autoSlider:before{
-transform:translateX(30px);
-
-background:#45eaff;
-
-box-shadow:
-0 0 20px #45eaff,
-0 0 40px #45eaff66;
-}
-
-/* CONTROLS */
-
-.autoControls{
-position:relative;
-z-index:2;
-
-display:grid;
-
-grid-template-columns:
-1fr 1fr;
-
-gap:12px;
-
-margin-top:20px;
-}
-
-.autoField{
-padding:14px;
-
-border:1px solid #203952;
-
-border-radius:14px;
-
-background:#07111d;
-}
-
-.autoField label{
-display:block;
-
-margin-bottom:8px;
-
-color:#71839c;
-
-font-size:11px;
-
-font-weight:900;
-
-letter-spacing:1px;
-}
-
-.autoField input,
-.autoField select{
-width:100%;
-
-padding:12px;
-
-border:1px solid #29415d;
-
-outline:none;
-
-border-radius:10px;
-
-background:#0d1826;
-
-color:#fff;
-
-font-weight:900;
-}
-
-.autoField input:focus,
-.autoField select:focus{
-border-color:#45eaff;
-
-box-shadow:
-0 0 18px #45eaff18;
-}
-
-/* STATS */
-
-.autoStats{
-position:relative;
-z-index:2;
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:10px;
-
-margin-top:12px;
-}
-
-.autoStat{
-padding:12px;
-
-border:1px solid #1d334b;
-
-border-radius:12px;
-
-background:#08121e;
-
-text-align:center;
-}
-
-.autoStat strong{
-display:block;
-
-color:#45eaff;
-
-font-size:18px;
-}
-
-.autoStat span{
-display:block;
-
-margin-top:3px;
-
-color:#64758d;
-
-font-size:10px;
-
-font-weight:800;
-}
-
-/* BUTTONS */
-
-.autoActions{
-display:flex;
-
-gap:10px;
-
-margin-top:14px;
-
-position:relative;
-z-index:2;
-}
-
-.autoButton{
-flex:1;
-
-padding:12px;
-
-border:1px solid #31577b;
-
-border-radius:10px;
-
-background:#102237;
-
-color:#dcecff;
-
-font-weight:1000;
-
-transition:.2s;
-}
-
-.autoButton:hover{
-border-color:#45eaff;
-
-background:#12304a;
-
-box-shadow:
-0 0 25px #45eaff16;
-}
-
-.autoButton.danger{
-border-color:#613344;
-
-background:#21101a;
-}
-
-.autoButton.danger:hover{
-border-color:#ff596e;
-
-box-shadow:
-0 0 25px #ff596e18;
-}
-
-.autoStatus{
-margin-top:13px;
-
-position:relative;
-z-index:2;
-
-padding:10px 13px;
-
-border-radius:10px;
-
-font-size:11px;
-
-font-weight:900;
-}
-
-.autoStatus.on{
-color:#55e58b;
-
-border:1px solid #245c43;
-
-background:#071b14;
-
-box-shadow:
-0 0 20px #55e58b0d;
-}
-
-.autoStatus.off{
-color:#7b8da4;
-
-border:1px solid #26374a;
-
-background:#07101a;
-}
-
-/* ==============================
-MARKET
-============================== */
-
-.market{
-display:grid;
-
-grid-template-columns:
-repeat(
-auto-fill,
-minmax(240px,1fr)
-);
-
-gap:14px;
-}
-
-.marketCard{
-padding:15px;
-
-border:1px solid #20344d;
-
-border-radius:15px;
-
-background:#09111d;
-
-transition:.2s;
-}
-
-.marketCard:hover{
-border-color:#3e6487;
-
-transform:translateY(-2px);
-}
-
-.marketTop{
-display:flex;
-
-gap:11px;
-
-align-items:center;
-}
-
-.marketIcon{
-width:60px;
-height:60px;
-
-display:grid;
-place-items:center;
-
-border-radius:11px;
-
-background:#101b2a;
-
-font-size:32px;
-}
-
-.mname{
-font-weight:900;
-}
-
-.mrarity{
-font-size:11px;
-
-color:var(--r);
-
-margin-top:4px;
-}
-
-.mprice{
-font-size:22px;
-
-font-weight:1000;
-
-color:var(--gold);
-
-margin-top:14px;
-}
-
-.change{
-font-size:12px;
-
-margin-top:4px;
-}
-
-.buy{
-width:100%;
-
-margin-top:12px;
-
-padding:10px;
-
-border:0;
-
-border-radius:9px;
-
-background:#163b61;
-
-color:#fff;
-
-font-weight:1000;
-
-transition:.2s;
-}
-
-.buy:hover{
-background:#1d5489;
-
-box-shadow:
-0 0 20px #45eaff15;
-}
-
-/* ==============================
-MODALS
-============================== */
 
 .modal{
-position:fixed;
-
-inset:0;
-
-z-index:100;
-
-display:none;
-
-align-items:center;
-justify-content:center;
-
-padding:14px;
-
-background:#01040be8;
-
-backdrop-filter:blur(15px);
--webkit-backdrop-filter:blur(15px);
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  place-items:center;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(12px);
+  padding:20px;
 }
-
-.modal.show{
-display:flex;
+.modal.show{display:grid}
+.modalBox{
+  width:min(520px,100%);
+  text-align:center;
+  border:1px solid rgba(54,232,255,.35);
+  border-radius:28px;
+  padding:30px;
+  background:linear-gradient(145deg,#0d1428,#080b15);
+  box-shadow:0 30px 100px rgba(0,0,0,.6);
 }
-
-.box{
-width:min(1050px,96vw);
-
-max-height:94vh;
-
-overflow:auto;
-
-padding:22px;
-
-border:1px solid #294563;
-
-border-radius:22px;
-
-background:
-linear-gradient(
-145deg,
-#0b1725,
-#060c14
-);
-
-box-shadow:
-0 35px 120px #000;
+.bigIcon{
+  font-size:110px;
+  margin:10px;
+  filter:drop-shadow(0 0 25px rgba(54,232,255,.35));
 }
-
-.modalHead{
-display:flex;
-
-justify-content:space-between;
-align-items:center;
-}
-
-.modalHead h2{
-margin:0;
-}
-
-.close{
-width:40px;
-height:40px;
-
-border:1px solid #29415d;
-
-border-radius:10px;
-
-background:#101b2a;
-
-color:#fff;
-
-font-size:20px;
-}
-
-.close:hover{
-border-color:var(--red);
-
-background:#21111a;
-}
-
-/* ==============================
-ROLLER
-============================== */
-
-.roller{
-height:245px;
-
-margin:24px 0;
-
-position:relative;
-
-overflow:hidden;
-
-border:1px solid #253c59;
-
-border-radius:16px;
-
-background:#040811;
-
-box-shadow:
-inset 0 0 50px #000;
-}
-
-.roller:before{
-content:"";
-
-position:absolute;
-
-z-index:5;
-
-inset:0;
-
-pointer-events:none;
-
-background:
-linear-gradient(
-90deg,
-#040811,
-transparent 18%,
-transparent 82%,
-#040811
-);
-}
-
-.marker{
-position:absolute;
-
-z-index:10;
-
-left:50%;
-
-top:0;
-bottom:0;
-
-width:3px;
-
-transform:translateX(-50%);
-
-background:#fff;
-
-box-shadow:
-0 0 25px #fff,
-0 0 50px var(--cyan);
-}
-
-.track{
-height:100%;
-
-position:absolute;
-
-left:0;
-top:0;
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-will-change:transform;
-}
-
-.roll{
-width:175px;
-height:185px;
-
-flex:0 0 175px;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-justify-content:center;
-
-gap:9px;
-
-border:2px solid var(--r);
-
-border-radius:14px;
-
-background:#0d1724;
-
-box-shadow:
-0 0 25px var(--g);
-}
-
-.roll .icon{
-font-size:57px;
-}
-
-.rollName{
-text-align:center;
-
-width:90%;
-
-font-size:12px;
-
-font-weight:1000;
-}
-
-/* ==============================
-RESULT
-============================== */
-
-.result{
-display:none;
-
-text-align:center;
-
-padding:18px;
-}
-
-.result.show{
-display:block;
-}
-
-.resultCard{
-width:min(370px,92%);
-
-margin:20px auto;
-
-padding:28px;
-
-border:2px solid var(--r);
-
-border-radius:20px;
-
-background:
-radial-gradient(
-circle,
-var(--g),
-transparent 65%
-),
-#0b1421;
-
-animation:pop .55s ease;
-
-box-shadow:
-0 0 60px var(--g);
-}
-
-.resultCard .icon{
-font-size:105px;
-}
-
-.resultCard h2{
-margin:15px 0 5px;
-}
-
-.resultCard p{
-margin:0;
-
-color:var(--r);
-
-font-weight:1000;
-
-letter-spacing:2px;
-}
-
-.resultCard .marketValue{
-color:var(--gold);
-
-letter-spacing:0;
-
-margin-top:10px;
-}
-
-/* ==============================
-DETAIL
-============================== */
-
-.detail{
-text-align:center;
-}
-
-.detailVisual{
-width:250px;
-height:200px;
-
-margin:22px auto;
-
-display:grid;
-place-items:center;
-
-border:2px solid var(--r);
-
-border-radius:18px;
-
-background:
-radial-gradient(
-circle,
-var(--g),
-transparent 65%
-),
-#070c15;
-
-box-shadow:
-0 0 50px var(--g);
-}
-
-.detailVisual .icon{
-font-size:95px;
-}
-
-.detail #detailRarity{
-font-weight:1000;
-letter-spacing:2px;
-}
-
-.detail #detailPrice{
-color:var(--gold);
-font-weight:900;
-}
-
-/* ==============================
-TOAST
-============================== */
 
 .toast{
-position:fixed;
-
-left:50%;
-bottom:22px;
-
-z-index:300;
-
-transform:
-translate(-50%,120px);
-
-transition:.3s;
-
-padding:13px 19px;
-
-border:1px solid #385574;
-
-border-radius:11px;
-
-background:#101b2a;
-
-box-shadow:
-0 15px 45px #000;
-
-color:#fff;
-
-font-weight:900;
-
-white-space:nowrap;
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:200;
+  transform:translateY(100px);
+  opacity:0;
+  transition:.25s;
+  background:#0c1222;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 18px;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
-
 .toast.show{
-transform:
-translate(-50%,0);
+  transform:translateY(0);
+  opacity:1;
 }
 
-/* ==============================
-ANIMATIONS
-============================== */
-
-@keyframes pop{
-
-0%{
-transform:scale(.5);
-opacity:0;
+.empty{
+  text-align:center;
+  padding:50px 20px;
+  color:var(--muted);
+}
+.auto{
+  border-color:rgba(56,242,154,.3);
+  box-shadow:0 0 40px rgba(56,242,154,.04);
+}
+.auto h2{color:var(--green)}
+.live{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 9px;
+  border-radius:9px;
+  background:rgba(56,242,154,.08);
+  color:var(--green);
+  font-size:11px;
+  font-weight:1000;
+}
+.dot{
+  width:7px;height:7px;border-radius:50%;
+  background:currentColor;
+  box-shadow:0 0 10px currentColor;
 }
 
-70%{
-transform:scale(1.07);
+footer{
+  text-align:center;
+  color:#59627d;
+  padding:35px;
 }
-
-100%{
-transform:scale(1);
-opacity:1;
-}
-
-}
-
-@keyframes pulse{
-
-0%,100%{
-opacity:.7;
-}
-
-50%{
-opacity:1;
-}
-
-}
-
-.autoStatus.on{
-animation:pulse 2s infinite;
-}
-
-/* ==============================
-MOBILE
-============================== */
 
 @media(max-width:650px){
-
-.top{
-height:64px;
-
-padding:0 12px;
+  header{padding:13px}
+  main{padding:13px}
+  .hero{padding:22px}
+  .hero h1{font-size:42px}
+  .caseIcon{height:125px}
+  nav{top:59px}
 }
-
-.brand{
-font-size:16px;
-
-letter-spacing:2px;
-}
-
-.money{
-padding:8px 11px;
-
-font-size:13px;
-}
-
-.wrap{
-width:94%;
-
-padding-top:20px;
-}
-
-.hero h1{
-letter-spacing:-2px;
-}
-
-.hero p{
-font-size:13px;
-}
-
-.cases{
-grid-template-columns:
-repeat(
-2,
-minmax(0,1fr)
-);
-
-gap:10px;
-}
-
-.case{
-min-height:285px;
-
-padding:12px;
-}
-
-.caseVisual{
-height:115px;
-}
-
-.caseBox{
-width:92px;
-height:78px;
-
-font-size:39px;
-}
-
-.caseName{
-font-size:15px;
-}
-
-.caseDesc{
-font-size:10px;
-}
-
-.caseFoot{
-display:block;
-}
-
-.price{
-display:block;
-
-margin-bottom:8px;
-}
-
-.open{
-width:100%;
-
-padding:9px;
-
-font-size:12px;
-}
-
-.grid{
-grid-template-columns:
-repeat(
-2,
-minmax(0,1fr)
-);
-}
-
-.roller{
-height:215px;
-}
-
-.roll{
-width:145px;
-
-flex-basis:145px;
-
-height:165px;
-}
-
-.autoControls{
-grid-template-columns:1fr;
-}
-
-.autoStats{
-grid-template-columns:
-repeat(3,1fr);
-}
-
-.autoActions{
-flex-direction:column;
-}
-
-.autoTitle h3{
-font-size:15px;
-}
-
-.autoTitle p{
-font-size:10px;
-}
-
-.autoSellPanel{
-padding:16px;
-}
-
-}
-
 </style>
 </head>
 
 <body>
 
-<header class="top">
+<div class="bg" id="stars"></div>
 
-<div class="brand">
-VOID <i>ARMORY X</i>
-</div>
-
-<div class="money">
-🪙 <span id="coins">2500</span>
-</div>
-
+<header>
+  <div class="logo">VOID <span>COSMOS X</span></div>
+  <div class="coins" id="coinDisplay">🪙 0</div>
 </header>
 
-<main class="wrap">
-
-<section class="hero">
-
-<div class="eyebrow">
-NEXT GENERATION CASE SYSTEM
-</div>
-
-<h1>
-ENTER THE <span>VOID</span>
-</h1>
-
-<p>
-Öffne futuristische Cases, sammle seltene Waffen,
-kaufe und verkaufe Items und beobachte den dynamischen
-Ingame-Markt.
-</p>
-
-</section>
-
-<nav class="tabs">
-
-<button class="active" data-view="cases">
-CASES
-</button>
-
-<button data-view="inventory">
-INVENTAR
-</button>
-
-<button data-view="market">
-MARKT
-</button>
-
+<nav>
+  <button class="active" data-page="home">HOME</button>
+  <button data-page="cases">CASES</button>
+  <button data-page="inventory">INVENTAR</button>
+  <button data-page="market">MARKT</button>
+  <button data-page="auto">AUTO SYSTEM</button>
+  <button data-page="stats">STATS</button>
 </nav>
 
-<!-- =========================
-CASES
-========================= -->
+<main>
 
-<section id="cases" class="view active">
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="live"><span class="dot"></span> COSMIC MARKET ONLINE</div>
+    <h1><span class="gradient">VOID COSMOS X</span></h1>
+    <p>
+      Öffne futuristische Boxen, sammle seltene Cosmetics,
+      beobachte den dynamischen Markt und automatisiere deine Sammlung.
+    </p>
+    <div class="row">
+      <button class="btn" onclick="go('cases')">📦 BOXEN ÖFFNEN</button>
+      <button class="btn dark" onclick="go('inventory')">🧬 INVENTAR</button>
+    </div>
+  </div>
 
-<div class="title">
+  <h2 class="sectionTitle">System Overview</h2>
 
-<h2>
-Case Arsenal
-</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="stat" id="homeItems">0</div>
+      <div class="statLabel">Items</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="homeValue">0</div>
+      <div class="statLabel">Inventarwert</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="homeOpened">0</div>
+      <div class="statLabel">Boxen geöffnet</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="homeAuto">OFF</div>
+      <div class="statLabel">Auto Buyer</div>
+    </div>
+  </div>
+</section>
 
-<small>
-20 Cases
-</small>
+<section id="cases" class="page">
+  <div class="space">
+    <div>
+      <h1>📦 COSMIC CASES</h1>
+      <p class="muted">Jede Box besitzt eigene Drop-Chancen.</p>
+    </div>
+  </div>
+  <br>
+  <div id="caseGrid" class="grid"></div>
 
-</div>
+  <div id="rollerWrap" class="panel">
+    <h2>DROP SEQUENCE</h2>
+    <div class="roller">
+      <div class="pointer"></div>
+      <div class="track" id="track"></div>
+    </div>
+    <button id="spinButton" class="btn gold spinBtn" onclick="spin()">START SEQUENCE</button>
+  </div>
+</section>
 
-<div class="cases" id="caseGrid"></div>
+<section id="inventory" class="page">
+  <div class="space">
+    <div>
+      <h1>🧬 INVENTAR</h1>
+      <p class="muted">Deine komplette Sammlung.</p>
+    </div>
+    <button class="btn red" onclick="sellAllLow()">LOW VALUE VERKAUFEN</button>
+  </div>
+  <br>
+  <div id="inventoryGrid" class="grid"></div>
+</section>
+
+<section id="market" class="page">
+  <div class="hero">
+    <h1>📈 <span class="gradient">COSMIC MARKET</span></h1>
+    <p>Die Werte bewegen sich automatisch.</p>
+  </div>
+  <div id="marketGrid" class="grid"></div>
+</section>
+
+<section id="auto" class="page">
+
+  <div class="hero">
+    <div class="live"><span class="dot"></span> AUTOMATION CORE</div>
+    <h1><span class="gradient">AUTO SYSTEM</span></h1>
+    <p>
+      Automatisiere den Kauf von harmlosen Cosmic-Cosmetic-Boxen
+      und den Verkauf bestimmter Items.
+    </p>
+  </div>
+
+  <div class="panel auto">
+    <div class="space">
+      <div>
+        <h2>🤖 AUTO BOX BUYER</h2>
+        <p class="muted">Kauft automatisch die ausgewählte Box.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="autoBuyEnabled" onchange="saveAutoBuy()">
+        <span>AKTIV</span>
+      </label>
+    </div>
+
+    <br>
+
+    <div class="formGrid">
+      <div>
+        <label>BOX</label>
+        <select id="autoBuyCase"></select>
+      </div>
+
+      <div>
+        <label>KAUF-INTERVALL IN SEKUNDEN</label>
+        <input id="autoBuyInterval" type="number" min="1" value="8">
+      </div>
+
+      <div>
+        <label>MAXIMALES BUDGET</label>
+        <input id="autoBuyBudget" type="number" min="0" value="10000">
+      </div>
+
+      <div>
+        <label>MINDESTGUTHABEN</label>
+        <input id="autoBuyReserve" type="number" min="0" value="500">
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <button class="btn green" onclick="startAutoBuy()">▶ AUTO BUY STARTEN</button>
+      <button class="btn red" onclick="stopAutoBuy()">■ STOPP</button>
+      <button class="btn dark" onclick="autoBuyOnce()">JETZT 1× KAUFEN</button>
+    </div>
+
+    <br>
+
+    <div class="grid">
+      <div class="card">
+        <div class="stat" id="autoBought">0</div>
+        <div class="statLabel">Automatisch gekauft</div>
+      </div>
+      <div class="card">
+        <div class="stat" id="autoSpent">0</div>
+        <div class="statLabel">Automatisch ausgegeben</div>
+      </div>
+      <div class="card">
+        <div class="stat" id="autoRemaining">0</div>
+        <div class="statLabel">Budget übrig</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel auto">
+    <div class="space">
+      <div>
+        <h2>💰 AUTO SELLER</h2>
+        <p class="muted">Verkauft Items automatisch ab einem bestimmten Marktwert.</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="autoSellEnabled" onchange="saveAutoSell()">
+        <span>AKTIV</span>
+      </label>
+    </div>
+
+    <br>
+
+    <div class="formGrid">
+      <div>
+        <label>MINDESTWERT</label>
+        <input id="autoSellValue" type="number" min="0" value="1000">
+      </div>
+
+      <div>
+        <label>SELTENHEIT SCHÜTZEN AB</label>
+        <select id="autoSellRarity">
+          <option value="0">Nichts schützen</option>
+          <option value="1">Uncommon</option>
+          <option value="2">Rare</option>
+          <option value="3">Epic</option>
+          <option value="4">Legendary</option>
+          <option value="5">Mythic</option>
+          <option value="6">Ancient</option>
+        </select>
+      </div>
+    </div>
+
+    <br>
+
+    <button class="btn green" onclick="runAutoSell()">JETZT PRÜFEN</button>
+
+    <br><br>
+
+    <div class="grid">
+      <div class="card">
+        <div class="stat" id="autoSold">0</div>
+        <div class="statLabel">Automatisch verkauft</div>
+      </div>
+      <div class="card">
+        <div class="stat" id="autoEarned">0</div>
+        <div class="statLabel">Einnahmen</div>
+      </div>
+      <div class="card">
+        <div class="stat" id="autoProtected">0</div>
+        <div class="statLabel">Geschützte Items</div>
+      </div>
+    </div>
+  </div>
 
 </section>
 
-<!-- =========================
-INVENTORY
-========================= -->
-
-<section id="inventory" class="view">
-
-<div class="title">
-
-<h2>
-Dein Arsenal
-</h2>
-
-<small id="count">
-0 Items
-</small>
-
-</div>
-
-<!-- AUTO SELL -->
-
-<div class="autoSellPanel">
-
-<div class="autoHeader">
-
-<div class="autoTitle">
-
-<div class="autoIcon">
-⚙️
-</div>
-
-<div>
-
-<h3>
-AUTO SELL SYSTEM
-</h3>
-
-<p>
-Automatischer Waffen-Verkäufer
-</p>
-
-</div>
-
-</div>
-
-<label class="autoToggle">
-
-<input
-type="checkbox"
-id="autoSellEnabled"
->
-
-<span class="autoSlider"></span>
-
-</label>
-
-</div>
-
-<div class="autoControls">
-
-<div class="autoField">
-
-<label>
-MINDEST-MARKTWERT
-</label>
-
-<input
-type="number"
-id="autoSellValue"
-min="0"
-step="50"
-value="500"
->
-
-</div>
-
-<div class="autoField">
-
-<label>
-SELTENHEITSSCHUTZ
-</label>
-
-<select id="autoSellRarity">
-
-<option value="none">
-Kein Schutz
-</option>
-
-<option value="rare">
-RARE schützen
-</option>
-
-<option value="epic">
-EPIC + schützen
-</option>
-
-<option value="legendary">
-LEGENDARY + schützen
-</option>
-
-<option value="mythic">
-MYTHIC + schützen
-</option>
-
-<option value="ancient">
-ALLE seltenen schützen
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div class="autoStats">
-
-<div class="autoStat">
-
-<strong id="autoSoldCount">
-0
-</strong>
-
-<span>
-VERKAUFT
-</span>
-
-</div>
-
-<div class="autoStat">
-
-<strong id="autoEarned">
-0
-</strong>
-
-<span>
-COINS VERDIENT
-</span>
-
-</div>
-
-<div class="autoStat">
-
-<strong id="autoProtected">
-0
-</strong>
-
-<span>
-GESCHÜTZT
-</span>
-
-</div>
-
-</div>
-
-<div class="autoActions">
-
-<button
-class="autoButton"
-id="runAutoSell"
->
-⚡ JETZT PRÜFEN
-</button>
-
-<button
-class="autoButton danger"
-id="resetAutoStats"
->
-↻ STATISTIK RESET
-</button>
-
-</div>
-
-<div
-class="autoStatus off"
-id="autoStatus"
->
-● AUTO SELL IST AUS
-</div>
-
-</div>
-
-<div class="grid" id="inventoryGrid"></div>
-
-</section>
-
-<!-- =========================
-MARKET
-========================= -->
-
-<section id="market" class="view">
-
-<div class="title">
-
-<h2>
-Dynamic Market
-</h2>
-
-<small>
-Preise ändern sich automatisch
-</small>
-
-</div>
-
-<div class="market" id="marketGrid"></div>
-
+<section id="stats" class="page">
+  <div class="hero">
+    <h1>📊 <span class="gradient">STATISTICS</span></h1>
+    <p>Deine komplette Cosmic-Auswertung.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="stat" id="sCoins">0</div>
+      <div class="statLabel">Coins</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="sOpened">0</div>
+      <div class="statLabel">Geöffnete Boxen</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="sItems">0</div>
+      <div class="statLabel">Items</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="sValue">0</div>
+      <div class="statLabel">Inventarwert</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="sBought">0</div>
+      <div class="statLabel">Auto-Käufe</div>
+    </div>
+    <div class="card">
+      <div class="stat" id="sSold">0</div>
+      <div class="statLabel">Auto-Verkäufe</div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="panel">
+    <h2>⚙ SYSTEM</h2>
+    <div class="row">
+      <button class="btn dark" onclick="addCoins()">+1000 Test-Coins</button>
+      <button class="btn red" onclick="resetGame()">SPIEL ZURÜCKSETZEN</button>
+    </div>
+  </div>
 </section>
 
 </main>
 
-<!-- =========================
-OPEN MODAL
-========================= -->
+<footer>
+  VOID COSMOS X • Single-File Browser Game
+</footer>
 
-<div class="modal" id="openModal">
-
-<div class="box">
-
-<div id="openingView">
-
-<div class="modalHead">
-
-<div>
-
-<h2 id="openingTitle">
-Case
-</h2>
-
-<small style="color:#71839c">
-Das Item wird bestimmt...
-</small>
-
+<div id="modal" class="modal">
+  <div class="modalBox">
+    <div class="muted">NEW COSMIC ITEM</div>
+    <div class="bigIcon" id="resultIcon">🤖</div>
+    <h1 id="resultName">Item</h1>
+    <div id="resultRarity"></div>
+    <h2 id="resultValue">0 🪙</h2>
+    <button class="btn" onclick="closeModal()">WEITER</button>
+  </div>
 </div>
 
-<button
-class="close"
-id="closeOpen"
->
-×
-</button>
-
-</div>
-
-<div class="roller">
-
-<div class="marker"></div>
-
-<div
-class="track"
-id="track"
-></div>
-
-</div>
-
-<button
-class="open"
-id="spin"
-style="width:100%"
->
-CASE ÖFFNEN
-</button>
-
-</div>
-
-<div class="result" id="result">
-
-<div style="
-color:#71839c;
-letter-spacing:3px;
-font-size:12px;
-font-weight:900
-">
-ITEM ERHALTEN
-</div>
-
-<div
-class="resultCard"
-id="resultCard"
->
-
-<div
-class="icon"
-id="resultIcon"
->
-⚡
-</div>
-
-<h2 id="resultName"></h2>
-
-<p id="resultRarity"></p>
-
-<p
-class="marketValue"
-id="resultValue"
-></p>
-
-</div>
-
-<button
-class="open"
-id="continue"
->
-INS INVENTAR
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-DETAIL MODAL
-========================= -->
-
-<div class="modal" id="detailModal">
-
-<div class="box">
-
-<div class="modalHead">
-
-<h2>
-WEAPON INSPECT
-</h2>
-
-<button
-class="close"
-id="closeDetail"
->
-×
-</button>
-
-</div>
-
-<div class="detail">
-
-<div
-class="detailVisual"
-id="detailVisual"
->
-
-<div
-class="icon"
-id="detailIcon"
->
-⚡
-</div>
-
-</div>
-
-<h2 id="detailName"></h2>
-
-<p id="detailRarity"></p>
-
-<p id="detailPrice"></p>
-
-<button
-class="open"
-id="detailSell"
->
-VERKAUFEN
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div
-class="toast"
-id="toast"
-></div>
+<div id="toast" class="toast"></div>
 
 <script>
-
 /* =========================================================
-RARITIES
+   VOID COSMOS X
+   Komplettes Single-File-System
 ========================================================= */
 
-const rarity={
+const rarities = [
+  {name:"Common",class:"common",mult:1,weight:48},
+  {name:"Uncommon",class:"uncommon",mult:1.7,weight:25},
+  {name:"Rare",class:"rare",mult:3,weight:14},
+  {name:"Epic",class:"epic",mult:7,weight:7},
+  {name:"Legendary",class:"legendary",mult:16,weight:4},
+  {name:"Mythic",class:"mythic",mult:38,weight:1.7},
+  {name:"Ancient",class:"ancient",mult:90,weight:.3}
+];
 
-common:{
-name:"COMMON",
-c:"#aab5c6",
-g:"rgba(170,181,198,.20)"
-},
-
-uncommon:{
-name:"UNCOMMON",
-c:"#55e58b",
-g:"rgba(85,229,139,.23)"
-},
-
-rare:{
-name:"RARE",
-c:"#4ca7ff",
-g:"rgba(76,167,255,.27)"
-},
-
-epic:{
-name:"EPIC",
-c:"#a66cff",
-g:"rgba(166,108,255,.29)"
-},
-
-legendary:{
-name:"LEGENDARY",
-c:"#ffd05b",
-g:"rgba(255,208,91,.31)"
-},
-
-mythic:{
-name:"MYTHIC",
-c:"#ff4db8",
-g:"rgba(255,77,184,.34)"
-},
-
-ancient:{
-name:"ANCIENT",
-c:"#ff596e",
-g:"rgba(255,89,110,.37)"
-}
-
-};
-
-/* =========================================================
-WEAPONS
-========================================================= */
-
-const weapons=[
-
-["VX-9 Plasma","⚡","common",85],
-["ARX Pulse","🔷","common",95],
-["Nova Blaster","🔫","common",110],
-["Ion SMG","⚡","common",125],
-["Photon Carbine","🔹","common",135],
-["Vector-X","🔫","common",145],
-["Aero Pulse","✦","common",150],
-["XR-17","◈","common",165],
-
-["Neon Striker","💠","uncommon",210],
-["Plasma Runner","🔵","uncommon",230],
-["Cyber Fang","🗡️","uncommon",245],
-["Ion Hunter","⚡","uncommon",260],
-["Starline","✦","uncommon",280],
-["Quantum SMG","🔷","uncommon",300],
-["Pulse-47","🔫","uncommon",325],
-["Solar Edge","☀️","uncommon",350],
-
-["Specter-7","👻","rare",420],
-["Astra Rifle","🔷","rare",450],
-["Vortex Blade","🗡️","rare",480],
-["Rail Phantom","⚡","rare",510],
-["Cryo Lance","❄️","rare",540],
-["Void SMG","🌌","rare",570],
-["Nova Edge","💫","rare",600],
-["Stellar Carbine","✦","rare",650],
-
-["Titan Pulse","💎","epic",780],
-["Omega Rifle","🔷","epic",850],
-["Dark Matter","🌑","epic",920],
-["Cyber Reaper","☠️","epic",1000],
-["Hyperion","⚡","epic",1100],
-["Quantum Fang","🗡️","epic",1200],
-
-["Solar Destroyer","☀️","legendary",1450],
-["Void Railgun","🚀","legendary",1650],
-["Apex Plasma","💥","legendary",1850],
-["Titan-X","🔱","legendary",2100],
-["Infinity Core","♾️","legendary",2400],
-
-["Nebula King","👑","mythic",3200],
-["Void Reaper","☠️","mythic",3800],
-["Galaxy Breaker","🌌","mythic",4500],
-["Omega Prime","💠","mythic",5200],
-
-["Eclipse","🌑","ancient",7000],
-["Singularity","🌀","ancient",8500],
-["Cosmic Destroyer","🌠","ancient",10000]
-
-].map(x=>({
-
-name:x[0],
-icon:x[1],
-rarity:x[2],
-base:x[3]
-
+const items = [
+  ["Neon Drone","🤖",40],
+  ["Quantum Bot","🦾",65],
+  ["Cyber Cube","🔷",90],
+  ["Holo Mask","🎭",120],
+  ["Galaxy Orb","🔮",180],
+  ["Plasma Core","💠",240],
+  ["Void Crystal","💎",330],
+  ["Quantum Engine","⚙️",450],
+  ["Nebula Crown","👑",650],
+  ["Cosmic Dragon","🐉",900],
+  ["Star Reactor","☀️",1300],
+  ["Void Singularity","🌌",2000],
+  ["Omega Robot","🤖",3200],
+  ["Galaxy Titan","🗿",5000],
+  ["Eternal Core","💫",8500]
+].map((x,i)=>({
+  id:i,
+  name:x[0],
+  icon:x[1],
+  base:x[2]
 }));
 
-/* =========================================================
-CASES
-========================================================= */
+const cases = [
+  {id:0,name:"Starter Capsule",icon:"📦",price:100},
+  {id:1,name:"Neon Capsule",icon:"🟦",price:250},
+  {id:2,name:"Quantum Capsule",icon:"🧊",price:500},
+  {id:3,name:"Galaxy Capsule",icon:"🌌",price:900},
+  {id:4,name:"Cyber Capsule",icon:"🤖",price:1500},
+  {id:5,name:"Void Capsule",icon:"🕳️",price:2500},
+  {id:6,name:"Cosmic Capsule",icon:"🌠",price:5000},
+  {id:7,name:"Omega Capsule",icon:"💫",price:10000}
+];
 
-const cases=[
+let coins = Number(localStorage.getItem("vcx_coins") ?? 15000);
+let inventory = JSON.parse(localStorage.getItem("vcx_inventory") || "[]");
+let opened = Number(localStorage.getItem("vcx_opened") ?? 0);
 
-["Recruit Case","📦",0,"#4ca7ff",
-["common","common","common","uncommon","rare"]],
+let market = JSON.parse(localStorage.getItem("vcx_market") || "{}");
 
-["Pulse Case","🔷",120,"#4ca7ff",
-["common","uncommon","uncommon","rare"]],
-
-["Neon Case","💠",220,"#55e58b",
-["uncommon","uncommon","rare","rare","epic"]],
-
-["Cyber Case","🛰️",350,"#7b6cff",
-["uncommon","rare","rare","epic"]],
-
-["Void Case","🌌",500,"#a66cff",
-["rare","rare","epic","epic","legendary"]],
-
-["Quantum Case","🌀",700,"#a66cff",
-["rare","epic","epic","legendary"]],
-
-["Titan Case","💎",950,"#ffd05b",
-["epic","epic","legendary","legendary","mythic"]],
-
-["Solar Case","☀️",1200,"#ffd05b",
-["epic","legendary","legendary","mythic"]],
-
-["Apex Case","🔥",1500,"#ff7b45",
-["legendary","legendary","mythic","mythic"]],
-
-["Galaxy Case","🌠",1900,"#ff4db8",
-["legendary","mythic","mythic"]],
-
-["Singularity Case","🌀",2400,"#ff596e",
-["mythic","mythic","ancient"]],
-
-["Eclipse Case","🌑",3000,"#ff596e",
-["mythic","ancient","ancient"]],
-
-["Omega Case","♾️",3800,"#ff4db8",
-["mythic","ancient"]],
-
-["Cosmic Case","🌌",5000,"#ff596e",
-["mythic","ancient","ancient"]],
-
-["Legacy Case","👑",7000,"#ffd05b",
-["legendary","mythic","ancient"]],
-
-["Phantom Case","👻",9000,"#8c72ff",
-["epic","legendary","mythic","ancient"]],
-
-["Stellar Case","⭐",11000,"#45eaff",
-["legendary","mythic","ancient"]],
-
-["Black Hole Case","🕳️",14000,"#a66cff",
-["mythic","ancient","ancient"]],
-
-["Godcore Case","🔱",18000,"#ffd05b",
-["mythic","ancient","ancient"]],
-
-["Infinity Case","♾️",25000,"#ff4db8",
-["mythic","ancient"]]
-
-].map(x=>({
-
-name:x[0],
-icon:x[1],
-price:x[2],
-glow:x[3],
-pool:x[4]
-
+let autoBuy = JSON.parse(localStorage.getItem("vcx_autoBuy") || JSON.stringify({
+  enabled:false,
+  caseId:0,
+  interval:8,
+  budget:10000,
+  reserve:500,
+  bought:0,
+  spent:0
 }));
 
-/* =========================================================
-SAVE DATA
-========================================================= */
+let autoSell = JSON.parse(localStorage.getItem("vcx_autoSell") || JSON.stringify({
+  enabled:false,
+  value:1000,
+  rarity:4,
+  sold:0,
+  earned:0,
+  protected:0
+}));
 
-let coins=
-Number(
-localStorage.getItem("vax_coins")
-||2500
-);
+let selectedCase = null;
+let rolling = false;
+let autoTimer = null;
+let marketTimer = null;
 
-let inventory=
-JSON.parse(
-localStorage.getItem("vax_inventory")
-||"[]"
-);
-
-let market=
-JSON.parse(
-localStorage.getItem("vax_market")
-||"{}"
-);
-
-/* AUTO SELL SETTINGS */
-
-let autoSellEnabled=
-localStorage.getItem(
-"vax_autoSellEnabled"
-)==="true";
-
-let autoSellValue=
-Number(
-localStorage.getItem(
-"vax_autoSellValue"
-)||500
-);
-
-let autoSellRarity=
-localStorage.getItem(
-"vax_autoSellRarity"
-)||"none";
-
-let autoSoldCount=
-Number(
-localStorage.getItem(
-"vax_autoSoldCount"
-)||0
-);
-
-let autoEarned=
-Number(
-localStorage.getItem(
-"vax_autoEarned"
-)||0
-);
-
-let autoProtected=
-Number(
-localStorage.getItem(
-"vax_autoProtected"
-)||0
-);
-
-let currentCase=null;
-let currentWinner=null;
-let spinning=false;
-let detailIndex=-1;
-
-/* =========================================================
-SAVE
-========================================================= */
+const $ = id => document.getElementById(id);
 
 function save(){
-
-localStorage.setItem(
-"vax_coins",
-coins
-);
-
-localStorage.setItem(
-"vax_inventory",
-JSON.stringify(inventory)
-);
-
-localStorage.setItem(
-"vax_market",
-JSON.stringify(market)
-);
-
-localStorage.setItem(
-"vax_autoSellEnabled",
-autoSellEnabled
-);
-
-localStorage.setItem(
-"vax_autoSellValue",
-autoSellValue
-);
-
-localStorage.setItem(
-"vax_autoSellRarity",
-autoSellRarity
-);
-
-localStorage.setItem(
-"vax_autoSoldCount",
-autoSoldCount
-);
-
-localStorage.setItem(
-"vax_autoEarned",
-autoEarned
-);
-
-localStorage.setItem(
-"vax_autoProtected",
-autoProtected
-);
-
+  localStorage.setItem("vcx_coins",coins);
+  localStorage.setItem("vcx_inventory",JSON.stringify(inventory));
+  localStorage.setItem("vcx_opened",opened);
+  localStorage.setItem("vcx_market",JSON.stringify(market));
+  localStorage.setItem("vcx_autoBuy",JSON.stringify(autoBuy));
+  localStorage.setItem("vcx_autoSell",JSON.stringify(autoSell));
 }
 
-/* =========================================================
-MARKET INIT
-========================================================= */
-
-function initMarket(){
-
-weapons.forEach(w=>{
-
-if(!market[w.name]){
-
-market[w.name]={
-price:w.base,
-change:0
-};
-
+function fmt(n){
+  return Math.floor(n).toLocaleString("de-DE");
 }
 
-});
-
-save();
-
+function toast(text){
+  const t=$("toast");
+  t.textContent=text;
+  t.classList.add("show");
+  clearTimeout(toast.timer);
+  toast.timer=setTimeout(()=>t.classList.remove("show"),2600);
 }
-
-/* =========================================================
-PRICE
-========================================================= */
-
-function price(w){
-
-return Math.max(
-10,
-Math.round(
-market[w.name]?.price
-||w.base
-)
-);
-
-}
-
-/* =========================================================
-STYLE
-========================================================= */
-
-function setStyle(el,w){
-
-let r=
-rarity[w.rarity];
-
-el.style.setProperty(
-"--r",
-r.c
-);
-
-el.style.setProperty(
-"--g",
-r.g
-);
-
-}
-
-/* =========================================================
-COINS
-========================================================= */
 
 function updateCoins(){
-
-document.getElementById(
-"coins"
-).textContent=
-coins.toLocaleString(
-"de-DE"
-);
-
-save();
-
+  $("coinDisplay").textContent="🪙 "+fmt(coins);
 }
 
-/* =========================================================
-TOAST
-========================================================= */
+function go(page){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
 
-function toast(t){
+  $(page).classList.add("active");
 
-let e=
-document.getElementById(
-"toast"
-);
+  const btn=document.querySelector(`nav button[data-page="${page}"]`);
+  if(btn)btn.classList.add("active");
 
-e.textContent=t;
-
-e.classList.add("show");
-
-clearTimeout(
-window.__toast
-);
-
-window.__toast=
-setTimeout(
-()=>{
-e.classList.remove("show");
-},
-2500
-);
-
+  renderAll();
 }
 
-/* =========================================================
-RENDER CASES
-========================================================= */
-
-function renderCases(){
-
-let g=
-document.getElementById(
-"caseGrid"
-);
-
-g.innerHTML="";
-
-cases.forEach(
-(c,i)=>{
-
-let e=
-document.createElement(
-"article"
-);
-
-e.className="case";
-
-e.style.setProperty(
-"--glow",
-c.glow
-);
-
-e.innerHTML=`
-
-<div class="caseVisual">
-
-<div class="caseBox">
-${c.icon}
-</div>
-
-</div>
-
-<div class="caseName">
-${c.name}
-</div>
-
-<div class="caseDesc">
-Futuristische Waffen und seltene Drops.
-</div>
-
-<div class="caseFoot">
-
-<span class="price">
-
-${
-c.price
-?"🪙 "+c.price
-:"FREE"
-}
-
-</span>
-
-<button
-class="open"
-data-case="${i}"
->
-ÖFFNEN
-</button>
-
-</div>
-
-`;
-
-g.appendChild(e);
-
-}
-
-);
-
-}
-
-/* =========================================================
-AUTO SELL UI
-========================================================= */
-
-function renderAutoSell(){
-
-document.getElementById(
-"autoSellEnabled"
-).checked=
-autoSellEnabled;
-
-document.getElementById(
-"autoSellValue"
-).value=
-autoSellValue;
-
-document.getElementById(
-"autoSellRarity"
-).value=
-autoSellRarity;
-
-document.getElementById(
-"autoSoldCount"
-).textContent=
-autoSoldCount.toLocaleString(
-"de-DE"
-);
-
-document.getElementById(
-"autoEarned"
-).textContent=
-autoEarned.toLocaleString(
-"de-DE"
-);
-
-document.getElementById(
-"autoProtected"
-).textContent=
-autoProtected.toLocaleString(
-"de-DE"
-);
-
-let status=
-document.getElementById(
-"autoStatus"
-);
-
-if(autoSellEnabled){
-
-status.className=
-"autoStatus on";
-
-status.innerHTML=
-"● AUTO SELL IST AKTIV — Mindestwert: 🪙 "+
-autoSellValue;
-
-}else{
-
-status.className=
-"autoStatus off";
-
-status.innerHTML=
-"● AUTO SELL IST AUS";
-
-}
-
-}
-
-/* =========================================================
-RARITY PROTECTION
-========================================================= */
-
-const rarityRank={
-
-common:0,
-uncommon:1,
-rare:2,
-epic:3,
-legendary:4,
-mythic:5,
-ancient:6
-
-};
-
-function isProtected(w){
-
-if(
-autoSellRarity==="none"
-){
-return false;
-}
-
-return (
-rarityRank[w.rarity]
->=
-rarityRank[autoSellRarity]
-);
-
-}
-
-/* =========================================================
-AUTO SELL ENGINE
-========================================================= */
-
-function runAutoSell(){
-
-let threshold=
-Math.max(
-0,
-Number(
-autoSellValue
-)
-||0
-);
-
-let remaining=[];
-let sold=[];
-let protectedItems=0;
-let earned=0;
-
-inventory.forEach(w=>{
-
-let p=price(w);
-
-if(
-isProtected(w)
-){
-
-remaining.push(w);
-
-protectedItems++;
-
-return;
-
-}
-
-if(
-p< threshold
-){
-
-earned+=p;
-
-sold.push({
-...w,
-_soldPrice:p
+document.querySelectorAll("nav button").forEach(btn=>{
+  btn.addEventListener("click",()=>go(btn.dataset.page));
 });
 
-return;
-
+function rarityRank(name){
+  return rarities.findIndex(r=>r.name===name);
 }
 
-remaining.push(w);
-
-});
-
-inventory=remaining;
-
-if(sold.length){
-
-coins+=earned;
-
-autoSoldCount+=sold.length;
-
-autoEarned+=earned;
-
+function initMarket(){
+  items.forEach(item=>{
+    if(market[item.id]===undefined){
+      market[item.id]=item.base;
+    }
+  });
+  save();
 }
 
-autoProtected+=protectedItems;
-
-save();
-
-updateCoins();
-
-renderInventory();
-
-renderAutoSell();
-
-renderMarket();
-
-if(sold.length){
-
-toast(
-"⚡ AUTO SELL: "+
-sold.length+
-" Waffen für 🪙 "+
-earned+
-" verkauft"
-);
-
-}else{
-
-toast(
-"✓ Keine Waffen erfüllen die Auto-Sell-Regel."
-);
-
+function price(item){
+  return Math.max(
+    10,
+    Math.round(market[item.id] || item.base)
+  );
 }
-
-}
-
-/* =========================================================
-RENDER INVENTORY
-========================================================= */
-
-function renderInventory(){
-
-let g=
-document.getElementById(
-"inventoryGrid"
-);
-
-g.innerHTML="";
-
-document.getElementById(
-"count"
-).textContent=
-inventory.length+
-" Items";
-
-if(!inventory.length){
-
-g.innerHTML=`
-
-<div style="
-grid-column:1/-1;
-text-align:center;
-color:#64758d;
-padding:50px
-">
-
-<div style="
-font-size:45px;
-margin-bottom:12px
-">
-🛰️
-</div>
-
-Noch keine Waffen im Arsenal.
-
-</div>
-
-`;
-
-return;
-
-}
-
-inventory.forEach(
-(w,i)=>{
-
-let e=
-document.createElement(
-"article"
-);
-
-e.className="item";
-
-setStyle(e,w);
-
-let p=
-price(w);
-
-let protection=
-isProtected(w);
-
-e.innerHTML=`
-
-<div class="visual">
-
-<div class="icon">
-${w.icon}
-</div>
-
-</div>
-
-<div class="name">
-${w.name}
-</div>
-
-<div class="rarity">
-${rarity[w.rarity].name}
-</div>
-
-<div
-class="value ${
-p>=autoSellValue
-?"marketValueHigh"
-:"marketValueLow"
-}"
->
-Marktwert: 🪙 ${p}
-</div>
-
-${
-protection
-?
-`
-<div style="
-margin-top:6px;
-font-size:9px;
-font-weight:1000;
-color:#55e58b;
-">
-🛡 AUTO-SELL GESCHÜTZT
-</div>
-`
-:""
-}
-
-<button
-class="sell"
-data-sell="${i}"
->
-VERKAUFEN
-</button>
-
-`;
-
-g.appendChild(e);
-
-}
-
-);
-
-}
-
-/* =========================================================
-MARKET
-========================================================= */
-
-function renderMarket(){
-
-let g=
-document.getElementById(
-"marketGrid"
-);
-
-g.innerHTML="";
-
-weapons
-.slice()
-.sort(
-(a,b)=>
-price(b)-price(a)
-)
-.forEach(
-w=>{
-
-let e=
-document.createElement(
-"article"
-);
-
-e.className=
-"marketCard";
-
-setStyle(e,w);
-
-let d=
-market[w.name];
-
-e.innerHTML=`
-
-<div class="marketTop">
-
-<div class="marketIcon">
-${w.icon}
-</div>
-
-<div>
-
-<div class="mname">
-${w.name}
-</div>
-
-<div class="mrarity">
-${rarity[w.rarity].name}
-</div>
-
-</div>
-
-</div>
-
-<div class="mprice">
-🪙 ${price(w)}
-</div>
-
-<div
-class="change"
-style="color:${
-d.change>=0
-?"#55e58b"
-:"#ff6578"
-}"
->
-
-${d.change>=0?"+":""}
-${d.change} Coins
-
-</div>
-
-<button
-class="buy"
-data-buy="${w.name}"
->
-KAUFEN
-</button>
-
-`;
-
-g.appendChild(e);
-
-}
-
-);
-
-}
-
-/* =========================================================
-RANDOM WEAPON
-========================================================= */
-
-function randomWeapon(){
-
-let rr=
-currentCase.pool[
-Math.floor(
-Math.random()*
-currentCase.pool.length
-)
-];
-
-let p=
-weapons.filter(
-w=>
-w.rarity===rr
-);
-
-return p[
-Math.floor(
-Math.random()*p.length
-)
-];
-
-}
-
-/* =========================================================
-ROLLER CARD
-========================================================= */
-
-function rollCard(w){
-
-let e=
-document.createElement(
-"div"
-);
-
-e.className="roll";
-
-setStyle(e,w);
-
-e.innerHTML=`
-
-<div class="icon">
-${w.icon}
-</div>
-
-<div class="rollName">
-${w.name}
-</div>
-
-`;
-
-return e;
-
-}
-
-/* =========================================================
-CREATE ROLL
-========================================================= */
-
-function createRoll(){
-
-let t=
-document.getElementById(
-"track"
-);
-
-t.innerHTML="";
-
-t.style.transition="none";
-
-t.style.transform=
-"translateX(0)";
-
-for(
-let i=0;
-i<60;
-i++
-){
-
-t.appendChild(
-rollCard(
-randomWeapon()
-)
-);
-
-}
-
-}
-
-/* =========================================================
-OPEN CASE
-========================================================= */
-
-function openCase(i){
-
-if(spinning){
-return;
-}
-
-currentCase=
-cases[i];
-
-if(
-currentCase.price>
-coins
-){
-
-toast(
-"Nicht genug Coins."
-);
-
-return;
-
-}
-
-if(currentCase.price){
-
-coins-=
-currentCase.price;
-
-updateCoins();
-
-}
-
-document.getElementById(
-"openModal"
-).classList.add(
-"show"
-);
-
-document.getElementById(
-"openingView"
-).style.display=
-"block";
-
-document.getElementById(
-"result"
-).classList.remove(
-"show"
-);
-
-document.getElementById(
-"openingTitle"
-).textContent=
-currentCase.name;
-
-document.getElementById(
-"spin"
-).disabled=false;
-
-createRoll();
-
-}
-
-/* =========================================================
-SPIN
-========================================================= */
-
-function spin(){
-
-if(spinning){
-return;
-}
-
-spinning=true;
-
-document.getElementById(
-"spin"
-).disabled=true;
-
-currentWinner=
-randomWeapon();
-
-let track=
-document.getElementById(
-"track"
-);
-
-let cards=[
-...track.children
-];
-
-let idx=48;
-
-cards[idx].replaceWith(
-rollCard(
-currentWinner
-)
-);
-
-let step=185;
-
-let roller=
-document.querySelector(
-".roller"
-);
-
-let target=
--(idx*step)+
-(
-roller.clientWidth/2-87.5
-);
-
-requestAnimationFrame(
-()=>{
-
-track.style.transition=
-"transform 6s cubic-bezier(.08,.72,.12,1)";
-
-track.style.transform=
-`translateX(${target}px)`;
-
-}
-
-);
-
-setTimeout(
-()=>showResult(),
-6250
-);
-
-}
-
-/* =========================================================
-SHOW RESULT
-========================================================= */
-
-function showResult(){
-
-spinning=false;
-
-inventory.push({
-...currentWinner
-});
-
-save();
-
-renderInventory();
-
-let r=
-rarity[
-currentWinner.rarity
-];
-
-let card=
-document.getElementById(
-"resultCard"
-);
-
-card.style.setProperty(
-"--r",
-r.c
-);
-
-card.style.setProperty(
-"--g",
-r.g
-);
-
-document.getElementById(
-"resultIcon"
-).textContent=
-currentWinner.icon;
-
-document.getElementById(
-"resultName"
-).textContent=
-currentWinner.name;
-
-document.getElementById(
-"resultRarity"
-).textContent=
-r.name;
-
-document.getElementById(
-"resultValue"
-).textContent=
-"🪙 "+
-price(currentWinner);
-
-document.getElementById(
-"openingView"
-).style.display=
-"none";
-
-document.getElementById(
-"result"
-).classList.add(
-"show"
-);
-
-document.getElementById(
-"spin"
-).disabled=false;
-
-toast(
-"DROP: "+
-currentWinner.name
-);
-
-/*
-AUTO SELL NACH DROP
-*/
-
-if(autoSellEnabled){
-
-setTimeout(
-()=>{
-runAutoSell();
-},
-700
-);
-
-}
-
-}
-
-/* =========================================================
-MANUAL SELL
-========================================================= */
-
-function sell(i){
-
-let w=
-inventory[i];
-
-if(!w){
-return;
-}
-
-let p=
-price(w);
-
-coins+=p;
-
-inventory.splice(
-i,
-1
-);
-
-if(
-market[w.name]
-){
-
-let old=
-market[w.name].price;
-
-market[w.name].price=
-Math.max(
-10,
-Math.round(
-old*.97
-)
-);
-
-market[w.name].change=
-market[w.name].price-
-old;
-
-}
-
-save();
-
-updateCoins();
-
-renderInventory();
-
-renderMarket();
-
-toast(
-w.name+
-" für "+
-p+
-" Coins verkauft"
-);
-
-}
-
-/* =========================================================
-BUY
-========================================================= */
-
-function buy(name){
-
-let w=
-weapons.find(
-x=>x.name===name
-);
-
-if(!w){
-return;
-}
-
-let p=
-price(w);
-
-if(coins<p){
-
-toast(
-"Nicht genug Coins."
-);
-
-return;
-
-}
-
-coins-=p;
-
-inventory.push({
-...w
-});
-
-let old=
-market[name].price;
-
-market[name].price=
-Math.round(
-old*1.05
-);
-
-market[name].change=
-market[name].price-
-old;
-
-save();
-
-updateCoins();
-
-renderInventory();
-
-renderMarket();
-
-toast(
-w.name+
-" gekauft"
-);
-
-}
-
-/* =========================================================
-DETAIL
-========================================================= */
-
-function openDetail(i){
-
-let w=
-inventory[i];
-
-if(!w){
-return;
-}
-
-detailIndex=i;
-
-let r=
-rarity[w.rarity];
-
-document.getElementById(
-"detailIcon"
-).textContent=
-w.icon;
-
-document.getElementById(
-"detailName"
-).textContent=
-w.name;
-
-document.getElementById(
-"detailRarity"
-).textContent=
-r.name;
-
-document.getElementById(
-"detailRarity"
-).style.color=
-r.c;
-
-document.getElementById(
-"detailPrice"
-).textContent=
-"Marktwert: 🪙 "+
-price(w);
-
-setStyle(
-document.getElementById(
-"detailVisual"
-),
-w
-);
-
-document.getElementById(
-"detailModal"
-).classList.add(
-"show"
-);
-
-}
-
-/* =========================================================
-CASE CLICK
-========================================================= */
-
-document
-.getElementById(
-"caseGrid"
-)
-.addEventListener(
-"click",
-e=>{
-
-let b=
-e.target.closest(
-"[data-case]"
-);
-
-if(b){
-
-openCase(
-Number(
-b.dataset.case
-)
-);
-
-}
-
-}
-);
-
-/* =========================================================
-INVENTORY CLICK
-========================================================= */
-
-document
-.getElementById(
-"inventoryGrid"
-)
-.addEventListener(
-"click",
-e=>{
-
-let s=
-e.target.closest(
-"[data-sell]"
-);
-
-if(s){
-
-e.stopPropagation();
-
-sell(
-Number(
-s.dataset.sell
-)
-);
-
-return;
-
-}
-
-let item=
-e.target.closest(
-".item"
-);
-
-if(item){
-
-openDetail(
-[
-...item.parentNode.children
-]
-.indexOf(item)
-);
-
-}
-
-}
-);
-
-/* =========================================================
-MARKET CLICK
-========================================================= */
-
-document
-.getElementById(
-"marketGrid"
-)
-.addEventListener(
-"click",
-e=>{
-
-let b=
-e.target.closest(
-"[data-buy]"
-);
-
-if(b){
-
-buy(
-b.dataset.buy
-);
-
-}
-
-}
-);
-
-/* =========================================================
-SPIN BUTTON
-========================================================= */
-
-document
-.getElementById(
-"spin"
-)
-.addEventListener(
-"click",
-spin
-);
-
-/* =========================================================
-CLOSE OPEN
-========================================================= */
-
-document
-.getElementById(
-"closeOpen"
-)
-.addEventListener(
-"click",
-()=>{
-
-if(!spinning){
-
-document
-.getElementById(
-"openModal"
-)
-.classList.remove(
-"show"
-);
-
-}
-
-}
-);
-
-/* =========================================================
-CONTINUE
-========================================================= */
-
-document
-.getElementById(
-"continue"
-)
-.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById(
-"openModal"
-)
-.classList.remove(
-"show"
-);
-
-}
-);
-
-/* =========================================================
-CLOSE DETAIL
-========================================================= */
-
-document
-.getElementById(
-"closeDetail"
-)
-.addEventListener(
-"click",
-()=>{
-
-document
-.getElementById(
-"detailModal"
-)
-.classList.remove(
-"show"
-);
-
-}
-);
-
-/* =========================================================
-DETAIL SELL
-========================================================= */
-
-document
-.getElementById(
-"detailSell"
-)
-.addEventListener(
-"click",
-()=>{
-
-if(detailIndex>=0){
-
-sell(
-detailIndex
-);
-
-detailIndex=-1;
-
-document
-.getElementById(
-"detailModal"
-)
-.classList.remove(
-"show"
-);
-
-}
-
-}
-);
-
-/* =========================================================
-TABS
-========================================================= */
-
-document
-.querySelector(
-".tabs"
-)
-.addEventListener(
-"click",
-e=>{
-
-let b=
-e.target.closest(
-"[data-view]"
-);
-
-if(!b){
-return;
-}
-
-document
-.querySelectorAll(
-".tabs button"
-)
-.forEach(
-x=>
-x.classList.remove(
-"active"
-)
-);
-
-b.classList.add(
-"active"
-);
-
-document
-.querySelectorAll(
-".view"
-)
-.forEach(
-x=>
-x.classList.remove(
-"active"
-)
-);
-
-document
-.getElementById(
-b.dataset.view
-)
-.classList.add(
-"active"
-);
-
-}
-);
-
-/* =========================================================
-AUTO SELL TOGGLE
-========================================================= */
-
-document
-.getElementById(
-"autoSellEnabled"
-)
-.addEventListener(
-"change",
-e=>{
-
-autoSellEnabled=
-e.target.checked;
-
-save();
-
-renderAutoSell();
-
-if(autoSellEnabled){
-
-toast(
-"⚡ AUTO SELL AKTIVIERT"
-);
-
-runAutoSell();
-
-}else{
-
-toast(
-"AUTO SELL DEAKTIVIERT"
-);
-
-}
-
-}
-);
-
-/* =========================================================
-AUTO SELL VALUE
-========================================================= */
-
-document
-.getElementById(
-"autoSellValue"
-)
-.addEventListener(
-"change",
-e=>{
-
-autoSellValue=
-Math.max(
-0,
-Number(
-e.target.value
-)||0
-);
-
-save();
-
-renderAutoSell();
-
-if(autoSellEnabled){
-
-runAutoSell();
-
-}
-
-}
-);
-
-/* =========================================================
-AUTO SELL RARITY
-========================================================= */
-
-document
-.getElementById(
-"autoSellRarity"
-)
-.addEventListener(
-"change",
-e=>{
-
-autoSellRarity=
-e.target.value;
-
-save();
-
-renderAutoSell();
-
-if(autoSellEnabled){
-
-runAutoSell();
-
-}
-
-}
-);
-
-/* =========================================================
-MANUAL AUTO SELL
-========================================================= */
-
-document
-.getElementById(
-"runAutoSell"
-)
-.addEventListener(
-"click",
-()=>{
-
-runAutoSell();
-
-}
-);
-
-/* =========================================================
-RESET AUTO STATS
-========================================================= */
-
-document
-.getElementById(
-"resetAutoStats"
-)
-.addEventListener(
-"click",
-()=>{
-
-autoSoldCount=0;
-
-autoEarned=0;
-
-autoProtected=0;
-
-save();
-
-renderAutoSell();
-
-toast(
-"Auto-Sell Statistik zurückgesetzt"
-);
-
-}
-);
-
-/* =========================================================
-DYNAMIC MARKET
-========================================================= */
 
 function moveMarket(){
+  items.forEach(item=>{
+    let p=price(item);
 
-weapons.forEach(
-w=>{
+    const volatility =
+      item.base < 300 ? .12 :
+      item.base < 1000 ? .09 :
+      .06;
 
-let d=
-market[w.name];
+    const change=(Math.random()*2-1)*volatility;
 
-let old=
-d.price;
+    p*=1+change;
 
-let percent=
-(
-Math.random()-.5
-)*.12;
+    const floor=item.base*.55;
+    const ceiling=item.base*3.5;
 
-d.price=
-Math.max(
-10,
-Math.round(
-old*
-(
-1+percent
-)
-)
-);
+    market[item.id]=Math.max(
+      floor,
+      Math.min(ceiling,p)
+    );
+  });
 
-d.change=
-d.price-
-old;
+  save();
+  renderAll();
 
-}
-);
-
-save();
-
-renderMarket();
-
-if(autoSellEnabled){
-
-runAutoSell();
-
+  if(autoSell.enabled)runAutoSell();
 }
 
+function weightedRarity(){
+  let total=rarities.reduce((a,b)=>a+b.weight,0);
+  let r=Math.random()*total;
+
+  for(const rarity of rarities){
+    r-=rarity.weight;
+    if(r<=0)return rarity;
+  }
+
+  return rarities[0];
+}
+
+function randomItem(){
+  return items[Math.floor(Math.random()*items.length)];
+}
+
+function createDrop(){
+  const rarity=weightedRarity();
+  const item=randomItem();
+
+  return {
+    uid:Date.now()+"_"+Math.random().toString(36).slice(2),
+    itemId:item.id,
+    name:item.name,
+    icon:item.icon,
+    rarity:rarity.name,
+    rarityClass:rarity.class,
+    base:item.base,
+    obtained:Date.now()
+  };
+}
+
+function renderCases(){
+  const grid=$("caseGrid");
+  grid.innerHTML="";
+
+  cases.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <div class="caseIcon">${c.icon}</div>
+      <div class="space">
+        <h3>${c.name}</h3>
+        <span class="price">🪙 ${fmt(c.price)}</span>
+      </div>
+      <p class="muted">
+        Zufällige Cosmic-Cosmetics mit seltenen Drops.
+      </p>
+      <button class="btn" style="width:100%" onclick="openCase(${c.id})">
+        ÖFFNEN
+      </button>
+    `;
+
+    grid.appendChild(div);
+  });
+}
+
+function openCase(id){
+  if(rolling)return;
+
+  const c=cases.find(x=>x.id===id);
+  if(!c)return;
+
+  if(coins<c.price){
+    toast("Nicht genug Coins.");
+    return;
+  }
+
+  coins-=c.price;
+  opened++;
+  selectedCase=c;
+
+  updateCoins();
+  createRoll();
+  save();
+}
+
+function createRoll(){
+  $("rollerWrap").style.display="block";
+
+  const track=$("track");
+  track.innerHTML="";
+
+  for(let i=0;i<45;i++){
+    const d=createDrop();
+
+    const div=document.createElement("div");
+    div.className="rollItem";
+    div.innerHTML=`
+      <div>${d.icon}</div>
+      <strong>${d.name}</strong>
+      <span class="badge ${d.rarityClass}">${d.rarity}</span>
+    `;
+
+    track.appendChild(div);
+  }
+
+  track.style.transform="translateX(0)";
+  $("spinButton").disabled=false;
+
+  $("rollerWrap").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+function spin(){
+  if(rolling)return;
+
+  rolling=true;
+  $("spinButton").disabled=true;
+
+  const track=$("track");
+  const children=[...track.children];
+
+  const winnerIndex=36;
+  const cardWidth=167;
+
+  const offset =
+    -(winnerIndex*cardWidth - (window.innerWidth/2 - 77));
+
+  track.style.transition=
+    "transform 4.5s cubic-bezier(.08,.72,.12,1)";
+
+  track.style.transform=
+    `translateX(${offset}px)`;
+
+  setTimeout(()=>{
+    const drop=createDrop();
+
+    inventory.push(drop);
+
+    save();
+    showResult(drop);
+
+    rolling=false;
+    $("spinButton").disabled=false;
+
+    if(autoSell.enabled){
+      setTimeout(runAutoSell,300);
+    }
+
+    renderAll();
+  },4700);
+}
+
+function showResult(drop){
+  $("resultIcon").textContent=drop.icon;
+  $("resultName").textContent=drop.name;
+  $("resultRarity").innerHTML=
+    `<span class="badge ${drop.rarityClass}">${drop.rarity}</span>`;
+  $("resultValue").textContent=
+    fmt(price({id:drop.itemId,base:drop.base}))+" 🪙";
+
+  $("modal").classList.add("show");
+}
+
+function closeModal(){
+  $("modal").classList.remove("show");
+}
+
+function renderInventory(){
+  const grid=$("inventoryGrid");
+  grid.innerHTML="";
+
+  if(!inventory.length){
+    grid.innerHTML=`
+      <div class="panel empty">
+        <h2>Inventar leer</h2>
+        <p>Öffne deine erste Capsule.</p>
+      </div>
+    `;
+    return;
+  }
+
+  [...inventory].reverse().forEach(drop=>{
+    const value=price({id:drop.itemId,base:drop.base});
+
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <div class="item">
+        <div class="itemIcon">${drop.icon}</div>
+        <div class="itemInfo">
+          <h3>${drop.name}</h3>
+          <span class="badge ${drop.rarityClass}">${drop.rarity}</span>
+          <p class="price">🪙 ${fmt(value)}</p>
+        </div>
+      </div>
+
+      <br>
+
+      <button class="btn red" style="width:100%"
+        onclick="sell('${drop.uid}')">
+        VERKAUFEN
+      </button>
+    `;
+
+    grid.appendChild(div);
+  });
+}
+
+function sell(uid){
+  const index=inventory.findIndex(x=>x.uid===uid);
+  if(index<0)return;
+
+  const drop=inventory[index];
+  const value=price({id:drop.itemId,base:drop.base});
+
+  coins+=value;
+  inventory.splice(index,1);
+
+  save();
+  updateCoins();
+  renderAll();
+
+  toast(`+${fmt(value)} Coins`);
+}
+
+function sellAllLow(){
+  let earned=0;
+  const kept=[];
+
+  for(const drop of inventory){
+    const value=price({id:drop.itemId,base:drop.base});
+
+    if(value<500){
+      earned+=value;
+    }else{
+      kept.push(drop);
+    }
+  }
+
+  inventory=kept;
+  coins+=earned;
+
+  save();
+  updateCoins();
+  renderAll();
+
+  toast(`Low-Value Items verkauft: +${fmt(earned)} 🪙`);
+}
+
+function renderMarket(){
+  const grid=$("marketGrid");
+  grid.innerHTML="";
+
+  items.forEach(item=>{
+    const current=price(item);
+    const ratio=current/item.base;
+
+    let trend="STABIL";
+
+    if(ratio>1.05)trend="📈 STEIGEND";
+    if(ratio<.95)trend="📉 FALLEND";
+
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <div class="item">
+        <div class="itemIcon">${item.icon}</div>
+        <div class="itemInfo">
+          <h3>${item.name}</h3>
+          <p class="muted">Basiswert: ${fmt(item.base)}</p>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="space">
+        <span class="price">🪙 ${fmt(current)}</span>
+        <span class="badge ${ratio>1.05?"legendary":ratio<.95?"mythic":"common"}">
+          ${trend}
+        </span>
+      </div>
+    `;
+
+    grid.appendChild(div);
+  });
 }
 
 /* =========================================================
-START
+   AUTO BUYER
+========================================================= */
+
+function initAutoBuyUI(){
+  const select=$("autoBuyCase");
+  select.innerHTML="";
+
+  cases.forEach(c=>{
+    const option=document.createElement("option");
+    option.value=c.id;
+    option.textContent=
+      `${c.name} — ${fmt(c.price)} 🪙`;
+    select.appendChild(option);
+  });
+
+  $("autoBuyEnabled").checked=autoBuy.enabled;
+  $("autoBuyCase").value=autoBuy.caseId;
+  $("autoBuyInterval").value=autoBuy.interval;
+  $("autoBuyBudget").value=autoBuy.budget;
+  $("autoBuyReserve").value=autoBuy.reserve;
+
+  updateAutoStats();
+
+  if(autoBuy.enabled){
+    startAutoBuy(false);
+  }
+}
+
+function saveAutoBuy(){
+  autoBuy.enabled=$("autoBuyEnabled").checked;
+  autoBuy.caseId=Number($("autoBuyCase").value);
+  autoBuy.interval=Math.max(
+    1,
+    Number($("autoBuyInterval").value)||8
+  );
+  autoBuy.budget=Math.max(
+    0,
+    Number($("autoBuyBudget").value)||0
+  );
+  autoBuy.reserve=Math.max(
+    0,
+    Number($("autoBuyReserve").value)||0
+  );
+
+  save();
+
+  if(autoBuy.enabled){
+    startAutoBuy(false);
+  }else{
+    stopAutoBuy(false);
+  }
+
+  updateAutoStats();
+}
+
+function startAutoBuy(show=true){
+  saveAutoBuy();
+
+  if(autoTimer)clearInterval(autoTimer);
+
+  autoBuy.enabled=true;
+  $("autoBuyEnabled").checked=true;
+
+  autoTimer=setInterval(
+    autoBuyOnce,
+    Math.max(1,autoBuy.interval)*1000
+  );
+
+  save();
+
+  if(show)toast("🤖 Auto Buyer aktiviert.");
+}
+
+function stopAutoBuy(show=true){
+  if(autoTimer){
+    clearInterval(autoTimer);
+    autoTimer=null;
+  }
+
+  autoBuy.enabled=false;
+
+  if($("autoBuyEnabled")){
+    $("autoBuyEnabled").checked=false;
+  }
+
+  save();
+
+  if(show)toast("Auto Buyer gestoppt.");
+}
+
+function autoBuyOnce(){
+  const c=cases.find(x=>x.id===Number(autoBuy.caseId));
+  if(!c)return;
+
+  if(autoBuy.spent+c.price>autoBuy.budget){
+    stopAutoBuy(false);
+    toast("🤖 Auto-Buyer: Budget erreicht.");
+    return;
+  }
+
+  if(coins-c.price<autoBuy.reserve){
+    stopAutoBuy(false);
+    toast("🤖 Auto-Buyer: Mindestguthaben erreicht.");
+    return;
+  }
+
+  coins-=c.price;
+
+  autoBuy.spent+=c.price;
+  autoBuy.bought++;
+  opened++;
+
+  const drop=createDrop();
+  inventory.push(drop);
+
+  save();
+  updateCoins();
+  renderAll();
+
+  toast(`🤖 ${c.name} automatisch gekauft`);
+}
+
+function updateAutoStats(){
+  if(!$("autoBought"))return;
+
+  $("autoBought").textContent=fmt(autoBuy.bought);
+  $("autoSpent").textContent=fmt(autoBuy.spent);
+  $("autoRemaining").textContent=
+    fmt(Math.max(0,autoBuy.budget-autoBuy.spent));
+}
+
+/* =========================================================
+   AUTO SELLER
+========================================================= */
+
+function initAutoSellUI(){
+  $("autoSellEnabled").checked=autoSell.enabled;
+  $("autoSellValue").value=autoSell.value;
+  $("autoSellRarity").value=autoSell.rarity;
+
+  updateAutoSellStats();
+}
+
+function saveAutoSell(){
+  autoSell.enabled=$("autoSellEnabled").checked;
+  autoSell.value=Math.max(
+    0,
+    Number($("autoSellValue").value)||0
+  );
+  autoSell.rarity=Number($("autoSellRarity").value);
+
+  save();
+
+  if(autoSell.enabled){
+    runAutoSell();
+  }
+}
+
+function isProtected(drop){
+  return rarityRank(drop.rarity)>=autoSell.rarity;
+}
+
+function runAutoSell(){
+  if(!autoSell.enabled)return;
+
+  let earned=0;
+  let sold=0;
+  let protectedCount=0;
+  const kept=[];
+
+  for(const drop of inventory){
+    const value=price({
+      id:drop.itemId,
+      base:drop.base
+    });
+
+    if(isProtected(drop)){
+      protectedCount++;
+      kept.push(drop);
+      continue;
+    }
+
+    if(value>=autoSell.value){
+      earned+=value;
+      sold++;
+    }else{
+      kept.push(drop);
+    }
+  }
+
+  inventory=kept;
+
+  if(sold){
+    coins+=earned;
+    autoSell.sold+=sold;
+    autoSell.earned+=earned;
+  }
+
+  autoSell.protected=protectedCount;
+
+  save();
+  updateCoins();
+  updateAutoSellStats();
+  renderAll();
+}
+
+function updateAutoSellStats(){
+  if(!$("autoSold"))return;
+
+  $("autoSold").textContent=fmt(autoSell.sold);
+  $("autoEarned").textContent=fmt(autoSell.earned);
+  $("autoProtected").textContent=fmt(autoSell.protected);
+}
+
+/* =========================================================
+   GENERAL STATS
+========================================================= */
+
+function inventoryValue(){
+  return inventory.reduce(
+    (sum,x)=>
+      sum+price({id:x.itemId,base:x.base}),
+    0
+  );
+}
+
+function renderStats(){
+  $("homeItems").textContent=fmt(inventory.length);
+  $("homeValue").textContent=fmt(inventoryValue());
+  $("homeOpened").textContent=fmt(opened);
+  $("homeAuto").textContent=autoBuy.enabled?"ON":"OFF";
+
+  $("sCoins").textContent=fmt(coins);
+  $("sOpened").textContent=fmt(opened);
+  $("sItems").textContent=fmt(inventory.length);
+  $("sValue").textContent=fmt(inventoryValue());
+  $("sBought").textContent=fmt(autoBuy.bought);
+  $("sSold").textContent=fmt(autoSell.sold);
+
+  updateAutoStats();
+  updateAutoSellStats();
+}
+
+function renderAll(){
+  updateCoins();
+  renderCases();
+  renderInventory();
+  renderMarket();
+  renderStats();
+}
+
+/* =========================================================
+   RESET / TEST
+========================================================= */
+
+function addCoins(){
+  coins+=1000;
+  save();
+  updateCoins();
+  renderStats();
+  toast("+1.000 Test-Coins");
+}
+
+function resetGame(){
+  if(!confirm("Wirklich alles zurücksetzen?"))return;
+
+  stopAutoBuy(false);
+
+  localStorage.removeItem("vcx_coins");
+  localStorage.removeItem("vcx_inventory");
+  localStorage.removeItem("vcx_opened");
+  localStorage.removeItem("vcx_market");
+  localStorage.removeItem("vcx_autoBuy");
+  localStorage.removeItem("vcx_autoSell");
+
+  location.reload();
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+function createStars(){
+  const box=$("stars");
+
+  for(let i=0;i<90;i++){
+    const s=document.createElement("div");
+    s.className="star";
+
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.animationDelay=
+      (-Math.random()*7)+"s";
+    s.style.animationDuration=
+      (4+Math.random()*8)+"s";
+
+    box.appendChild(s);
+  }
+}
+
+/* =========================================================
+   START
 ========================================================= */
 
 initMarket();
+createStars();
+initAutoBuyUI();
+initAutoSellUI();
+renderAll();
 
-renderCases();
+marketTimer=setInterval(moveMarket,10000);
 
-renderInventory();
-
-renderMarket();
-
-renderAutoSell();
-
-updateCoins();
-
-/*
-MARKT BEWEGT SICH ALLE 30 SEKUNDEN
-*/
-
-setInterval(
-moveMarket,
-30000
-);
+window.addEventListener("beforeunload",save);
 
 </script>
-
 </body>
 </html>
 ```
