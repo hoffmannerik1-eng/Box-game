@@ -3,2397 +3,2391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050711">
-<title>NEXUS // COLLECTION</title>
+<meta name="theme-color" content="#eef2f7">
+<title>iOS 27 Web</title>
 
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:#050711;color:#eef5ff}
-body{overflow-x:hidden}
-
 :root{
- --bg:#050711;
- --panel:rgba(12,17,31,.88);
- --panel2:#11182a;
- --line:rgba(255,255,255,.09);
- --cyan:#62eaff;
- --purple:#a66cff;
- --green:#58f59a;
- --gold:#ffd65a;
- --red:#ff607c;
- --muted:#7f8ba4;
+  --text:#111;
+  --muted:#777;
+  --glass:rgba(255,255,255,.55);
+  --glass2:rgba(255,255,255,.82);
+  --line:rgba(0,0,0,.08);
+  --blue:#007aff;
+  --green:#34c759;
+  --red:#ff3b30;
+  --shadow:0 20px 60px rgba(20,30,50,.18);
 }
 
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:active{transform:scale(.97)}
-
-#bg{
- position:fixed;
- inset:0;
- z-index:0;
- overflow:hidden;
- pointer-events:none;
- background:
- radial-gradient(circle at 20% 10%,rgba(0,220,255,.12),transparent 30%),
- radial-gradient(circle at 80% 60%,rgba(150,60,255,.12),transparent 30%),
- #050711;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Arial,sans-serif;
+  color:var(--text);
 }
 
-.grid{
- position:absolute;
- width:160%;
- height:160%;
- left:-30%;
- top:-10%;
- background-image:
- linear-gradient(rgba(98,234,255,.035) 1px,transparent 1px),
- linear-gradient(90deg,rgba(98,234,255,.035) 1px,transparent 1px);
- background-size:45px 45px;
- transform:perspective(600px) rotateX(60deg);
- animation:grid 18s linear infinite;
+body{
+  background:
+    radial-gradient(circle at 15% 15%,#fff 0%,transparent 28%),
+    radial-gradient(circle at 85% 15%,#9ed0ff 0%,transparent 30%),
+    radial-gradient(circle at 70% 85%,#cbb8ff 0%,transparent 32%),
+    linear-gradient(135deg,#dfeaf7,#f6f8fb,#dce6f3);
 }
 
-@keyframes grid{
- from{background-position:0 0}
- to{background-position:0 450px}
+body.dark{
+  --text:#fff;
+  --muted:#aaa;
+  --glass:rgba(30,30,35,.58);
+  --glass2:rgba(45,45,50,.82);
+  --line:rgba(255,255,255,.1);
+  background:
+    radial-gradient(circle at 20% 20%,#394b6b,transparent 30%),
+    radial-gradient(circle at 80% 20%,#24294a,transparent 30%),
+    linear-gradient(145deg,#08090d,#171923);
 }
 
-.glow{
- position:absolute;
- width:500px;
- height:500px;
- border-radius:50%;
- filter:blur(100px);
- opacity:.15;
- animation:float 10s ease-in-out infinite alternate;
+button,input,textarea{
+  font:inherit;
 }
 
-.glow.a{background:#00d9ff;left:-200px;top:100px}
-.glow.b{background:#943dff;right:-200px;bottom:100px;animation-delay:-4s}
-
-@keyframes float{
- to{transform:translate(80px,-70px) scale(1.2)}
+button{
+  border:0;
+  cursor:pointer;
 }
 
-.scan{
- position:absolute;
- inset:0;
- background:repeating-linear-gradient(
-  to bottom,
- transparent 0,
- transparent 5px,
- rgba(255,255,255,.012) 6px
- );
+.statusbar{
+  position:fixed;
+  z-index:1000;
+  top:0;
+  left:0;
+  right:0;
+  height:42px;
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14px;
+  font-weight:700;
+  pointer-events:none;
 }
 
-.app{position:relative;z-index:1;min-height:100vh}
-
-header{
- position:sticky;
- top:0;
- z-index:50;
- background:rgba(5,7,17,.78);
- backdrop-filter:blur(22px);
- border-bottom:1px solid var(--line);
+.dynamic-island{
+  position:fixed;
+  z-index:1001;
+  top:9px;
+  left:50%;
+  transform:translateX(-50%);
+  width:115px;
+  height:28px;
+  border-radius:20px;
+  background:#050505;
+  box-shadow:0 5px 20px rgba(0,0,0,.35);
 }
 
-.nav{
- max-width:1500px;
- margin:auto;
- padding:13px 18px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
+.home{
+  height:100vh;
+  padding:58px 18px 115px;
+  overflow:auto;
 }
 
-.brand{
- display:flex;
- align-items:center;
- gap:11px;
- font-weight:1000;
- letter-spacing:3px;
- white-space:nowrap;
+.header{
+  max-width:680px;
+  margin:auto;
 }
 
-.brandIcon{
- width:42px;
- height:42px;
- display:grid;
- place-items:center;
- border-radius:12px;
- background:linear-gradient(135deg,rgba(98,234,255,.15),rgba(166,108,255,.18));
- border:1px solid rgba(98,234,255,.3);
- box-shadow:0 0 30px rgba(98,234,255,.12);
- font-size:20px;
+.date{
+  font-size:15px;
+  font-weight:700;
+  color:var(--muted);
+  margin-bottom:6px;
 }
 
-.brand span{color:var(--cyan)}
-
-.navlinks{
- display:flex;
- gap:5px;
+.greeting{
+  font-size:36px;
+  font-weight:800;
+  letter-spacing:-1.5px;
+  margin-bottom:18px;
 }
 
-.navlinks button{
- padding:10px 13px;
- color:#8793a9;
- background:transparent;
- border-radius:9px;
- border:0;
+.widget-row{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:12px;
+  margin-bottom:22px;
 }
 
-.navlinks button:hover,
-.navlinks button.active{
- color:white;
- background:rgba(255,255,255,.07);
+.widget{
+  min-height:120px;
+  padding:18px;
+  border-radius:30px;
+  background:var(--glass);
+  backdrop-filter:blur(30px);
+  -webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:var(--shadow);
 }
 
-.balance{
- padding:10px 14px;
- border:1px solid var(--line);
- border-radius:10px;
- color:var(--gold);
- background:rgba(255,255,255,.045);
- font-weight:900;
- white-space:nowrap;
+.weather-temp{
+  font-size:36px;
+  font-weight:800;
 }
 
-main{
- max-width:1500px;
- margin:auto;
- padding:22px 18px 70px;
+.weather-desc{
+  color:var(--muted);
+  margin-top:4px;
 }
 
-.page{display:none}
-.page.active{display:block;animation:page .3s ease}
-
-@keyframes page{
- from{opacity:0;transform:translateY(8px)}
- to{opacity:1;transform:none}
+.calendar-big{
+  font-size:35px;
+  font-weight:800;
 }
 
-.hero{
- min-height:400px;
- padding:45px;
- display:flex;
- align-items:center;
- border:1px solid var(--line);
- border-radius:25px;
- overflow:hidden;
- position:relative;
- background:
- radial-gradient(circle at 85% 30%,rgba(98,234,255,.13),transparent 28%),
- linear-gradient(130deg,rgba(13,22,40,.96),rgba(6,9,18,.9));
+.calendar-label{
+  color:var(--muted);
 }
 
-.hero:after{
- content:"NEXUS";
- position:absolute;
- right:-35px;
- bottom:-80px;
- font-size:180px;
- font-weight:1000;
- color:rgba(255,255,255,.018);
- letter-spacing:-12px;
+.app-grid{
+  max-width:680px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:21px 13px;
 }
 
-.heroContent{position:relative;z-index:2;max-width:800px}
-
-.eyebrow{
- color:var(--cyan);
- letter-spacing:4px;
- font-size:11px;
- font-weight:1000;
- margin-bottom:15px;
+.app{
+  text-align:center;
+  background:none;
+  color:var(--text);
+  min-width:0;
 }
 
-h1{
- margin:0;
- font-size:clamp(45px,8vw,90px);
- line-height:.9;
- letter-spacing:-5px;
+.app-icon{
+  width:70px;
+  height:70px;
+  margin:auto;
+  border-radius:21px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  background:var(--glass2);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 12px 30px rgba(20,30,50,.17);
+  transition:.15s;
 }
 
-.gradient{
- background:linear-gradient(90deg,#fff,var(--cyan),#aa70ff);
- -webkit-background-clip:text;
- background-clip:text;
- color:transparent;
+.app:active .app-icon{
+  transform:scale(.84);
 }
 
-.hero p{
- color:#9ba8bd;
- line-height:1.7;
- max-width:680px;
- margin:22px 0;
+.app-name{
+  display:block;
+  margin-top:7px;
+  font-size:12px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.actions{
- display:flex;
- gap:10px;
- flex-wrap:wrap;
+.dock{
+  position:fixed;
+  z-index:900;
+  bottom:17px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border-radius:31px;
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(35px);
+  -webkit-backdrop-filter:blur(35px);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:0 25px 60px rgba(0,0,0,.2);
 }
 
-.primary,.secondary{
- padding:13px 19px;
- border-radius:10px;
- font-weight:900;
+.dock .app-icon{
+  width:62px;
+  height:62px;
+}
+
+.window{
+  position:fixed;
+  z-index:800;
+  inset:0;
+  display:none;
+  flex-direction:column;
+  background:rgba(242,245,250,.86);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+}
+
+.dark .window{
+  background:rgba(12,13,18,.88);
+}
+
+.window.open{
+  display:flex;
+  animation:windowIn .22s ease;
+}
+
+@keyframes windowIn{
+  from{
+    opacity:0;
+    transform:scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.topbar{
+  height:72px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.38);
+  backdrop-filter:blur(25px);
+}
+
+.dark .topbar{
+  background:rgba(30,30,35,.5);
+}
+
+.topbar h2{
+  margin:0;
+  font-size:21px;
+}
+
+.back{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  background:var(--glass2);
+  color:var(--text);
+  font-size:28px;
+}
+
+.top-right{
+  margin-left:auto;
+}
+
+.content{
+  flex:1;
+  overflow:auto;
+  padding:18px;
+}
+
+.card{
+  padding:18px;
+  border-radius:27px;
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 15px 40px rgba(20,30,50,.1);
+  margin-bottom:15px;
 }
 
 .primary{
- color:#031015;
- background:linear-gradient(90deg,var(--cyan),#a3f7ff);
- box-shadow:0 0 30px rgba(98,234,255,.14);
+  background:#111;
+  color:#fff;
+  border-radius:17px;
+  padding:13px 18px;
+  font-weight:700;
 }
 
-.secondary{
- color:white;
- background:rgba(255,255,255,.06);
- border:1px solid var(--line);
+.blue{
+  background:var(--blue);
+  color:#fff;
+  border-radius:17px;
+  padding:13px 18px;
+  font-weight:700;
 }
 
-.stats{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px;
- margin-top:15px;
+input,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  outline:none;
+  background:var(--glass2);
+  color:var(--text);
+  padding:14px;
+  border-radius:18px;
+  margin:6px 0;
 }
 
-.stat{
- padding:18px;
- border:1px solid var(--line);
- border-radius:15px;
- background:var(--panel);
+textarea{
+  min-height:60vh;
+  resize:none;
 }
 
-.statLabel{
- color:var(--muted);
- font-size:10px;
- letter-spacing:1px;
- text-transform:uppercase;
+.store-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
 }
 
-.statValue{
- margin-top:7px;
- font-size:25px;
- font-weight:1000;
+.store-card{
+  padding:18px;
+  border-radius:25px;
+  background:var(--glass2);
+  border:1px solid rgba(255,255,255,.7);
 }
 
-.sectionHead{
- margin:32px 0 15px;
- display:flex;
- align-items:end;
- justify-content:space-between;
- gap:15px;
+.store-icon{
+  font-size:42px;
 }
 
-.sectionTitle{
- font-size:23px;
- font-weight:1000;
+.store-card h3{
+  margin:8px 0 4px;
 }
 
-.sectionSub{
- color:var(--muted);
- font-size:12px;
- margin-top:4px;
+.store-card p{
+  color:var(--muted);
+  font-size:13px;
 }
 
-.boxGrid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(225px,1fr));
- gap:13px;
+.chat{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-.box{
- min-height:230px;
- position:relative;
- padding:19px;
- border:1px solid var(--line);
- border-radius:18px;
- overflow:hidden;
- background:
- radial-gradient(circle at 85% 15%,rgba(98,234,255,.11),transparent 28%),
- linear-gradient(145deg,rgba(18,26,44,.96),rgba(6,9,17,.97));
- transition:.25s;
+.bubble{
+  max-width:78%;
+  padding:11px 14px;
+  border-radius:20px;
+  line-height:1.4;
 }
 
-.box:hover{
- transform:translateY(-5px);
- border-color:rgba(98,234,255,.35);
- box-shadow:0 20px 50px rgba(0,0,0,.35);
+.bubble.me{
+  align-self:flex-end;
+  color:#fff;
+  background:#007aff;
+  border-bottom-right-radius:6px;
 }
 
-.boxNo{
- color:#5c6980;
- font-size:10px;
- letter-spacing:2px;
+.bubble.bot{
+  align-self:flex-start;
+  background:var(--glass2);
+  border-bottom-left-radius:6px;
 }
 
-.boxIcon{
- font-size:53px;
- margin:15px 0;
- filter:drop-shadow(0 0 20px rgba(98,234,255,.25));
+.chatbar{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:var(--glass2);
+  border-top:1px solid var(--line);
 }
 
-.boxName{font-size:17px;font-weight:1000}
-.boxDesc{font-size:11px;color:var(--muted);margin-top:5px}
-
-.boxBottom{
- display:flex;
- align-items:center;
- justify-content:space-between;
- margin-top:18px;
+.chatbar input{
+  margin:0;
 }
 
-.price{color:var(--gold);font-weight:1000}
-
-.open{
- padding:9px 12px;
- color:var(--cyan);
- border-radius:8px;
- border:1px solid rgba(98,234,255,.2);
- background:rgba(98,234,255,.08);
- font-weight:900;
+.chatbar button{
+  white-space:nowrap;
 }
 
-.toolbar{
- display:flex;
- gap:9px;
- flex-wrap:wrap;
- margin-bottom:15px;
+.mail{
+  display:flex;
+  gap:13px;
+  align-items:center;
 }
 
-.search,.select,.tradeInput{
- padding:13px;
- border-radius:10px;
- border:1px solid var(--line);
- background:rgba(255,255,255,.05);
- color:white;
- outline:none;
+.mail-icon{
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:17px;
+  background:var(--glass2);
+  font-size:25px;
 }
 
-.search{flex:1;min-width:210px}
-.select{min-width:150px}
-
-.itemGrid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
- gap:11px;
+.mail-text{
+  flex:1;
 }
 
-.item{
- position:relative;
- padding:15px;
- min-height:260px;
- border-radius:16px;
- border:1px solid var(--line);
- background:linear-gradient(145deg,rgba(16,23,38,.97),rgba(6,9,17,.98));
- overflow:hidden;
- transition:.2s;
+.mail-text b{
+  display:block;
 }
 
-.item:hover{
- transform:translateY(-4px);
- border-color:rgba(255,255,255,.18);
+.mail-text span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  margin-top:3px;
 }
 
-.item:before{
- content:"";
- position:absolute;
- width:140px;
- height:140px;
- right:-80px;
- top:-80px;
- border-radius:50%;
- background:var(--rarity);
- filter:blur(30px);
- opacity:.15;
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
-.itemTop{
- display:flex;
- justify-content:space-between;
- align-items:start;
- gap:8px;
+.photo{
+  aspect-ratio:1;
+  border-radius:19px;
+  display:grid;
+  place-items:center;
+  font-size:42px;
+  background:
+    linear-gradient(135deg,#75b9ff,#e9f5ff,#b89cff);
+  box-shadow:0 10px 25px rgba(20,30,50,.13);
 }
 
-.itemIcon{
- width:57px;
- height:57px;
- display:grid;
- place-items:center;
- border-radius:13px;
- background:rgba(255,255,255,.045);
- border:1px solid rgba(255,255,255,.08);
- font-size:28px;
+.calculator{
+  max-width:450px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
 }
 
-.rarity{
- padding:5px 7px;
- border-radius:7px;
- color:var(--rarity);
- border:1px solid var(--rarity);
- background:rgba(255,255,255,.03);
- font-size:9px;
- font-weight:1000;
+.calc-display{
+  grid-column:1/-1;
+  font-size:32px;
+  text-align:right;
+  height:75px;
 }
 
-.itemName{
- margin-top:14px;
- font-weight:1000;
- line-height:1.2;
+.calc-button{
+  height:65px;
+  border-radius:20px;
+  background:var(--glass2);
+  color:var(--text);
+  font-size:22px;
 }
 
-.itemId{
- margin-top:4px;
- color:#566278;
- font-size:9px;
+.calc-op{
+  background:#111;
+  color:#fff;
 }
 
-.itemStats{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:6px;
- margin-top:14px;
+.game-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
 }
 
-.mini{
- padding:8px;
- background:rgba(255,255,255,.035);
- border-radius:8px;
+.game{
+  min-height:180px;
+  border-radius:28px;
+  padding:20px;
+  color:#fff;
+  background:
+    radial-gradient(circle at 80% 20%,#527dff,transparent 35%),
+    linear-gradient(145deg,#111827,#252b38);
+  box-shadow:var(--shadow);
 }
 
-.mini small{
- display:block;
- color:#637088;
- font-size:8px;
+.game-emoji{
+  font-size:45px;
 }
 
-.mini b{font-size:12px}
-
-.itemActions{
- display:flex;
- gap:6px;
- margin-top:10px;
+.game button{
+  margin-top:15px;
+  background:#fff;
+  color:#111;
+  border-radius:16px;
+  padding:11px 15px;
+  font-weight:700;
 }
 
-.sell,.tradeItem{
- flex:1;
- padding:9px;
- border-radius:8px;
- font-weight:900;
+.settings-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
 }
 
-.sell{
- color:#ff8198;
- background:rgba(255,96,124,.08);
- border:1px solid rgba(255,96,124,.17);
+.settings-row:last-child{
+  border-bottom:0;
 }
 
-.tradeItem{
- color:var(--cyan);
- background:rgba(98,234,255,.08);
- border:1px solid rgba(98,234,255,.17);
+.settings-icon{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:var(--glass2);
 }
 
-.empty{
- padding:50px;
- text-align:center;
- border:1px dashed var(--line);
- border-radius:16px;
- color:var(--muted);
+.settings-row div:nth-child(2){
+  flex:1;
 }
 
-.tradeGrid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:14px;
+.settings-row small{
+  color:var(--muted);
 }
 
-.panel{
- padding:22px;
- border:1px solid var(--line);
- border-radius:18px;
- background:var(--panel);
+.toggle{
+  width:54px;
+  height:32px;
+  border-radius:20px;
+  background:#bbb;
+  padding:3px;
 }
 
-.panelTitle{font-size:20px;font-weight:1000}
-.panelText{color:var(--muted);font-size:12px;line-height:1.6;margin-top:7px}
-
-.codeBox{
- margin:17px 0;
- padding:18px;
- text-align:center;
- border:1px dashed rgba(98,234,255,.3);
- border-radius:13px;
- background:rgba(98,234,255,.04);
+.toggle.on{
+  background:#34c759;
 }
 
-.code{
- color:var(--cyan);
- font-size:34px;
- font-weight:1000;
- letter-spacing:8px;
+.toggle-dot{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
 }
 
-.status{
- margin-top:12px;
- padding:12px;
- border-radius:9px;
- background:rgba(255,255,255,.035);
- color:#9ba7ba;
- font-size:12px;
-}
-
-.modal{
- position:fixed;
- inset:0;
- z-index:100;
- display:none;
- align-items:center;
- justify-content:center;
- padding:18px;
- background:rgba(0,0,0,.78);
- backdrop-filter:blur(13px);
-}
-
-.modal.show{display:flex}
-
-.modalBox{
- width:min(720px,100%);
- max-height:90vh;
- overflow:auto;
- padding:24px;
- border-radius:21px;
- border:1px solid rgba(255,255,255,.13);
- background:
- radial-gradient(circle at 50% 0,rgba(98,234,255,.1),transparent 35%),
- #080c17;
- box-shadow:0 30px 100px #000;
- animation:modal .3s cubic-bezier(.2,.8,.2,1);
-}
-
-@keyframes modal{
- from{opacity:0;transform:scale(.9) translateY(20px)}
- to{opacity:1;transform:none}
-}
-
-.modalHead{
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
-
-.close{
- width:36px;
- height:36px;
- border:0;
- border-radius:9px;
- background:rgba(255,255,255,.07);
- color:white;
- font-size:20px;
-}
-
-.openArea{
- height:290px;
- margin:18px 0;
- display:grid;
- place-items:center;
- position:relative;
- overflow:hidden;
- border-radius:16px;
- border:1px solid var(--line);
- background:
- radial-gradient(circle,rgba(98,234,255,.12),transparent 45%),
- #040710;
-}
-
-.bigBox{
- font-size:110px;
- filter:drop-shadow(0 0 40px rgba(98,234,255,.4));
-}
-
-.shake{animation:shake .12s infinite}
-
-@keyframes shake{
- 0%{transform:translate(0)}
- 25%{transform:translate(5px,-3px) rotate(2deg)}
- 50%{transform:translate(-5px,4px) rotate(-2deg)}
- 75%{transform:translate(3px,2px)}
- 100%{transform:translate(0)}
-}
-
-.particle{
- position:absolute;
- width:5px;
- height:5px;
- border-radius:50%;
- background:var(--cyan);
- box-shadow:0 0 15px var(--cyan);
- animation:particle 1s ease-out forwards;
-}
-
-@keyframes particle{
- to{
-  transform:translate(var(--x),var(--y)) scale(0);
-  opacity:0;
- }
-}
-
-.result{text-align:center;display:none}
-.result.show{display:block;animation:result .45s ease}
-
-@keyframes result{
- from{opacity:0;transform:scale(.6)}
- to{opacity:1;transform:none}
-}
-
-.resultIcon{
- font-size:100px;
- filter:drop-shadow(0 0 35px var(--rarity));
-}
-
-.resultRarity{
- color:var(--rarity);
- font-size:12px;
- letter-spacing:4px;
- font-weight:1000;
-}
-
-.resultName{
- margin:9px 0;
- font-size:28px;
- font-weight:1000;
-}
-
-.resultChance{font-size:11px;color:var(--muted)}
-.resultValue{margin-top:10px;color:var(--gold);font-size:21px;font-weight:1000}
-
-.toastBox{
- position:fixed;
- right:16px;
- bottom:16px;
- z-index:300;
- width:min(360px,calc(100% - 32px));
- display:flex;
- flex-direction:column;
- gap:8px;
+.toggle.on .toggle-dot{
+  transform:translateX(22px);
 }
 
 .toast{
- padding:13px;
- border-radius:10px;
- background:rgba(12,18,31,.96);
- border:1px solid var(--line);
- box-shadow:0 15px 40px #0008;
- animation:toast .3s ease;
- font-size:12px;
+  position:fixed;
+  z-index:2000;
+  left:50%;
+  bottom:125px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  background:#111;
+  color:#fff;
+  padding:13px 18px;
+  border-radius:19px;
+  pointer-events:none;
+  transition:.25s;
 }
 
-@keyframes toast{
- from{opacity:0;transform:translateX(30px)}
- to{opacity:1;transform:none}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
 }
 
-@media(max-width:900px){
- .stats{grid-template-columns:1fr 1fr}
- .tradeGrid{grid-template-columns:1fr}
- .nav{flex-wrap:wrap}
- .navlinks{order:3;width:100%;overflow:auto}
+.lock{
+  position:fixed;
+  z-index:3000;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at 20% 20%,#fff,transparent 30%),
+    radial-gradient(circle at 80% 20%,#9bd1ff,transparent 35%),
+    linear-gradient(135deg,#dce8f7,#f7f8fa);
+  backdrop-filter:blur(30px);
 }
 
-@media(max-width:600px){
- main{padding:14px 11px 60px}
- .hero{padding:27px;min-height:370px}
- h1{font-size:49px}
- .boxGrid{grid-template-columns:1fr 1fr;gap:8px}
- .itemGrid{grid-template-columns:1fr 1fr;gap:8px}
- .item{padding:11px}
- .itemActions{flex-direction:column}
+.lock.show{
+  display:flex;
 }
 
-@media(max-width:390px){
- .boxGrid,.itemGrid{grid-template-columns:1fr}
+.lock-time{
+  font-size:90px;
+  font-weight:800;
+  letter-spacing:-6px;
+}
+
+.lock p{
+  color:#666;
+}
+
+.unlock{
+  background:#111;
+  color:#fff;
+  padding:15px 25px;
+  border-radius:20px;
+  font-weight:700;
+}
+
+.custom-delete{
+  float:right;
+  background:#ff3b30;
+  color:#fff;
+  border-radius:12px;
+  padding:7px 10px;
+}
+
+@media(max-width:430px){
+  .home{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .app-icon{
+    width:62px;
+    height:62px;
+    font-size:30px;
+  }
+
+  .dock .app-icon{
+    width:57px;
+    height:57px;
+  }
+
+  .dock{
+    gap:6px;
+  }
+
+  .greeting{
+    font-size:31px;
+  }
+
+  .widget-row{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .photo-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="bg">
- <div class="grid"></div>
- <div class="glow a"></div>
- <div class="glow b"></div>
- <div class="scan"></div>
+<div class="statusbar">
+  <span id="statusTime">09:41</span>
+  <span>▮▮▮　⌁　▰</span>
 </div>
 
-<div class="app">
+<div class="dynamic-island"></div>
 
-<header>
- <div class="nav">
-
-  <div class="brand">
-   <div class="brandIcon">◇</div>
-   NEXUS<span>CORE</span>
-  </div>
-
-  <div class="navlinks">
-   <button class="active" data-page="home">HOME</button>
-   <button data-page="boxes">BOXES</button>
-   <button data-page="collection">COLLECTION</button>
-   <button data-page="trade">TRADE</button>
-  </div>
-
-  <div class="balance">
-   ◉ <span id="credits">25.000</span>
-  </div>
-
- </div>
-</header>
-
-<main>
-
-<section class="page active" id="home">
-
- <div class="hero">
-
-  <div class="heroContent">
-
-   <div class="eyebrow">
-    NEXUS COLLECTION NETWORK // ONLINE
-   </div>
-
-   <h1>
-    BUILD YOUR<br>
-    <span class="gradient">DIGITAL UNIVERSE.</span>
-   </h1>
-
-   <p>
-    Öffne futuristische Supply-Cores, entdecke seltene
-    digitale Artefakte, verkaufe deine Sammlung und
-    tausche Items live mit anderen Spielern.
-   </p>
-
-   <div class="actions">
-    <button class="primary" onclick="showPage('boxes')">
-     BOXES ÖFFNEN
-    </button>
-
-    <button class="secondary" onclick="showPage('collection')">
-     COLLECTION
-    </button>
-   </div>
-
-  </div>
-
- </div>
-
- <div class="stats">
-
-  <div class="stat">
-   <div class="statLabel">Items</div>
-   <div class="statValue">2.000</div>
-  </div>
-
-  <div class="stat">
-   <div class="statLabel">Supply Cores</div>
-   <div class="statValue">50</div>
-  </div>
-
-  <div class="stat">
-   <div class="statLabel">Collection</div>
-   <div class="statValue" id="statCount">0</div>
-  </div>
-
-  <div class="stat">
-   <div class="statLabel">Collection Value</div>
-   <div class="statValue" id="statValue">0</div>
-  </div>
-
- </div>
-
- <div class="sectionHead">
+<div class="lock" id="lockScreen">
   <div>
-   <div class="sectionTitle">RARITY MATRIX</div>
-   <div class="sectionSub">
-    Die Wahrscheinlichkeiten werden direkt angezeigt.
-   </div>
+    <div class="lock-time" id="lockTime">09:41</div>
+    <p>iOS 27 Web</p>
+    <button class="unlock" onclick="unlockPhone()">Entsperren</button>
   </div>
- </div>
+</div>
 
- <div id="rarities"></div>
+<main class="home">
 
-</section>
+  <div class="header">
 
-
-<section class="page" id="boxes">
-
- <div class="sectionHead">
-  <div>
-   <div class="sectionTitle">50 SUPPLY CORES</div>
-   <div class="sectionSub">
-    Öffne einen Core und erhalte ein zufälliges digitales Item.
-   </div>
-  </div>
- </div>
-
- <div class="boxGrid" id="boxesGrid"></div>
-
-</section>
-
-
-<section class="page" id="collection">
-
- <div class="sectionHead">
-  <div>
-   <div class="sectionTitle">YOUR COLLECTION</div>
-   <div class="sectionSub">
-    Items können jederzeit verkauft werden.
-   </div>
-  </div>
- </div>
-
- <div class="toolbar">
-
-  <input
-   class="search"
-   id="search"
-   placeholder="Collection durchsuchen..."
-   oninput="renderCollection()"
-  >
-
-  <select class="select" id="rarityFilter" onchange="renderCollection()">
-   <option value="all">Alle Raritäten</option>
-  </select>
-
-  <select class="select" id="sortFilter" onchange="renderCollection()">
-   <option value="new">Neueste</option>
-   <option value="high">Wert ↓</option>
-   <option value="low">Wert ↑</option>
-   <option value="name">Name A-Z</option>
-  </select>
-
- </div>
-
- <div class="itemGrid" id="collectionGrid"></div>
-
-</section>
-
-
-<section class="page" id="trade">
-
- <div class="sectionHead">
-  <div>
-   <div class="sectionTitle">LIVE PLAYER TRADE</div>
-   <div class="sectionSub">
-    Kein sichtbarer Login – Firebase identifiziert deinen Browser automatisch.
-   </div>
-  </div>
- </div>
-
- <div class="tradeGrid">
-
-  <div class="panel">
-
-   <div class="panelTitle">TRADE ERSTELLEN</div>
-
-   <div class="panelText">
-    Erstelle einen Raum und teile den Code mit einem anderen Spieler.
-    Beide Browser sehen Änderungen live.
-   </div>
-
-   <div class="codeBox">
-    <div style="font-size:9px;color:#657188">
-     TRADE CODE
+    <div class="date" id="dateText">
+      DIENSTAG · 14. SEPTEMBER
     </div>
 
-    <div class="code" id="tradeCode">
-     ------
+    <div class="greeting">
+      Hallo 👋
     </div>
-   </div>
 
-   <button
-    class="primary"
-    style="width:100%"
-    onclick="createTrade()"
-   >
-    TRADE ERSTELLEN
-   </button>
+    <div class="widget-row">
 
-   <div class="status" id="tradeStatus">
-    Noch kein Trade aktiv.
-   </div>
+      <div class="widget">
+        <div>☀️ Wetter</div>
+        <div class="weather-temp">22°</div>
+        <div class="weather-desc">Klarer Himmel</div>
+      </div>
 
-  </div>
+      <div class="widget">
+        <div>Heute</div>
+        <div class="calendar-big" id="dayNumber">14</div>
+        <div class="calendar-label">September</div>
+      </div>
 
-
-  <div class="panel">
-
-   <div class="panelTitle">TRADE BEITRETEN</div>
-
-   <div class="panelText">
-    Gib den sechsstelligen Code des anderen Spielers ein.
-   </div>
-
-   <input
-    class="tradeInput"
-    id="joinCode"
-    maxlength="6"
-    placeholder="ABC123"
-    style="width:100%;margin-top:16px;text-transform:uppercase"
-   >
-
-   <button
-    class="primary"
-    style="width:100%;margin-top:10px"
-    onclick="joinTrade()"
-   >
-    TRADE BEITRETEN
-   </button>
-
-   <div class="status">
-    Firebase-ID:
-    <b id="uidShort">verbinde...</b>
-   </div>
+    </div>
 
   </div>
 
- </div>
-
- <div class="sectionHead">
-  <div>
-   <div class="sectionTitle">TRADE YOUR ITEMS</div>
-   <div class="sectionSub">
-    Wähle ein Item für den aktiven Trade.
-   </div>
-  </div>
- </div>
-
- <div class="itemGrid" id="tradeGrid"></div>
-
-</section>
+  <div class="app-grid" id="appGrid"></div>
 
 </main>
 
-<footer>
- NEXUSCORE // DIGITAL COLLECTION NETWORK
-</footer>
+<div class="dock" id="dock"></div>
 
-</div>
+<div class="toast" id="toast"></div>
 
 
-<!-- BOX MODAL -->
+<!-- NACHRICHTEN -->
 
-<div class="modal" id="boxModal">
+<section class="window" id="messagesWindow">
 
- <div class="modalBox">
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Nachrichten</h2>
+    <span class="top-right">● Online</span>
+  </div>
 
-  <div class="modalHead">
+  <div class="content">
 
-   <div>
-    <div style="font-size:9px;color:#657188">
-     SUPPLY CORE
+    <div class="card">
+      <b>🤖 AI Chat</b>
+      <p style="color:var(--muted)">
+        Schreibe mit einem lokalen Bot.
+      </p>
     </div>
 
-    <div class="panelTitle" id="modalName">
-     CORE
-    </div>
-   </div>
+    <div class="chat" id="chatMessages">
 
-   <button class="close" onclick="closeModal('boxModal')">
-    ×
-   </button>
+      <div class="bubble bot">
+        Hey! 👋 Ich bin dein Web-Bot.
+      </div>
 
-  </div>
-
-  <div class="openArea" id="openArea">
-   <div class="bigBox" id="bigBox">⬢</div>
-  </div>
-
-  <div id="openControls">
-
-   <div style="font-size:11px;color:#77849a">
-    Preis:
-    <b id="modalPrice">500</b>
-    Credits
-   </div>
-
-   <button
-    class="primary"
-    style="width:100%;margin-top:11px"
-    onclick="openCurrentBox()"
-   >
-    CORE ÖFFNEN
-   </button>
-
-  </div>
-
-  <div class="result" id="result">
-
-   <div
-    class="resultIcon"
-    id="resultIcon"
-   >
-    ✦
-   </div>
-
-   <div
-    class="resultRarity"
-    id="resultRarity"
-   >
-    RARE
-   </div>
-
-   <div
-    class="resultName"
-    id="resultName"
-   >
-    ITEM
-   </div>
-
-   <div
-    class="resultChance"
-    id="resultChance"
-   >
-    Drop Chance: 1%
-   </div>
-
-   <div
-    class="resultValue"
-    id="resultValue"
-   >
-    ◉ 500
-   </div>
-
-  </div>
-
-  <button
-   class="secondary"
-   id="again"
-   style="display:none;width:100%;margin-top:10px"
-   onclick="openCurrentBox()"
-  >
-   NOCH EINS ÖFFNEN
-  </button>
-
- </div>
-
-</div>
-
-
-<!-- SELL MODAL -->
-
-<div class="modal" id="sellModal">
-
- <div class="modalBox">
-
-  <div class="modalHead">
-
-   <div>
-    <div style="font-size:9px;color:#657188">
-     MARKET
     </div>
 
-    <div class="panelTitle">
-     ITEM VERKAUFEN
-    </div>
-   </div>
+  </div>
 
-   <button class="close" onclick="closeModal('sellModal')">
-    ×
-   </button>
+  <div class="chatbar">
+    <input id="messageInput" placeholder="Nachricht…">
+    <button class="blue" onclick="sendMessage()">Senden</button>
+  </div>
+
+</section>
+
+
+<!-- MAIL -->
+
+<section class="window" id="mailWindow">
+
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Mail</h2>
+  </div>
+
+  <div class="content">
+
+    <div class="card mail">
+      <div class="mail-icon">✉️</div>
+      <div class="mail-text">
+        <b>Willkommen bei iOS 27 Web</b>
+        <span>Dein System ist bereit.</span>
+      </div>
+      <small>Heute</small>
+    </div>
+
+    <div class="card mail">
+      <div class="mail-icon">🛍️</div>
+      <div class="mail-text">
+        <b>App Store</b>
+        <span>Neue Apps sind verfügbar.</span>
+      </div>
+      <small>Heute</small>
+    </div>
+
+    <div class="card mail">
+      <div class="mail-icon">🤖</div>
+      <div class="mail-text">
+        <b>AI Assistant</b>
+        <span>Du hast eine neue Nachricht.</span>
+      </div>
+      <small>Gestern</small>
+    </div>
 
   </div>
 
-  <div id="sellPreview" style="margin-top:20px"></div>
+</section>
 
-  <button
-   class="primary"
-   style="width:100%;margin-top:15px"
-   onclick="confirmSell()"
-  >
-   FÜR CREDITS VERKAUFEN
-  </button>
 
-  <button
-   class="secondary"
-   style="width:100%;margin-top:8px"
-   onclick="closeModal('sellModal')"
-  >
-   ABBRECHEN
-  </button>
+<!-- FOTOS -->
 
- </div>
+<section class="window" id="photosWindow">
 
-</div>
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Fotos</h2>
+    <button class="primary top-right" onclick="addPhoto()">＋</button>
+  </div>
 
+  <div class="content">
 
-<div class="toastBox" id="toastBox"></div>
+    <div class="card">
+      <b>Mediathek</b>
+      <p style="color:var(--muted)">
+        Deine Fotos werden lokal im Browser gespeichert.
+      </p>
+    </div>
 
-
-<script type="module">
-
-/* =========================================================
-   FIREBASE
-   ========================================================= */
-
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-import {
- getAuth,
- signInAnonymously,
- onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-import {
- getFirestore,
- doc,
- setDoc,
- getDoc,
- updateDoc,
- onSnapshot,
- serverTimestamp,
- runTransaction
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-
-const firebaseConfig={
- apiKey:"AIzaSyBtU8j4zDEEQSGwOiaQfF3qQ9qOJLyyq-I",
- authDomain:"box-opening.firebaseapp.com",
- projectId:"box-opening",
- storageBucket:"box-opening.firebasestorage.app",
- messagingSenderId:"191172808219",
- appId:"1:191172808219:web:ffe29445eba8b8eaccf2be"
-};
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-
-let currentUser=null;
-let activeTrade=null;
-let tradeUnsubscribe=null;
-
-
-/* =========================================================
-   DATA
-   ========================================================= */
-
-const RARITIES=[
- {id:"common",name:"COMMON",chance:55,multi:1,color:"#9aa5b5"},
- {id:"uncommon",name:"UNCOMMON",chance:25,multi:2.2,color:"#5fe397"},
- {id:"rare",name:"RARE",chance:11,multi:5,color:"#51baff"},
- {id:"epic",name:"EPIC",chance:5,multi:12,color:"#aa6cff"},
- {id:"legendary",name:"LEGENDARY",chance:2.5,multi:30,color:"#ffd05b"},
- {id:"mythic",name:"MYTHIC",chance:.9,multi:90,color:"#ff6096"},
- {id:"divine",name:"DIVINE",chance:.4,multi:250,color:"#fff477"},
- {id:"cosmic",name:"COSMIC",chance:.15,multi:700,color:"#7f91ff"},
- {id:"ancient",name:"ANCIENT",chance:.04,multi:2000,color:"#ff7652"},
- {id:"singularity",name:"SINGULARITY",chance:.01,multi:10000,color:"#fff"}
-];
-
-const PREFIX=[
- "Neon","Quantum","Void","Nova","Cyber","Apex",
- "Shadow","Solar","Lunar","Spectral","Hyper","Stellar",
- "Prism","Chrome","Digital","Astral","Eclipse","Gravity",
- "Pulse","Flux","Omega","Zero","Titan","Celestial",
- "Photon","Arc","Meteor","Infinite","Crystal","Holo",
- "Vector","Matrix","Genesis","Nexus","Aurora","Zenith",
- "Echo","Mirage","Vertex","Orbit"
-];
-
-const CORE=[
- "Shard","Core","Module","Matrix","Chip","Crystal",
- "Orb","Drive","Node","Engine","Emitter","Reactor",
- "Prism","Lens","Array","Cell","Cube","Sphere",
- "Fragment","Circuit","Relic","Token","Glyph","Beacon",
- "Capsule","Processor","Unit","Artifact","Device","Frame",
- "Ring","Signal","Portal","Key","Disc","Memory",
- "Protocol","Sequence","Vector","Artifact"
-];
-
-const SUFFIX=[
- "I","II","III","IV","V","VI","VII","VIII","IX","X",
- "Prime","Alpha","Beta","Gamma","Delta","Omega",
- "EX","NX","XR","Ultra","Infinity","Prototype",
- "Ascended","Reborn","Zero","Core","Prime-X","MK-II",
- "Hyper","Ultimate"
-];
-
-const ICONS=[
- "✦","◇","⬢","◈","◆","✧","⟡","◉","⬡","✹","☄","⟁"
-];
-
-const BOX_NAMES=[
- "Starter Core","Neon Cache","Cyber Vault","Quantum Core",
- "Void Capsule","Shadow Cache","Nova Supply","Titan Vault",
- "Apex Core","Omega Cache","Pulse Core","Spectral Vault",
- "Solar Capsule","Lunar Cache","Phantom Core","Eclipse Vault",
- "Inferno Cache","Frost Core","Thunder Vault","Plasma Capsule",
- "Ion Cache","Stellar Core","Gravity Vault","Meteor Cache",
- "Astral Capsule","Rift Core","Cosmic Vault","Ancient Cache",
- "Divine Core","Mythic Vault","Obsidian Cache","Prism Core",
- "Chrome Vault","Celestial Capsule","Digital Cache","Hyper Core",
- "Flux Vault","Zero Capsule","Dark Matter Core","Galaxy Cache",
- "Singularity Vault","Infinity Core","Omega Prime","Quantum Prime",
- "Void Prime","Apex Prime","Neon Prime","Titan Prime",
- "Legend Core","Ultimate Vault"
-];
-
-const BOXES=BOX_NAMES.map((name,i)=>({
- id:i,
- name,
- price:500+i*275,
- icon:["⬢","◈","◆","◇","⟡"][i%5]
-}));
-
-
-/* =========================================================
-   STATE
-   ========================================================= */
-
-let credits=Number(localStorage.getItem("nexusCredits"));
-
-if(!Number.isFinite(credits))
- credits=25000;
-
-let inventory=JSON.parse(
- localStorage.getItem("nexusInventory")||"[]"
-);
-
-let currentBox=null;
-let pendingSell=null;
-let opening=false;
-
-
-/* =========================================================
-   WEAPON-SAFE ITEM GENERATOR
-   ========================================================= */
-
-function pseudo(index){
-
- let x=Math.sin(index*12.9898)*43758.5453;
- return x-Math.floor(x);
-
-}
-
-function rarityFor(index){
-
- let roll=pseudo(index)*100;
- let total=0;
-
- for(const r of RARITIES){
-
-  total+=r.chance;
-
-  if(roll<total)
-   return r;
-
- }
-
- return RARITIES[0];
-}
-
-const ITEMS=[];
-
-for(let i=0;i<2000;i++){
-
- const rarity=rarityFor(i);
-
- const base=80+((i*137)%900);
-
- ITEMS.push({
-
-  id:"NX-"+String(i+1).padStart(4,"0"),
-
-  name:
-   PREFIX[i%PREFIX.length]+" "+
-   CORE[Math.floor(i/PREFIX.length)%CORE.length]+" "+
-   SUFFIX[Math.floor(i/(PREFIX.length*CORE.length))%SUFFIX.length],
-
-  rarity:rarity.id,
-
-  rarityName:rarity.name,
-
-  chance:rarity.chance,
-
-  multi:rarity.multi,
-
-  color:rarity.color,
-
-  icon:ICONS[i%ICONS.length],
-
-  value:Math.floor(base*rarity.multi),
-
-  energy:20+((i*29)%980),
-
-  stability:10+((i*43)%990)
-
- });
-
-}
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function fmt(n){
- return Number(n||0).toLocaleString("de-DE");
-}
-
-function save(){
-
- localStorage.setItem(
-  "nexusCredits",
-  String(credits)
- );
-
- localStorage.setItem(
-  "nexusInventory",
-  JSON.stringify(inventory)
- );
-
-}
-
-function toast(text){
-
- const box=document.getElementById("toastBox");
- const el=document.createElement("div");
-
- el.className="toast";
- el.textContent=text;
-
- box.appendChild(el);
-
- setTimeout(()=>{
-  el.style.opacity="0";
-  el.style.transform="translateX(30px)";
-  setTimeout(()=>el.remove(),300);
- },2500);
-
-}
-
-function updateUI(){
-
- document.getElementById("credits").textContent=fmt(credits);
-
- document.getElementById("statCount").textContent=
-  fmt(inventory.length);
-
- document.getElementById("statValue").textContent=
-  fmt(
-   inventory.reduce(
-    (a,b)=>a+Number(b.value||0),0
-   )
-  );
-
- save();
-
-}
-
-
-/* =========================================================
-   NAV
-   ========================================================= */
-
-function showPage(page){
-
- document.querySelectorAll(".page").forEach(p=>{
-  p.classList.remove("active");
- });
-
- document.getElementById(page).classList.add("active");
-
- document.querySelectorAll(".navlinks button").forEach(b=>{
-  b.classList.toggle(
-   "active",
-   b.dataset.page===page
-  );
- });
-
- if(page==="collection")
-  renderCollection();
-
- if(page==="trade")
-  renderTrade();
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
-}
-
-window.showPage=showPage;
-
-document.querySelectorAll(".navlinks button").forEach(b=>{
- b.onclick=()=>showPage(b.dataset.page);
-});
-
-
-/* =========================================================
-   RARITIES
-   ========================================================= */
-
-function renderRarities(){
-
- document.getElementById("rarities").innerHTML=
- RARITIES.map(r=>`
-
-  <div style="
-   display:grid;
-   grid-template-columns:1fr 80px 80px;
-   gap:8px;
-   padding:10px;
-   margin-bottom:6px;
-   border-radius:8px;
-   background:rgba(255,255,255,.035);
-   border:1px solid rgba(255,255,255,.04);
-  ">
-
-   <b style="color:${r.color}">
-    ${r.name}
-   </b>
-
-   <span style="text-align:right;color:#9aa6b8">
-    ${r.chance}%
-   </span>
-
-   <span style="text-align:right;color:#718097">
-    x${r.multi}
-   </span>
+    <div class="photo-grid" id="photoGrid"></div>
 
   </div>
 
- `).join("");
-
- document.getElementById("rarityFilter").innerHTML=
- `<option value="all">Alle Raritäten</option>`+
- RARITIES.map(r=>
-  `<option value="${r.id}">${r.name}</option>`
- ).join("");
-
-}
+</section>
 
 
-/* =========================================================
-   BOXES
-   ========================================================= */
+<!-- APP STORE -->
 
-function renderBoxes(){
+<section class="window" id="storeWindow">
 
- document.getElementById("boxesGrid").innerHTML=
- BOXES.map(b=>`
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>App Store</h2>
+  </div>
 
-  <div class="box">
+  <div class="content">
 
-   <div class="boxNo">
-    SUPPLY CORE #${String(b.id+1).padStart(2,"0")}
-   </div>
+    <div class="card">
 
-   <div class="boxIcon">
-    ${b.icon}
-   </div>
+      <h3>➕ Eigene App hinzufügen</h3>
 
-   <div class="boxName">
-    ${b.name}
-   </div>
+      <p style="color:var(--muted)">
+        Du kannst Apps direkt auf deinem Homescreen erstellen.
+      </p>
 
-   <div class="boxDesc">
-    RANDOM DIGITAL ARTIFACT
-   </div>
+      <input id="newAppName" placeholder="App-Name">
 
-   <div class="boxBottom">
+      <input id="newAppIcon" placeholder="Emoji, z.B. 🚀">
 
-    <div class="price">
-     ◉ ${fmt(b.price)}
+      <button class="blue" onclick="createApp()">
+        App installieren
+      </button>
+
     </div>
+
+    <h3>Empfohlen</h3>
+
+    <div class="store-grid">
+
+      <div class="store-card">
+        <div class="store-icon">🤖</div>
+        <h3>AI Assistant</h3>
+        <p>Dein smarter Web-Assistent.</p>
+        <button class="primary" onclick="installDemo('AI Assistant','🤖')">
+          Laden
+        </button>
+      </div>
+
+      <div class="store-card">
+        <div class="store-icon">🌐</div>
+        <h3>Browser</h3>
+        <p>Schneller Webzugriff.</p>
+        <button class="primary" onclick="openBrowser()">
+          Öffnen
+        </button>
+      </div>
+
+      <div class="store-card">
+        <div class="store-icon">🎨</div>
+        <h3>Studio</h3>
+        <p>Kreative Werkzeuge.</p>
+        <button class="primary" onclick="toast('Studio geöffnet')">
+          Öffnen
+        </button>
+      </div>
+
+      <div class="store-card">
+        <div class="store-icon">☁️</div>
+        <h3>Cloud</h3>
+        <p>Deine Dateien als Demo.</p>
+        <button class="primary" onclick="toast('Cloud geöffnet')">
+          Öffnen
+        </button>
+      </div>
+
+    </div>
+
+    <h3>Meine installierten Apps</h3>
+
+    <div id="installedApps"></div>
+
+  </div>
+
+</section>
+
+
+<!-- NOTIZEN -->
+
+<section class="window" id="notesWindow">
+
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Notizen</h2>
 
     <button
-     class="open"
-     onclick="openBoxModal(${b.id})"
-    >
-     ÖFFNEN
+      class="primary top-right"
+      onclick="saveNotes()">
+      Speichern
     </button>
+  </div>
 
-   </div>
+  <div class="content">
+
+    <div class="card">
+
+      <input
+        id="noteTitle"
+        placeholder="Titel">
+
+      <textarea
+        id="noteText"
+        placeholder="Schreibe hier deine Notiz…"></textarea>
+
+    </div>
 
   </div>
 
- `).join("");
+</section>
+
+
+<!-- RECHNER -->
+
+<section class="window" id="calculatorWindow">
+
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Rechner</h2>
+  </div>
+
+  <div class="content">
+
+    <div class="calculator">
+
+      <input
+        id="calcDisplay"
+        class="calc-display"
+        readonly>
+
+      <button class="calc-button" onclick="calc('7')">7</button>
+      <button class="calc-button" onclick="calc('8')">8</button>
+      <button class="calc-button" onclick="calc('9')">9</button>
+      <button class="calc-button calc-op" onclick="calc('/')">÷</button>
+
+      <button class="calc-button" onclick="calc('4')">4</button>
+      <button class="calc-button" onclick="calc('5')">5</button>
+      <button class="calc-button" onclick="calc('6')">6</button>
+      <button class="calc-button calc-op" onclick="calc('*')">×</button>
+
+      <button class="calc-button" onclick="calc('1')">1</button>
+      <button class="calc-button" onclick="calc('2')">2</button>
+      <button class="calc-button" onclick="calc('3')">3</button>
+      <button class="calc-button calc-op" onclick="calc('-')">−</button>
+
+      <button class="calc-button" onclick="calc('0')">0</button>
+      <button class="calc-button" onclick="calc('.')">.</button>
+      <button class="calc-button" onclick="calc('C')">C</button>
+      <button class="calc-button calc-op" onclick="calc('+')">+</button>
+
+      <button
+        class="calc-button"
+        style="grid-column:1/-1"
+        onclick="calc('=')">
+        =
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section class="window" id="gamesWindow">
+
+  <div class="topbar">
+    <button class="back" onclick="closeWindows()">‹</button>
+    <h2>Games</h2>
+  </div>
+
+  <div class="content">
+
+    <div class="game-grid">
+
+      <div class="game">
+
+        <div class="game-emoji">🚀</div>
+
+        <h2>Rocket Tap</h2>
+
+        <p>
+          Wie viele Punkte schaffst du?
+        </p>
+
+        <button onclick="rocketGame()">
+          START
+        </button>
+
+      </div>
+
+      <div class="game">
+
+        <div class="game-emoji">🧠</div>
+
+        <h2>Memory</h2>
+
+        <p>
+          Teste dein Gedächtnis.
+        </p>
+
+        <button onclick="memoryGame()">
+          START
+        </button>
+
+      </div>
+
+      <div class="game">
+
+        <div class="game-emoji">🎯</div>
+
+        <h2>Target</h2>
+
+        <p>
+          Triff das Ziel.
+        </p>
+
+        <button onclick="targetGame()">
+          START
+        </button>
+
+      </div>
+
+      <div class="game">
+
+        <div class="game-emoji">🏎️</div>
+
+        <h2>Mini Racer</h2>
+
+        <p>
+          Starte dein Rennen.
+        </p>
+
+        <button onclick="racerGame()">
+          START
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- EINSTELLUNGEN -->
+
+<section class="window" id="settingsWindow">
+
+  <div class="topbar">
+
+    <button class="back" onclick="closeWindows()">‹</button>
+
+    <h2>Einstellungen</h2>
+
+  </div>
+
+  <div class="content">
+
+    <div class="card">
+
+      <div class="settings-row">
+
+        <div class="settings-icon">
+          🌙
+        </div>
+
+        <div>
+          <b>Dunkelmodus</b>
+          <br>
+          <small>Systemdarstellung ändern</small>
+        </div>
+
+        <button
+          id="darkToggle"
+          class="toggle"
+          onclick="toggleDark()">
+
+          <div class="toggle-dot"></div>
+
+        </button>
+
+      </div>
+
+      <div class="settings-row">
+
+        <div class="settings-icon">
+          🔔
+        </div>
+
+        <div>
+          <b>Mitteilungen</b>
+          <br>
+          <small>Web-Benachrichtigungen</small>
+        </div>
+
+        <button
+          id="notifyToggle"
+          class="toggle on"
+          onclick="toggleNotify()">
+
+          <div class="toggle-dot"></div>
+
+        </button>
+
+      </div>
+
+      <div class="settings-row">
+
+        <div class="settings-icon">
+          📱
+        </div>
+
+        <div>
+          <b>iOS Web Edition</b>
+          <br>
+          <small>Version 27.0 Web</small>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <h3>💾 Speicher</h3>
+
+      <p style="color:var(--muted)">
+        Apps, Notizen und Einstellungen werden
+        lokal auf diesem Gerät gespeichert.
+      </p>
+
+      <button
+        class="primary"
+        onclick="clearData()">
+        Lokale Daten löschen
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h3>ℹ️ Über dieses Projekt</h3>
+
+      <p>
+        Dieses Projekt ist eine eigenständige
+        Web-Oberfläche und benötigt keinen Server
+        für die Grundfunktionen.
+      </p>
+
+      <p style="color:var(--muted)">
+        Ideal für GitHub Pages.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =========================================
+   GRUNDKONFIGURATION
+========================================= */
+
+const builtInApps = [
+
+  ["Nachrichten","💬","messages"],
+
+  ["Mail","✉️","mail"],
+
+  ["Fotos","🌄","photos"],
+
+  ["App Store","🛍️","store"],
+
+  ["Notizen","📝","notes"],
+
+  ["Rechner","🧮","calculator"],
+
+  ["Games","🎮","games"],
+
+  ["Einstellungen","⚙️","settings"],
+
+  ["Safari","🧭","browser"],
+
+  ["Musik","🎵","music"],
+
+  ["Karten","🗺️","maps"],
+
+  ["Wetter","☀️","weather"]
+
+];
+
+const dockApps = [
+
+  ["Telefon","📞","phone"],
+
+  ["Nachrichten","💬","messages"],
+
+  ["Safari","🧭","browser"],
+
+  ["Musik","🎵","music"]
+
+];
+
+let customApps =
+  JSON.parse(
+    localStorage.getItem("ios27_custom_apps") || "[]"
+  );
+
+
+/* =========================================
+   HOMESCREEN
+========================================= */
+
+function renderApps(){
+
+  const grid =
+    document.getElementById("appGrid");
+
+  const all = [
+    ...builtInApps,
+    ...customApps.map(
+      x => [x.name,x.icon,"custom"]
+    )
+  ];
+
+  grid.innerHTML = "";
+
+  all.forEach(app => {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "app";
+
+    button.innerHTML = `
+      <div class="app-icon">
+        ${app[1]}
+      </div>
+
+      <span class="app-name">
+        ${escapeHTML(app[0])}
+      </span>
+    `;
+
+    button.onclick = () =>
+      openApp(
+        app[0],
+        app[1],
+        app[2]
+      );
+
+    grid.appendChild(button);
+
+  });
+
+  renderDock();
+  renderInstalledApps();
 
 }
 
-window.openBoxModal=function(id){
 
- currentBox=BOXES.find(b=>b.id===id);
+/* =========================================
+   DOCK
+========================================= */
 
- document.getElementById("modalName").textContent=
-  currentBox.name;
+function renderDock(){
 
- document.getElementById("modalPrice").textContent=
-  fmt(currentBox.price);
+  const dock =
+    document.getElementById("dock");
 
- document.getElementById("openControls").style.display="block";
+  dock.innerHTML = "";
 
- document.getElementById("again").style.display="none";
+  dockApps.forEach(app => {
 
- document.getElementById("result").classList.remove("show");
+    const button =
+      document.createElement("button");
 
- document.getElementById("openArea")
-  .classList.remove("shake");
+    button.className = "app";
 
- document.getElementById("boxModal")
-  .classList.add("show");
+    button.innerHTML = `
+      <div class="app-icon">
+        ${app[1]}
+      </div>
+    `;
+
+    button.onclick = () =>
+      openApp(
+        app[0],
+        app[1],
+        app[2]
+      );
+
+    dock.appendChild(button);
+
+  });
 
 }
 
-window.closeModal=function(id){
 
- document.getElementById(id).classList.remove("show");
+/* =========================================
+   APPS ÖFFNEN
+========================================= */
 
-}
+function openApp(name,icon,id){
 
+  if(id === "custom"){
 
-/* =========================================================
-   BOX OPENING
-   ========================================================= */
+    toast(
+      "📱 " +
+      name +
+      " geöffnet"
+    );
 
-function rollItem(){
+    return;
+  }
 
- const rarity=(()=>{
-  const roll=Math.random()*100;
-  let total=0;
+  if(id === "browser"){
 
-  for(const r of RARITIES){
+    openBrowser();
 
-   total+=r.chance;
+    return;
+  }
 
-   if(roll<total)
-    return r;
+  if(id === "phone"){
+
+    toast(
+      "📞 Telefon-Demo"
+    );
+
+    return;
+  }
+
+  if(id === "music"){
+
+    toast(
+      "🎵 Musik-Demo"
+    );
+
+    return;
+  }
+
+  if(id === "maps"){
+
+    toast(
+      "🗺️ Karten-Demo"
+    );
+
+    return;
+  }
+
+  if(id === "weather"){
+
+    toast(
+      "☀️ 22 °C · Klar"
+    );
+
+    return;
+  }
+
+  const map = {
+
+    messages:"messagesWindow",
+
+    mail:"mailWindow",
+
+    photos:"photosWindow",
+
+    store:"storeWindow",
+
+    notes:"notesWindow",
+
+    calculator:"calculatorWindow",
+
+    games:"gamesWindow",
+
+    settings:"settingsWindow"
+
+  };
+
+  if(map[id]){
+
+    closeWindows();
+
+    document
+      .getElementById(map[id])
+      .classList.add("open");
+
+    if(id === "photos")
+      renderPhotos();
+
+    if(id === "notes")
+      loadNotes();
 
   }
 
-  return RARITIES[0];
- })();
+}
 
- const pool=
-  ITEMS.filter(i=>i.rarity===rarity.id);
 
- const base=
-  pool[Math.floor(Math.random()*pool.length)];
+/* =========================================
+   FENSTER
+========================================= */
 
- return {
-  ...base,
-  instanceId:
-   base.id+"-"+Date.now()+"-"+
-   Math.random().toString(36).slice(2,8),
-  obtained:Date.now()
- };
+function closeWindows(){
+
+  document
+    .querySelectorAll(".window")
+    .forEach(
+      x => x.classList.remove("open")
+    );
 
 }
 
-function particles(){
 
- const area=document.getElementById("openArea");
+/* =========================================
+   EIGENE APPS
+========================================= */
 
- for(let i=0;i<45;i++){
+function createApp(){
 
-  const p=document.createElement("div");
+  const name =
+    document
+      .getElementById("newAppName")
+      .value
+      .trim();
 
-  p.className="particle";
+  let icon =
+    document
+      .getElementById("newAppIcon")
+      .value
+      .trim();
 
-  const angle=Math.random()*Math.PI*2;
-  const dist=80+Math.random()*270;
+  if(!name){
 
-  p.style.left="50%";
-  p.style.top="50%";
+    toast(
+      "Bitte App-Namen eingeben"
+    );
 
-  p.style.setProperty(
-   "--x",
-   Math.cos(angle)*dist+"px"
+    return;
+  }
+
+  if(!icon)
+    icon = "📦";
+
+  customApps.push({
+
+    name:name,
+
+    icon:icon
+
+  });
+
+  localStorage.setItem(
+    "ios27_custom_apps",
+    JSON.stringify(customApps)
   );
 
-  p.style.setProperty(
-   "--y",
-   Math.sin(angle)*dist+"px"
-  );
-
-  area.appendChild(p);
-
-  setTimeout(()=>p.remove(),1000);
-
- }
-
-}
-
-window.openCurrentBox=async function(){
-
- if(opening||!currentBox)
-  return;
-
- if(credits<currentBox.price){
-
-  toast("Nicht genug Credits.");
-
-  return;
-
- }
-
- opening=true;
-
- credits-=currentBox.price;
-
- updateUI();
-
- const area=document.getElementById("openArea");
- const box=document.getElementById("bigBox");
-
- area.classList.add("shake");
-
- document.getElementById("openControls")
-  .style.display="none";
-
- for(let i=0;i<16;i++){
-
-  await new Promise(r=>setTimeout(r,75));
-
-  particles();
-
- }
-
- const item=rollItem();
-
- await new Promise(r=>setTimeout(r,500));
-
- area.classList.remove("shake");
-
- inventory.unshift(item);
-
- currentResult=item;
-
- document.getElementById("resultIcon").textContent=
-  item.icon;
-
- document.getElementById("resultRarity").textContent=
-  item.rarityName;
-
- document.getElementById("resultRarity")
-  .style.setProperty("--rarity",item.color);
-
- document.getElementById("resultName").textContent=
-  item.name;
-
- document.getElementById("resultChance").textContent=
-  "Drop Chance: "+item.chance+"%";
-
- document.getElementById("resultValue").textContent=
-  "◉ "+fmt(item.value);
-
- document.getElementById("resultIcon")
-  .style.setProperty("--rarity",item.color);
-
- document.getElementById("result")
-  .classList.add("show");
-
- document.getElementById("again")
-  .style.display="block";
-
- updateUI();
-
- renderCollection();
-
- toast(
-  item.rarityName+
-  " gefunden: "+
-  item.name
- );
-
- opening=false;
-
-}
-
-
-/* =========================================================
-   COLLECTION
-   ========================================================= */
-
-function itemHTML(item,trade=false){
-
- return `
-
- <div class="item" style="--rarity:${item.color}">
-
-  <div class="itemTop">
-
-   <div class="itemIcon">
-    ${item.icon}
-   </div>
-
-   <div class="rarity">
-    ${item.rarityName}
-   </div>
-
-  </div>
-
-  <div class="itemName">
-   ${item.name}
-  </div>
-
-  <div class="itemId">
-   ${item.id}
-  </div>
-
-  <div class="itemStats">
-
-   <div class="mini">
-    <small>ENERGY</small>
-    <b>${item.energy}</b>
-   </div>
-
-   <div class="mini">
-    <small>STABILITY</small>
-    <b>${item.stability}</b>
-   </div>
-
-   <div class="mini">
-    <small>VALUE</small>
-    <b>◉ ${fmt(item.value)}</b>
-   </div>
-
-   <div class="mini">
-    <small>DROP</small>
-    <b>${item.chance}%</b>
-   </div>
-
-  </div>
-
-  <div class="itemActions">
-
-   ${
-    trade
-    ?
-    `<button
-      class="tradeItem"
-      onclick="selectTradeItem('${item.instanceId}')"
-     >
-      AUSWÄHLEN
-     </button>`
-    :
-    `<button
-      class="sell"
-      onclick="sellItem('${item.instanceId}')"
-     >
-      VERKAUFEN
-     </button>
-     <button
-      class="tradeItem"
-      onclick="showPage('trade');setTimeout(()=>selectTradeItem('${item.instanceId}'),100)"
-     >
-      TRADE
-     </button>`
-   }
-
-  </div>
-
- </div>
-
- `;
-
-}
-
-window.renderCollection=function(){
-
- const search=
-  document.getElementById("search")
-   .value.toLowerCase();
-
- const rarity=
-  document.getElementById("rarityFilter").value;
-
- const sort=
-  document.getElementById("sortFilter").value;
-
- let list=inventory.filter(i=>{
-
-  const matchesName=
-   i.name.toLowerCase().includes(search);
-
-  const matchesRarity=
-   rarity==="all"||
-   i.rarity===rarity;
-
-  return matchesName&&matchesRarity;
-
- });
-
- if(sort==="new")
-  list.sort((a,b)=>b.obtained-a.obtained);
-
- if(sort==="high")
-  list.sort((a,b)=>b.value-a.value);
-
- if(sort==="low")
-  list.sort((a,b)=>a.value-b.value);
-
- if(sort==="name")
-  list.sort((a,b)=>a.name.localeCompare(b.name));
-
- const grid=
-  document.getElementById("collectionGrid");
-
- if(!list.length){
-
-  grid.innerHTML=`
-   <div class="empty">
-    Deine Collection ist noch leer.
-    Öffne eine Box.
-   </div>
-  `;
-
-  return;
-
- }
-
- grid.innerHTML=
-  list.map(i=>itemHTML(i,false)).join("");
-
-}
-
-
-/* =========================================================
-   SELL
-   ========================================================= */
-
-window.sellItem=function(id){
-
- const item=
-  inventory.find(i=>i.instanceId===id);
-
- if(!item)
-  return;
-
- pendingSell=item;
-
- document.getElementById("sellPreview").innerHTML=`
-
-  <div style="
-   padding:20px;
-   border:1px solid ${item.color}55;
-   border-radius:14px;
-   background:${item.color}08;
-   text-align:center;
-  ">
-
-   <div style="
-    font-size:70px;
-    color:${item.color};
-   ">
-    ${item.icon}
-   </div>
-
-   <div style="
-    font-size:20px;
-    font-weight:1000;
-   ">
-    ${item.name}
-   </div>
-
-   <div style="
-    color:${item.color};
-    margin-top:6px;
-    font-weight:900;
-   ">
-    ${item.rarityName}
-   </div>
-
-   <div style="
-    margin-top:15px;
-    color:#ffd65a;
-    font-size:22px;
-    font-weight:1000;
-   ">
-    + ◉ ${fmt(item.value)}
-   </div>
-
-  </div>
-
- `;
-
- document.getElementById("sellModal")
-  .classList.add("show");
-
-}
-
-window.confirmSell=function(){
-
- if(!pendingSell)
-  return;
-
- const index=
-  inventory.findIndex(
-   i=>i.instanceId===pendingSell.instanceId
-  );
-
- if(index===-1)
-  return;
-
- const value=pendingSell.value;
-
- inventory.splice(index,1);
-
- credits+=value;
-
- updateUI();
-
- closeModal("sellModal");
-
- toast(
-  "Item verkauft: +"+
-  fmt(value)+
-  " Credits"
- );
-
- pendingSell=null;
-
- renderCollection();
-
-}
-
-
-/* =========================================================
-   FIREBASE ANONYMOUS USER
-   ========================================================= */
-
-async function startFirebase(){
-
- try{
-
-  await signInAnonymously(auth);
-
- }catch(error){
-
-  console.error(error);
+  document
+    .getElementById("newAppName")
+    .value = "";
+
+  document
+    .getElementById("newAppIcon")
+    .value = "";
+
+  renderApps();
 
   toast(
-   "Firebase konnte nicht verbunden werden."
+    "✓ " +
+    name +
+    " installiert"
   );
 
- }
-
-}
-
-onAuthStateChanged(auth,user=>{
-
- if(!user)
-  return;
-
- currentUser=user;
-
- document.getElementById("uidShort")
-  .textContent=
-  user.uid.slice(0,8)+"...";
-
-});
-
-startFirebase();
-
-
-/* =========================================================
-   TRADE CODE
-   ========================================================= */
-
-function randomCode(){
-
- const chars=
-  "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
- let code="";
-
- for(let i=0;i<6;i++){
-
-  code+=chars[
-   Math.floor(
-    Math.random()*chars.length
-   )
-  ];
-
- }
-
- return code;
-
 }
 
 
-/* =========================================================
-   CREATE TRADE
-   ========================================================= */
+function installDemo(name,icon){
 
-window.createTrade=async function(){
+  if(
+    customApps.some(
+      x => x.name === name
+    )
+  ){
 
- if(!currentUser){
+    toast(
+      "App bereits installiert"
+    );
 
-  toast("Firebase verbindet noch...");
+    return;
+  }
 
-  return;
+  customApps.push({
 
- }
+    name:name,
 
- let code=randomCode();
-
- let ref=doc(
-  db,
-  "trades",
-  code
- );
-
- try{
-
-  await runTransaction(db,async transaction=>{
-
-   const existing=
-    await transaction.get(ref);
-
-   if(existing.exists())
-    throw new Error("CODE_EXISTS");
-
-   transaction.set(ref,{
-
-    code,
-
-    hostUid:currentUser.uid,
-
-    guestUid:null,
-
-    hostItem:null,
-
-    guestItem:null,
-
-    hostReady:false,
-
-    guestReady:false,
-
-    status:"waiting",
-
-    createdAt:serverTimestamp(),
-
-    updatedAt:serverTimestamp()
-
-   });
+    icon:icon
 
   });
 
-  document.getElementById("tradeCode")
-   .textContent=code;
+  localStorage.setItem(
+    "ios27_custom_apps",
+    JSON.stringify(customApps)
+  );
 
-  subscribeTrade(code);
+  renderApps();
 
-  toast("Trade erstellt: "+code);
-
- }catch(error){
-
-  console.error(error);
-
-  toast("Trade konnte nicht erstellt werden.");
-
- }
+  toast(
+    "✓ " +
+    name +
+    " installiert"
+  );
 
 }
 
 
-/* =========================================================
-   JOIN TRADE
-   ========================================================= */
+function renderInstalledApps(){
 
-window.joinTrade=async function(){
+  const box =
+    document.getElementById(
+      "installedApps"
+    );
 
- if(!currentUser){
+  if(!customApps.length){
 
-  toast("Firebase verbindet noch...");
+    box.innerHTML = `
+      <div class="card">
+        Noch keine eigenen Apps installiert.
+      </div>
+    `;
 
-  return;
+    return;
+  }
 
- }
+  box.innerHTML = "";
 
- const code=
-  document.getElementById("joinCode")
-   .value
-   .trim()
-   .toUpperCase();
+  customApps.forEach(
+    (app,index) => {
 
- if(code.length!==6){
+      const card =
+        document.createElement("div");
 
-  toast("Trade-Code muss 6 Zeichen haben.");
+      card.className = "card";
 
-  return;
+      card.innerHTML = `
+        <b>
+          ${app.icon}
+          ${escapeHTML(app.name)}
+        </b>
 
- }
+        <button
+          class="custom-delete"
+          onclick="deleteCustomApp(${index})">
+          Löschen
+        </button>
+      `;
 
- const ref=doc(db,"trades",code);
+      box.appendChild(card);
 
- try{
+    }
+  );
 
-  await runTransaction(db,async transaction=>{
+}
 
-   const snap=
-    await transaction.get(ref);
 
-   if(!snap.exists())
-    throw new Error("NOT_FOUND");
+function deleteCustomApp(index){
 
-   const data=snap.data();
+  customApps.splice(
+    index,
+    1
+  );
 
-   if(data.hostUid===currentUser.uid)
-    throw new Error("SELF");
+  localStorage.setItem(
+    "ios27_custom_apps",
+    JSON.stringify(customApps)
+  );
 
-   if(data.guestUid&&data.guestUid!==currentUser.uid)
-    throw new Error("FULL");
+  renderApps();
 
-   transaction.update(ref,{
+  toast(
+    "App gelöscht"
+  );
 
-    guestUid:currentUser.uid,
+}
 
-    status:"active",
 
-    updatedAt:serverTimestamp()
+/* =========================================
+   NACHRICHTEN / BOT
+========================================= */
 
-   });
+function sendMessage(){
 
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+  const text =
+    input.value.trim();
+
+  if(!text)
+    return;
+
+  addMessage(
+    text,
+    "me"
+  );
+
+  input.value = "";
+
+  setTimeout(
+    () => {
+
+      const replies = [
+
+        "Alles klar! 🤖",
+
+        "Interessant! Erzähl mir mehr.",
+
+        "Das habe ich verstanden.",
+
+        "Cool 😎",
+
+        "Ich bin dein Web-Bot und kann hier mit dir chatten.",
+
+        "Okay! Was möchtest du als Nächstes machen?"
+
+      ];
+
+      const answer =
+        replies[
+          Math.floor(
+            Math.random() *
+            replies.length
+          )
+        ];
+
+      addMessage(
+        answer,
+        "bot"
+      );
+
+    },
+    450
+  );
+
+}
+
+
+function addMessage(text,type){
+
+  const chat =
+    document.getElementById(
+      "chatMessages"
+    );
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "bubble " + type;
+
+  bubble.textContent =
+    text;
+
+  chat.appendChild(
+    bubble
+  );
+
+  bubble.scrollIntoView({
+    behavior:"smooth"
   });
 
-  document.getElementById("tradeCode")
-   .textContent=code;
+}
 
-  subscribeTrade(code);
 
-  toast("Trade beigetreten.");
+document
+  .getElementById(
+    "messageInput"
+  )
+  .addEventListener(
+    "keydown",
+    event => {
 
- }catch(error){
+      if(
+        event.key === "Enter"
+      ){
 
-  console.error(error);
+        sendMessage();
 
-  if(error.message==="NOT_FOUND")
-   toast("Trade nicht gefunden.");
+      }
 
-  else if(error.message==="SELF")
-   toast("Du kannst nicht deinem eigenen Trade beitreten.");
+    }
+  );
 
-  else if(error.message==="FULL")
-   toast("Dieser Trade ist bereits belegt.");
 
-  else
-   toast("Trade konnte nicht geöffnet werden.");
+/* =========================================
+   FOTOS
+========================================= */
 
- }
+function renderPhotos(){
+
+  const grid =
+    document.getElementById(
+      "photoGrid"
+    );
+
+  let photos =
+    JSON.parse(
+      localStorage.getItem(
+        "ios27_photos"
+      ) || "[]"
+    );
+
+  if(!photos.length){
+
+    photos = [
+
+      "🌅",
+
+      "🌌",
+
+      "🌊",
+
+      "🏔️",
+
+      "🌴",
+
+      "📸",
+
+      "🌃",
+
+      "🚀",
+
+      "🌈"
+
+    ];
+
+  }
+
+  grid.innerHTML = "";
+
+  photos.forEach(
+    photo => {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+      div.className =
+        "photo";
+
+      div.textContent =
+        photo;
+
+      grid.appendChild(
+        div
+      );
+
+    }
+  );
 
 }
 
 
-/* =========================================================
-   LIVE TRADE LISTENER
-   ========================================================= */
+function addPhoto(){
 
-function subscribeTrade(code){
+  const value =
+    prompt(
+      "Welches Emoji soll dein Foto darstellen?"
+    );
 
- if(tradeUnsubscribe)
-  tradeUnsubscribe();
+  if(!value)
+    return;
 
- const ref=doc(db,"trades",code);
+  let photos =
+    JSON.parse(
+      localStorage.getItem(
+        "ios27_photos"
+      ) || "[]"
+    );
 
- tradeUnsubscribe=
-  onSnapshot(ref,snap=>{
+  photos.push(
+    value
+  );
 
-   if(!snap.exists()){
+  localStorage.setItem(
+    "ios27_photos",
+    JSON.stringify(photos)
+  );
 
-    activeTrade=null;
+  renderPhotos();
 
-    document.getElementById("tradeStatus")
-     .textContent=
-     "Trade wurde geschlossen.";
+  toast(
+    "📸 Foto hinzugefügt"
+  );
+
+}
+
+
+/* =========================================
+   NOTIZEN
+========================================= */
+
+function loadNotes(){
+
+  document
+    .getElementById(
+      "noteTitle"
+    )
+    .value =
+    localStorage.getItem(
+      "ios27_note_title"
+    ) || "";
+
+  document
+    .getElementById(
+      "noteText"
+    )
+    .value =
+    localStorage.getItem(
+      "ios27_note_text"
+    ) || "";
+
+}
+
+
+function saveNotes(){
+
+  localStorage.setItem(
+    "ios27_note_title",
+    document
+      .getElementById(
+        "noteTitle"
+      )
+      .value
+  );
+
+  localStorage.setItem(
+    "ios27_note_text",
+    document
+      .getElementById(
+        "noteText"
+      )
+      .value
+  );
+
+  toast(
+    "✓ Notiz gespeichert"
+  );
+
+}
+
+
+/* =========================================
+   RECHNER
+========================================= */
+
+let calcExpression = "";
+
+function calc(value){
+
+  const display =
+    document.getElementById(
+      "calcDisplay"
+    );
+
+  if(value === "C"){
+
+    calcExpression = "";
+
+    display.value = "";
 
     return;
 
-   }
+  }
 
-   activeTrade={
-    ...snap.data(),
-    id:snap.id
-   };
+  if(value === "="){
 
-   renderTradeStatus();
+    try{
 
-  },error=>{
+      calcExpression =
+        String(
+          Function(
+            "return " +
+            calcExpression
+          )()
+        );
 
-   console.error(error);
+      display.value =
+        calcExpression;
 
-   toast(
-    "Live-Trade-Verbindung fehlgeschlagen."
-   );
+    }
 
-  });
+    catch{
 
-}
+      calcExpression = "";
 
+      display.value =
+        "Fehler";
 
-function renderTradeStatus(){
+    }
 
- if(!activeTrade)
-  return;
+    return;
 
- const mine=
-  activeTrade.hostUid===currentUser.uid;
+  }
 
- const other=
-  mine
-  ?activeTrade.guestUid
-  :activeTrade.hostUid;
+  calcExpression += value;
 
- document.getElementById("tradeStatus")
-  .innerHTML=`
-
-   <b>Status:</b>
-   ${activeTrade.status}<br><br>
-
-   <b>Partner:</b>
-   ${
-    other
-    ?other.slice(0,8)+"..."
-    :"wartet auf Spieler"
-   }<br><br>
-
-   <b>Dein Item:</b>
-   ${
-    mine
-    ?activeTrade.hostItem?.name||"noch keines"
-    :activeTrade.guestItem?.name||"noch keines"
-   }
-
-  `;
+  display.value =
+    calcExpression;
 
 }
 
 
-/* =========================================================
-   TRADE COLLECTION
-   ========================================================= */
+/* =========================================
+   SPIELE
+========================================= */
 
-window.renderTrade=function(){
+function rocketGame(){
 
- const grid=
-  document.getElementById("tradeGrid");
+  let score = 0;
 
- if(!inventory.length){
+  const start =
+    Date.now();
 
-  grid.innerHTML=`
-   <div class="empty">
-    Du besitzt noch keine Items.
-   </div>
-  `;
-
-  return;
-
- }
-
- grid.innerHTML=
-  inventory
-   .map(i=>itemHTML(i,true))
-   .join("");
-
-}
-
-
-/* =========================================================
-   SELECT TRADE ITEM
-   ========================================================= */
-
-window.selectTradeItem=async function(instanceId){
-
- if(!currentUser){
-
-  toast("Firebase verbindet noch.");
-
-  return;
-
- }
-
- if(!activeTrade){
-
-  toast("Erstelle zuerst einen Trade.");
-
-  return;
-
- }
-
- const item=
-  inventory.find(
-   i=>i.instanceId===instanceId
+  toast(
+    "🚀 Tippe schnell!"
   );
 
- if(!item)
-  return;
+  const interval =
+    setInterval(
+      () => {
 
- const mine=
-  activeTrade.hostUid===currentUser.uid;
+        score++;
 
- const ref=
-  doc(db,"trades",activeTrade.id);
+        if(
+          Date.now() -
+          start >
+          3000
+        ){
 
- try{
+          clearInterval(
+            interval
+          );
 
-  const update=mine
-   ?{
-     hostItem:{
-      instanceId:item.instanceId,
-      itemId:item.id,
-      name:item.name,
-      rarity:item.rarity,
-      value:item.value
-     },
-     hostReady:false,
-     updatedAt:serverTimestamp()
-    }
-   :{
-     guestItem:{
-      instanceId:item.instanceId,
-      itemId:item.id,
-      name:item.name,
-      rarity:item.rarity,
-      value:item.value
-     },
-     guestReady:false,
-     updatedAt:serverTimestamp()
-    };
+          toast(
+            "🚀 Score: " +
+            score
+          );
 
-  await updateDoc(ref,update);
+        }
 
-  toast("Item für Trade ausgewählt.");
-
- }catch(error){
-
-  console.error(error);
-
-  toast("Item konnte nicht ausgewählt werden.");
-
- }
+      },
+      100
+    );
 
 }
 
 
-/* =========================================================
-   INITIAL RENDER
-   ========================================================= */
+function memoryGame(){
 
-renderRarities();
-renderBoxes();
-renderCollection();
-renderTrade();
-updateUI();
+  const symbols =
+    ["🍎","🚀","🐶","⭐","🎮","🌈"];
+
+  const shuffled =
+    symbols
+      .sort(
+        () => Math.random()-.5
+      );
+
+  const first =
+    prompt(
+      "Memory: Welche Zahl gehört zu 🚀?\n\n" +
+      shuffled
+        .map(
+          (x,i) =>
+            (i+1) +
+            ": " +
+            x
+        )
+        .join("\n")
+    );
+
+  if(
+    first ==
+    shuffled.indexOf("🚀")+1
+  ){
+
+    toast(
+      "🧠 Richtig!"
+    );
+
+  }else{
+
+    toast(
+      "❌ Nicht ganz!"
+    );
+
+  }
+
+}
+
+
+function targetGame(){
+
+  const number =
+    Math.floor(
+      Math.random()*10
+    )+1;
+
+  const answer =
+    prompt(
+      "🎯 Rate eine Zahl von 1 bis 10"
+    );
+
+  if(
+    Number(answer) === number
+  ){
+
+    toast(
+      "🎯 Treffer!"
+    );
+
+  }else{
+
+    toast(
+      "Die Zahl war " +
+      number
+    );
+
+  }
+
+}
+
+
+function racerGame(){
+
+  toast(
+    "🏎️ Rennen gestartet!"
+  );
+
+  setTimeout(
+    () => {
+
+      toast(
+        "🏁 Du hast den 1. Platz!"
+      );
+
+    },
+    1600
+  );
+
+}
+
+
+/* =========================================
+   EINSTELLUNGEN
+========================================= */
+
+function toggleDark(){
+
+  document
+    .body
+    .classList
+    .toggle("dark");
+
+  const enabled =
+    document.body.classList.contains(
+      "dark"
+    );
+
+  localStorage.setItem(
+    "ios27_dark",
+    enabled
+  );
+
+  document
+    .getElementById(
+      "darkToggle"
+    )
+    .classList
+    .toggle(
+      "on",
+      enabled
+    );
+
+}
+
+
+function toggleNotify(){
+
+  const button =
+    document.getElementById(
+      "notifyToggle"
+    );
+
+  button.classList.toggle(
+    "on"
+  );
+
+  toast(
+    button.classList.contains("on")
+      ? "🔔 Mitteilungen an"
+      : "🔕 Mitteilungen aus"
+  );
+
+}
+
+
+function clearData(){
+
+  if(
+    !confirm(
+      "Alle eigenen Apps, Fotos und Notizen löschen?"
+    )
+  )
+    return;
+
+  localStorage.removeItem(
+    "ios27_custom_apps"
+  );
+
+  localStorage.removeItem(
+    "ios27_photos"
+  );
+
+  localStorage.removeItem(
+    "ios27_note_title"
+  );
+
+  localStorage.removeItem(
+    "ios27_note_text"
+  );
+
+  customApps = [];
+
+  renderApps();
+
+  toast(
+    "Daten gelöscht"
+  );
+
+}
+
+
+/* =========================================
+   BROWSER
+========================================= */
+
+function openBrowser(){
+
+  window.open(
+    "https://www.google.com",
+    "_blank"
+  );
+
+}
+
+
+/* =========================================
+   UHR
+========================================= */
+
+function updateClock(){
+
+  const now =
+    new Date();
+
+  const time =
+    now.toLocaleTimeString(
+      "de-DE",
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+  document
+    .getElementById(
+      "statusTime"
+    )
+    .textContent =
+    time;
+
+  document
+    .getElementById(
+      "lockTime"
+    )
+    .textContent =
+    time;
+
+  const days = [
+
+    "SONNTAG",
+
+    "MONTAG",
+
+    "DIENSTAG",
+
+    "MITTWOCH",
+
+    "DONNERSTAG",
+
+    "FREITAG",
+
+    "SAMSTAG"
+
+  ];
+
+  const months = [
+
+    "JANUAR",
+
+    "FEBRUAR",
+
+    "MÄRZ",
+
+    "APRIL",
+
+    "MAI",
+
+    "JUNI",
+
+    "JULI",
+
+    "AUGUST",
+
+    "SEPTEMBER",
+
+    "OKTOBER",
+
+    "NOVEMBER",
+
+    "DEZEMBER"
+
+  ];
+
+  document
+    .getElementById(
+      "dateText"
+    )
+    .textContent =
+    days[now.getDay()] +
+    " · " +
+    now.getDate() +
+    ". " +
+    months[now.getMonth()];
+
+  document
+    .getElementById(
+      "dayNumber"
+    )
+    .textContent =
+    now.getDate();
+
+}
+
+
+setInterval(
+  updateClock,
+  1000
+);
+
+updateClock();
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+function toast(text){
+
+  const box =
+    document.getElementById(
+      "toast"
+    );
+
+  box.textContent =
+    text;
+
+  box.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      () => {
+
+        box.classList.remove(
+          "show"
+        );
+
+      },
+      1800
+    );
+
+}
+
+
+/* =========================================
+   SPERREN
+========================================= */
+
+function unlockPhone(){
+
+  document
+    .getElementById(
+      "lockScreen"
+    )
+    .classList
+    .remove("show");
+
+}
+
+
+/* =========================================
+   HTML SICHER MACHEN
+========================================= */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+if(
+  localStorage.getItem(
+    "ios27_dark"
+  ) === "true"
+){
+
+  document
+    .body
+    .classList
+    .add("dark");
+
+  document
+    .getElementById(
+      "darkToggle"
+    )
+    .classList
+    .add("on");
+
+}
+
+renderApps();
+
+renderPhotos();
 
 </script>
 
