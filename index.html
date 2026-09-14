@@ -1,18 +1,24 @@
+```html
 <!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#04070d">
+<meta name="description" content="VOID ARMORY X — Futuristic Weapon Case System">
+
 <title>VOID ARMORY X</title>
 
 <style>
+
 :root{
---bg:#04070d;
---panel:#0a101c;
---panel2:#0e1726;
---line:#213652;
+--bg:#03050a;
+--panel:#08111d;
+--panel2:#0d1827;
+--line:#203851;
 --text:#eef7ff;
 --muted:#71839c;
+
 --cyan:#45eaff;
 --blue:#4b91ff;
 --purple:#a56cff;
@@ -24,16 +30,17 @@
 
 *{
 box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
 html,
 body{
 margin:0;
 padding:0;
-background:#04070d;
+min-height:100%;
+background:var(--bg);
 color:var(--text);
 font-family:Inter,Arial,sans-serif;
-min-height:100%;
 overflow-x:hidden;
 }
 
@@ -41,22 +48,48 @@ body:before{
 content:"";
 position:fixed;
 inset:0;
-z-index:-2;
+z-index:-3;
+
 background:
-radial-gradient(circle at 50% -10%,#193967 0,transparent 38%),
-radial-gradient(circle at 100% 100%,#24104b 0,transparent 35%),
-linear-gradient(#060b14,#02040a);
+radial-gradient(
+circle at 50% -10%,
+#193967 0,
+transparent 38%
+),
+radial-gradient(
+circle at 100% 100%,
+#24104b 0,
+transparent 35%
+),
+radial-gradient(
+circle at 0% 70%,
+#063344 0,
+transparent 30%
+),
+linear-gradient(
+#060b14,
+#02040a
+);
 }
 
 body:after{
 content:"";
 position:fixed;
 inset:0;
-z-index:-1;
-opacity:.08;
+z-index:-2;
+opacity:.055;
+
 background-image:
-linear-gradient(#fff 1px,transparent 1px),
-linear-gradient(90deg,#fff 1px,transparent 1px);
+linear-gradient(
+#fff 1px,
+transparent 1px
+),
+linear-gradient(
+90deg,
+#fff 1px,
+transparent 1px
+);
+
 background-size:44px 44px;
 pointer-events:none;
 }
@@ -71,18 +104,28 @@ opacity:.45;
 cursor:not-allowed;
 }
 
+/* ==============================
+TOP BAR
+============================== */
+
 .top{
 height:72px;
+
 position:sticky;
 top:0;
 z-index:50;
+
 display:flex;
 align-items:center;
 justify-content:space-between;
+
 padding:0 28px;
+
 background:#050914dd;
 border-bottom:1px solid #1c3049;
-backdrop-filter:blur(18px);
+
+backdrop-filter:blur(20px);
+-webkit-backdrop-filter:blur(20px);
 }
 
 .brand{
@@ -94,81 +137,151 @@ letter-spacing:3px;
 .brand i{
 font-style:normal;
 color:var(--cyan);
-text-shadow:0 0 20px #45eaff66;
+
+text-shadow:
+0 0 15px #45eaff88,
+0 0 35px #45eaff44;
 }
 
 .money{
-padding:10px 15px;
+display:flex;
+align-items:center;
+gap:8px;
+
+padding:10px 16px;
+
 border:1px solid #29415e;
-background:#0b1523;
-border-radius:12px;
+background:
+linear-gradient(
+135deg,
+#101d2d,
+#08111d
+);
+
+border-radius:13px;
+
 color:var(--gold);
-font-weight:900;
+font-weight:1000;
+
+box-shadow:
+0 8px 30px #0006,
+inset 0 0 20px #ffd05b08;
 }
+
+/* ==============================
+MAIN
+============================== */
 
 .wrap{
 width:min(1400px,94%);
 margin:auto;
-padding:32px 0 80px;
+padding:30px 0 90px;
 }
+
+/* ==============================
+HERO
+============================== */
 
 .hero{
 text-align:center;
-padding:20px 0 34px;
+padding:20px 0 35px;
 }
 
 .eyebrow{
 display:inline-block;
+
 border:1px solid #315478;
 color:#70c7ff;
+
 border-radius:999px;
-padding:7px 13px;
+
+padding:7px 14px;
+
 font-size:11px;
 font-weight:900;
 letter-spacing:2px;
+
+background:#0b1724aa;
+
+box-shadow:
+0 0 25px #45eaff0b;
 }
 
 .hero h1{
 font-size:clamp(42px,7vw,82px);
+
 line-height:.92;
-margin:17px 0 12px;
+
+margin:18px 0 13px;
+
 letter-spacing:-4px;
+font-weight:1000;
 }
 
 .hero h1 span{
 color:var(--cyan);
-text-shadow:0 0 35px #45eaff55;
+
+text-shadow:
+0 0 20px #45eaff55,
+0 0 50px #45eaff22;
 }
 
 .hero p{
 color:var(--muted);
 max-width:680px;
 margin:auto;
+line-height:1.6;
 }
+
+/* ==============================
+TABS
+============================== */
 
 .tabs{
 display:flex;
 gap:8px;
 overflow:auto;
 margin-bottom:22px;
+padding-bottom:2px;
 }
 
 .tabs button{
 white-space:nowrap;
+
 border:1px solid #20344d;
 background:#09101b;
+
 color:#8192aa;
-border-radius:10px;
-padding:11px 17px;
-font-weight:800;
+
+border-radius:11px;
+
+padding:11px 18px;
+
+font-weight:900;
+
+transition:.2s;
 }
 
 .tabs button.active,
 .tabs button:hover{
 color:#fff;
+
 border-color:#4386c8;
-background:#102238;
+
+background:
+linear-gradient(
+135deg,
+#102238,
+#0d1a2b
+);
+
+box-shadow:
+0 0 25px #45eaff0d;
 }
+
+/* ==============================
+VIEWS
+============================== */
 
 .view{
 display:none;
@@ -182,73 +295,124 @@ display:block;
 display:flex;
 justify-content:space-between;
 align-items:end;
+
 margin:20px 0 15px;
 }
 
 .title h2{
 margin:0;
 font-size:28px;
+font-weight:1000;
 }
 
 .title small{
 color:#65758d;
 }
 
+/* ==============================
+CASES
+============================== */
+
 .cases{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(235px,1fr));
+grid-template-columns:
+repeat(
+auto-fill,
+minmax(235px,1fr)
+);
+
 gap:17px;
 }
 
 .case{
 position:relative;
 overflow:hidden;
+
 min-height:345px;
+
 padding:17px;
+
 border:1px solid #213650;
 border-radius:20px;
-background:linear-gradient(145deg,#101b2c,#070c15);
-box-shadow:0 12px 40px #0004;
+
+background:
+linear-gradient(
+145deg,
+#101b2c,
+#070c15
+);
+
+box-shadow:
+0 12px 40px #0004,
+inset 0 0 35px #ffffff03;
+
 transition:.22s;
 }
 
 .case:hover{
 transform:translateY(-6px);
+
 border-color:#4a8fd2;
-box-shadow:0 20px 60px #0007;
+
+box-shadow:
+0 20px 60px #0007,
+0 0 30px #45eaff0a;
 }
 
 .case:before{
 content:"";
+
 position:absolute;
+
 width:180px;
 height:180px;
+
 border-radius:50%;
+
 right:-70px;
 top:-70px;
+
 background:var(--glow);
+
 filter:blur(55px);
+
 opacity:.25;
 }
 
 .caseVisual{
 height:155px;
+
 display:grid;
 place-items:center;
+
+position:relative;
+z-index:1;
 }
 
 .caseBox{
 width:132px;
 height:104px;
+
 border-radius:18px;
+
 display:grid;
 place-items:center;
+
 font-size:54px;
-background:linear-gradient(145deg,#203b5d,#091321);
+
+background:
+linear-gradient(
+145deg,
+#203b5d,
+#091321
+);
+
 border:1px solid #ffffff20;
+
 box-shadow:
 inset 0 0 35px #ffffff08,
-0 18px 40px #0008;
+0 18px 40px #0008,
+0 0 35px var(--glow);
 }
 
 .caseName{
@@ -258,8 +422,11 @@ font-size:19px;
 
 .caseDesc{
 height:32px;
+
 color:#6e819b;
+
 font-size:12px;
+
 margin-top:6px;
 }
 
@@ -267,7 +434,9 @@ margin-top:6px;
 display:flex;
 align-items:center;
 justify-content:space-between;
+
 gap:8px;
+
 margin-top:17px;
 }
 
@@ -278,56 +447,116 @@ font-weight:1000;
 
 .open{
 border:0;
+
 border-radius:10px;
+
 padding:11px 16px;
+
 color:#fff;
+
 font-weight:1000;
-background:linear-gradient(100deg,#237ee9,#814cff);
-box-shadow:0 7px 25px #347cff2b;
+
+background:
+linear-gradient(
+100deg,
+#237ee9,
+#814cff
+);
+
+box-shadow:
+0 7px 25px #347cff2b;
+
+transition:.2s;
 }
 
 .open:hover{
 filter:brightness(1.15);
+
+transform:translateY(-1px);
+
+box-shadow:
+0 10px 30px #347cff40;
 }
+
+/* ==============================
+INVENTORY
+============================== */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(185px,1fr));
+
+grid-template-columns:
+repeat(
+auto-fill,
+minmax(185px,1fr)
+);
+
 gap:13px;
 }
 
 .item{
 padding:11px;
+
 border:1px solid #1c3047;
-background:#09111d;
+
+background:
+linear-gradient(
+145deg,
+#09111d,
+#060c14
+);
+
 border-radius:15px;
+
 cursor:pointer;
+
 transition:.2s;
+
+box-shadow:
+0 8px 25px #0004;
 }
 
 .item:hover{
 transform:translateY(-3px);
+
 border-color:var(--r);
+
+box-shadow:
+0 12px 35px #0006,
+0 0 25px var(--g);
 }
 
 .visual{
 height:125px;
+
 border-radius:11px;
+
 display:grid;
 place-items:center;
+
 background:
-radial-gradient(circle,var(--g),transparent 65%),
+radial-gradient(
+circle,
+var(--g),
+transparent 65%
+),
 #070c14;
 }
 
 .icon{
 font-size:58px;
-filter:drop-shadow(0 0 18px var(--g));
+
+filter:
+drop-shadow(
+0 0 18px var(--g)
+);
 }
 
 .name{
 font-weight:900;
+
 margin-top:11px;
+
 white-space:nowrap;
 overflow:hidden;
 text-overflow:ellipsis;
@@ -335,55 +564,514 @@ text-overflow:ellipsis;
 
 .rarity{
 font-size:11px;
+
 font-weight:1000;
+
 letter-spacing:1px;
+
 color:var(--r);
+
 margin-top:5px;
 }
 
 .value{
 font-size:12px;
+
 color:#8494aa;
+
 margin-top:5px;
 }
 
 .sell{
 width:100%;
+
 margin-top:9px;
+
 padding:8px;
+
 border:1px solid #29415c;
+
 background:#101b2a;
+
 color:#d6e1ef;
+
 border-radius:8px;
+
+font-weight:900;
+
+transition:.2s;
+}
+
+.sell:hover{
+border-color:var(--red);
+
+color:#fff;
+
+background:#24131b;
+}
+
+/* ==============================
+AUTO SELL
+============================== */
+
+.autoSellPanel{
+position:relative;
+overflow:hidden;
+
+margin:0 0 25px;
+
+padding:22px;
+
+border:1px solid #294b70;
+
+border-radius:22px;
+
+background:
+linear-gradient(
+135deg,
+#0c1b2eec,
+#070c16ee
+);
+
+box-shadow:
+0 20px 70px #0008,
+inset 0 0 50px #45eaff08;
+}
+
+.autoSellPanel:before{
+content:"";
+
+position:absolute;
+
+width:280px;
+height:280px;
+
+right:-100px;
+top:-150px;
+
+border-radius:50%;
+
+background:#45eaff;
+
+filter:blur(90px);
+
+opacity:.12;
+
+pointer-events:none;
+}
+
+.autoSellPanel:after{
+content:"";
+
+position:absolute;
+
+left:-20%;
+right:-20%;
+
+bottom:0;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#45eaff,
+#a56cff,
+transparent
+);
+
+opacity:.8;
+}
+
+.autoHeader{
+display:flex;
+
+justify-content:space-between;
+align-items:center;
+
+gap:15px;
+
+position:relative;
+z-index:2;
+}
+
+.autoTitle{
+display:flex;
+
+align-items:center;
+
+gap:13px;
+}
+
+.autoIcon{
+width:48px;
+height:48px;
+
+display:grid;
+place-items:center;
+
+border-radius:14px;
+
+border:1px solid #2d6683;
+
+background:
+radial-gradient(
+circle,
+#45eaff33,
+transparent 70%
+),
+#0b1725;
+
+font-size:24px;
+
+box-shadow:
+0 0 30px #45eaff18;
+}
+
+.autoTitle h3{
+margin:0;
+
+font-size:18px;
+
+letter-spacing:1px;
+}
+
+.autoTitle p{
+margin:4px 0 0;
+
+color:#70839d;
+
+font-size:12px;
+}
+
+/* TOGGLE */
+
+.autoToggle{
+position:relative;
+
+width:62px;
+height:32px;
+
+flex:0 0 auto;
+}
+
+.autoToggle input{
+display:none;
+}
+
+.autoSlider{
+position:absolute;
+
+inset:0;
+
+border:1px solid #31445c;
+
+border-radius:999px;
+
+background:#101a28;
+
+cursor:pointer;
+
+transition:.25s;
+}
+
+.autoSlider:before{
+content:"";
+
+position:absolute;
+
+width:24px;
+height:24px;
+
+left:3px;
+top:3px;
+
+border-radius:50%;
+
+background:#64758d;
+
+transition:.25s;
+
+box-shadow:
+0 3px 10px #0008;
+}
+
+.autoToggle input:checked + .autoSlider{
+background:#063c49;
+
+border-color:#45eaff;
+
+box-shadow:
+0 0 20px #45eaff35,
+inset 0 0 15px #45eaff15;
+}
+
+.autoToggle input:checked + .autoSlider:before{
+transform:translateX(30px);
+
+background:#45eaff;
+
+box-shadow:
+0 0 20px #45eaff,
+0 0 40px #45eaff66;
+}
+
+/* CONTROLS */
+
+.autoControls{
+position:relative;
+z-index:2;
+
+display:grid;
+
+grid-template-columns:
+1fr 1fr;
+
+gap:12px;
+
+margin-top:20px;
+}
+
+.autoField{
+padding:14px;
+
+border:1px solid #203952;
+
+border-radius:14px;
+
+background:#07111d;
+}
+
+.autoField label{
+display:block;
+
+margin-bottom:8px;
+
+color:#71839c;
+
+font-size:11px;
+
+font-weight:900;
+
+letter-spacing:1px;
+}
+
+.autoField input,
+.autoField select{
+width:100%;
+
+padding:12px;
+
+border:1px solid #29415d;
+
+outline:none;
+
+border-radius:10px;
+
+background:#0d1826;
+
+color:#fff;
+
 font-weight:900;
 }
 
+.autoField input:focus,
+.autoField select:focus{
+border-color:#45eaff;
+
+box-shadow:
+0 0 18px #45eaff18;
+}
+
+/* STATS */
+
+.autoStats{
+position:relative;
+z-index:2;
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:10px;
+
+margin-top:12px;
+}
+
+.autoStat{
+padding:12px;
+
+border:1px solid #1d334b;
+
+border-radius:12px;
+
+background:#08121e;
+
+text-align:center;
+}
+
+.autoStat strong{
+display:block;
+
+color:#45eaff;
+
+font-size:18px;
+}
+
+.autoStat span{
+display:block;
+
+margin-top:3px;
+
+color:#64758d;
+
+font-size:10px;
+
+font-weight:800;
+}
+
+/* BUTTONS */
+
+.autoActions{
+display:flex;
+
+gap:10px;
+
+margin-top:14px;
+
+position:relative;
+z-index:2;
+}
+
+.autoButton{
+flex:1;
+
+padding:12px;
+
+border:1px solid #31577b;
+
+border-radius:10px;
+
+background:#102237;
+
+color:#dcecff;
+
+font-weight:1000;
+
+transition:.2s;
+}
+
+.autoButton:hover{
+border-color:#45eaff;
+
+background:#12304a;
+
+box-shadow:
+0 0 25px #45eaff16;
+}
+
+.autoButton.danger{
+border-color:#613344;
+
+background:#21101a;
+}
+
+.autoButton.danger:hover{
+border-color:#ff596e;
+
+box-shadow:
+0 0 25px #ff596e18;
+}
+
+.autoStatus{
+margin-top:13px;
+
+position:relative;
+z-index:2;
+
+padding:10px 13px;
+
+border-radius:10px;
+
+font-size:11px;
+
+font-weight:900;
+}
+
+.autoStatus.on{
+color:#55e58b;
+
+border:1px solid #245c43;
+
+background:#071b14;
+
+box-shadow:
+0 0 20px #55e58b0d;
+}
+
+.autoStatus.off{
+color:#7b8da4;
+
+border:1px solid #26374a;
+
+background:#07101a;
+}
+
+/* ==============================
+MARKET
+============================== */
+
 .market{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+
+grid-template-columns:
+repeat(
+auto-fill,
+minmax(240px,1fr)
+);
+
 gap:14px;
 }
 
 .marketCard{
 padding:15px;
+
 border:1px solid #20344d;
+
 border-radius:15px;
+
 background:#09111d;
+
+transition:.2s;
+}
+
+.marketCard:hover{
+border-color:#3e6487;
+
+transform:translateY(-2px);
 }
 
 .marketTop{
 display:flex;
+
 gap:11px;
+
 align-items:center;
 }
 
 .marketIcon{
 width:60px;
 height:60px;
+
 display:grid;
 place-items:center;
+
 border-radius:11px;
+
 background:#101b2a;
+
 font-size:32px;
 }
 
@@ -393,43 +1081,77 @@ font-weight:900;
 
 .mrarity{
 font-size:11px;
+
 color:var(--r);
+
 margin-top:4px;
 }
 
 .mprice{
 font-size:22px;
+
 font-weight:1000;
+
 color:var(--gold);
+
 margin-top:14px;
 }
 
 .change{
 font-size:12px;
+
 margin-top:4px;
 }
 
 .buy{
 width:100%;
+
 margin-top:12px;
+
 padding:10px;
+
 border:0;
+
 border-radius:9px;
+
 background:#163b61;
+
 color:#fff;
+
 font-weight:1000;
+
+transition:.2s;
 }
+
+.buy:hover{
+background:#1d5489;
+
+box-shadow:
+0 0 20px #45eaff15;
+}
+
+/* ==============================
+MODALS
+============================== */
 
 .modal{
 position:fixed;
+
 inset:0;
+
 z-index:100;
+
 display:none;
+
 align-items:center;
 justify-content:center;
+
 padding:14px;
+
 background:#01040be8;
+
 backdrop-filter:blur(15px);
+-webkit-backdrop-filter:blur(15px);
 }
 
 .modal.show{
@@ -438,17 +1160,31 @@ display:flex;
 
 .box{
 width:min(1050px,96vw);
+
 max-height:94vh;
+
 overflow:auto;
+
 padding:22px;
+
 border:1px solid #294563;
+
 border-radius:22px;
-background:#08111d;
-box-shadow:0 35px 120px #000;
+
+background:
+linear-gradient(
+145deg,
+#0b1725,
+#060c14
+);
+
+box-shadow:
+0 35px 120px #000;
 }
 
 .modalHead{
 display:flex;
+
 justify-content:space-between;
 align-items:center;
 }
@@ -460,29 +1196,58 @@ margin:0;
 .close{
 width:40px;
 height:40px;
+
 border:1px solid #29415d;
+
 border-radius:10px;
+
 background:#101b2a;
+
 color:#fff;
+
 font-size:20px;
 }
 
+.close:hover{
+border-color:var(--red);
+
+background:#21111a;
+}
+
+/* ==============================
+ROLLER
+============================== */
+
 .roller{
 height:245px;
+
 margin:24px 0;
+
 position:relative;
+
 overflow:hidden;
+
 border:1px solid #253c59;
+
 border-radius:16px;
+
 background:#040811;
+
+box-shadow:
+inset 0 0 50px #000;
 }
 
 .roller:before{
 content:"";
+
 position:absolute;
+
 z-index:5;
+
 inset:0;
+
 pointer-events:none;
+
 background:
 linear-gradient(
 90deg,
@@ -495,39 +1260,65 @@ transparent 82%,
 
 .marker{
 position:absolute;
+
 z-index:10;
+
 left:50%;
+
 top:0;
 bottom:0;
+
 width:3px;
+
 transform:translateX(-50%);
+
 background:#fff;
-box-shadow:0 0 25px #fff;
+
+box-shadow:
+0 0 25px #fff,
+0 0 50px var(--cyan);
 }
 
 .track{
 height:100%;
+
 position:absolute;
+
 left:0;
 top:0;
+
 display:flex;
+
 align-items:center;
+
 gap:10px;
+
 will-change:transform;
 }
 
 .roll{
 width:175px;
 height:185px;
+
 flex:0 0 175px;
+
 display:flex;
+
 flex-direction:column;
+
 align-items:center;
 justify-content:center;
+
 gap:9px;
+
 border:2px solid var(--r);
+
 border-radius:14px;
+
 background:#0d1724;
+
+box-shadow:
+0 0 25px var(--g);
 }
 
 .roll .icon{
@@ -536,14 +1327,23 @@ font-size:57px;
 
 .rollName{
 text-align:center;
+
 width:90%;
+
 font-size:12px;
+
 font-weight:1000;
 }
 
+/* ==============================
+RESULT
+============================== */
+
 .result{
 display:none;
+
 text-align:center;
+
 padding:18px;
 }
 
@@ -553,14 +1353,27 @@ display:block;
 
 .resultCard{
 width:min(370px,92%);
+
 margin:20px auto;
+
 padding:28px;
+
 border:2px solid var(--r);
+
 border-radius:20px;
+
 background:
-radial-gradient(circle,var(--g),transparent 65%),
+radial-gradient(
+circle,
+var(--g),
+transparent 65%
+),
 #0b1421;
+
 animation:pop .55s ease;
+
+box-shadow:
+0 0 60px var(--g);
 }
 
 .resultCard .icon{
@@ -573,16 +1386,25 @@ margin:15px 0 5px;
 
 .resultCard p{
 margin:0;
+
 color:var(--r);
+
 font-weight:1000;
+
 letter-spacing:2px;
 }
 
 .resultCard .marketValue{
 color:var(--gold);
+
 letter-spacing:0;
+
 margin-top:10px;
 }
+
+/* ==============================
+DETAIL
+============================== */
 
 .detail{
 text-align:center;
@@ -591,67 +1413,147 @@ text-align:center;
 .detailVisual{
 width:250px;
 height:200px;
+
 margin:22px auto;
+
 display:grid;
 place-items:center;
+
 border:2px solid var(--r);
+
 border-radius:18px;
+
 background:
-radial-gradient(circle,var(--g),transparent 65%),
+radial-gradient(
+circle,
+var(--g),
+transparent 65%
+),
 #070c15;
+
+box-shadow:
+0 0 50px var(--g);
 }
 
 .detailVisual .icon{
 font-size:95px;
 }
 
-.toast{
-position:fixed;
-left:50%;
-bottom:22px;
-z-index:300;
-transform:translate(-50%,120px);
-transition:.3s;
-padding:13px 19px;
-border:1px solid #385574;
-border-radius:11px;
-background:#101b2a;
-box-shadow:0 15px 45px #000;
-color:#fff;
+.detail #detailRarity{
+font-weight:1000;
+letter-spacing:2px;
+}
+
+.detail #detailPrice{
+color:var(--gold);
 font-weight:900;
 }
 
-.toast.show{
-transform:translate(-50%,0);
+/* ==============================
+TOAST
+============================== */
+
+.toast{
+position:fixed;
+
+left:50%;
+bottom:22px;
+
+z-index:300;
+
+transform:
+translate(-50%,120px);
+
+transition:.3s;
+
+padding:13px 19px;
+
+border:1px solid #385574;
+
+border-radius:11px;
+
+background:#101b2a;
+
+box-shadow:
+0 15px 45px #000;
+
+color:#fff;
+
+font-weight:900;
+
+white-space:nowrap;
 }
 
+.toast.show{
+transform:
+translate(-50%,0);
+}
+
+/* ==============================
+ANIMATIONS
+============================== */
+
 @keyframes pop{
+
 0%{
 transform:scale(.5);
 opacity:0;
 }
+
 70%{
 transform:scale(1.07);
 }
+
 100%{
 transform:scale(1);
 opacity:1;
 }
+
 }
+
+@keyframes pulse{
+
+0%,100%{
+opacity:.7;
+}
+
+50%{
+opacity:1;
+}
+
+}
+
+.autoStatus.on{
+animation:pulse 2s infinite;
+}
+
+/* ==============================
+MOBILE
+============================== */
 
 @media(max-width:650px){
 
 .top{
 height:64px;
+
 padding:0 12px;
 }
 
 .brand{
 font-size:16px;
+
+letter-spacing:2px;
+}
+
+.money{
+padding:8px 11px;
+
+font-size:13px;
 }
 
 .wrap{
 width:94%;
+
 padding-top:20px;
 }
 
@@ -659,13 +1561,23 @@ padding-top:20px;
 letter-spacing:-2px;
 }
 
+.hero p{
+font-size:13px;
+}
+
 .cases{
-grid-template-columns:repeat(2,minmax(0,1fr));
+grid-template-columns:
+repeat(
+2,
+minmax(0,1fr)
+);
+
 gap:10px;
 }
 
 .case{
 min-height:285px;
+
 padding:12px;
 }
 
@@ -676,6 +1588,7 @@ height:115px;
 .caseBox{
 width:92px;
 height:78px;
+
 font-size:39px;
 }
 
@@ -693,17 +1606,24 @@ display:block;
 
 .price{
 display:block;
+
 margin-bottom:8px;
 }
 
 .open{
 width:100%;
+
 padding:9px;
+
 font-size:12px;
 }
 
 .grid{
-grid-template-columns:repeat(2,minmax(0,1fr));
+grid-template-columns:
+repeat(
+2,
+minmax(0,1fr)
+);
 }
 
 .roller{
@@ -712,11 +1632,39 @@ height:215px;
 
 .roll{
 width:145px;
+
 flex-basis:145px;
+
 height:165px;
 }
 
+.autoControls{
+grid-template-columns:1fr;
 }
+
+.autoStats{
+grid-template-columns:
+repeat(3,1fr);
+}
+
+.autoActions{
+flex-direction:column;
+}
+
+.autoTitle h3{
+font-size:15px;
+}
+
+.autoTitle p{
+font-size:10px;
+}
+
+.autoSellPanel{
+padding:16px;
+}
+
+}
+
 </style>
 </head>
 
@@ -747,8 +1695,9 @@ ENTER THE <span>VOID</span>
 </h1>
 
 <p>
-Öffne futuristische Cases, sammle seltene Waffen
-und beobachte den sich bewegenden Ingame-Markt.
+Öffne futuristische Cases, sammle seltene Waffen,
+kaufe und verkaufe Items und beobachte den dynamischen
+Ingame-Markt.
 </p>
 
 </section>
@@ -769,6 +1718,10 @@ MARKT
 
 </nav>
 
+<!-- =========================
+CASES
+========================= -->
+
 <section id="cases" class="view active">
 
 <div class="title">
@@ -787,6 +1740,10 @@ Case Arsenal
 
 </section>
 
+<!-- =========================
+INVENTORY
+========================= -->
+
 <section id="inventory" class="view">
 
 <div class="title">
@@ -801,9 +1758,175 @@ Dein Arsenal
 
 </div>
 
+<!-- AUTO SELL -->
+
+<div class="autoSellPanel">
+
+<div class="autoHeader">
+
+<div class="autoTitle">
+
+<div class="autoIcon">
+⚙️
+</div>
+
+<div>
+
+<h3>
+AUTO SELL SYSTEM
+</h3>
+
+<p>
+Automatischer Waffen-Verkäufer
+</p>
+
+</div>
+
+</div>
+
+<label class="autoToggle">
+
+<input
+type="checkbox"
+id="autoSellEnabled"
+>
+
+<span class="autoSlider"></span>
+
+</label>
+
+</div>
+
+<div class="autoControls">
+
+<div class="autoField">
+
+<label>
+MINDEST-MARKTWERT
+</label>
+
+<input
+type="number"
+id="autoSellValue"
+min="0"
+step="50"
+value="500"
+>
+
+</div>
+
+<div class="autoField">
+
+<label>
+SELTENHEITSSCHUTZ
+</label>
+
+<select id="autoSellRarity">
+
+<option value="none">
+Kein Schutz
+</option>
+
+<option value="rare">
+RARE schützen
+</option>
+
+<option value="epic">
+EPIC + schützen
+</option>
+
+<option value="legendary">
+LEGENDARY + schützen
+</option>
+
+<option value="mythic">
+MYTHIC + schützen
+</option>
+
+<option value="ancient">
+ALLE seltenen schützen
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="autoStats">
+
+<div class="autoStat">
+
+<strong id="autoSoldCount">
+0
+</strong>
+
+<span>
+VERKAUFT
+</span>
+
+</div>
+
+<div class="autoStat">
+
+<strong id="autoEarned">
+0
+</strong>
+
+<span>
+COINS VERDIENT
+</span>
+
+</div>
+
+<div class="autoStat">
+
+<strong id="autoProtected">
+0
+</strong>
+
+<span>
+GESCHÜTZT
+</span>
+
+</div>
+
+</div>
+
+<div class="autoActions">
+
+<button
+class="autoButton"
+id="runAutoSell"
+>
+⚡ JETZT PRÜFEN
+</button>
+
+<button
+class="autoButton danger"
+id="resetAutoStats"
+>
+↻ STATISTIK RESET
+</button>
+
+</div>
+
+<div
+class="autoStatus off"
+id="autoStatus"
+>
+● AUTO SELL IST AUS
+</div>
+
+</div>
+
 <div class="grid" id="inventoryGrid"></div>
 
 </section>
+
+<!-- =========================
+MARKET
+========================= -->
 
 <section id="market" class="view">
 
@@ -825,6 +1948,10 @@ Preise ändern sich automatisch
 
 </main>
 
+<!-- =========================
+OPEN MODAL
+========================= -->
+
 <div class="modal" id="openModal">
 
 <div class="box">
@@ -845,7 +1972,10 @@ Das Item wird bestimmt...
 
 </div>
 
-<button class="close" id="closeOpen">
+<button
+class="close"
+id="closeOpen"
+>
 ×
 </button>
 
@@ -855,7 +1985,10 @@ Das Item wird bestimmt...
 
 <div class="marker"></div>
 
-<div class="track" id="track"></div>
+<div
+class="track"
+id="track"
+></div>
 
 </div>
 
@@ -880,9 +2013,15 @@ font-weight:900
 ITEM ERHALTEN
 </div>
 
-<div class="resultCard" id="resultCard">
+<div
+class="resultCard"
+id="resultCard"
+>
 
-<div class="icon" id="resultIcon">
+<div
+class="icon"
+id="resultIcon"
+>
 ⚡
 </div>
 
@@ -909,6 +2048,10 @@ INS INVENTAR
 </div>
 
 </div>
+
+<!-- =========================
+DETAIL MODAL
+========================= -->
 
 <div class="modal" id="detailModal">
 
@@ -964,9 +2107,16 @@ VERKAUFEN
 
 </div>
 
-<div class="toast" id="toast"></div>
+<div
+class="toast"
+id="toast"
+></div>
 
 <script>
+
+/* =========================================================
+RARITIES
+========================================================= */
 
 const rarity={
 
@@ -1013,6 +2163,10 @@ g:"rgba(255,89,110,.37)"
 }
 
 };
+
+/* =========================================================
+WEAPONS
+========================================================= */
 
 const weapons=[
 
@@ -1065,18 +2219,18 @@ const weapons=[
 ["Singularity","🌀","ancient",8500],
 ["Cosmic Destroyer","🌠","ancient",10000]
 
-].map(
-
-x=>({
+].map(x=>({
 
 name:x[0],
 icon:x[1],
 rarity:x[2],
 base:x[3]
 
-})
+}));
 
-);
+/* =========================================================
+CASES
+========================================================= */
 
 const cases=[
 
@@ -1140,9 +2294,7 @@ const cases=[
 ["Infinity Case","♾️",25000,"#ff4db8",
 ["mythic","ancient"]]
 
-].map(
-
-x=>({
+].map(x=>({
 
 name:x[0],
 icon:x[1],
@@ -1150,9 +2302,11 @@ price:x[2],
 glow:x[3],
 pool:x[4]
 
-})
+}));
 
-);
+/* =========================================================
+SAVE DATA
+========================================================= */
 
 let coins=
 Number(
@@ -1172,10 +2326,54 @@ localStorage.getItem("vax_market")
 ||"{}"
 );
 
+/* AUTO SELL SETTINGS */
+
+let autoSellEnabled=
+localStorage.getItem(
+"vax_autoSellEnabled"
+)==="true";
+
+let autoSellValue=
+Number(
+localStorage.getItem(
+"vax_autoSellValue"
+)||500
+);
+
+let autoSellRarity=
+localStorage.getItem(
+"vax_autoSellRarity"
+)||"none";
+
+let autoSoldCount=
+Number(
+localStorage.getItem(
+"vax_autoSoldCount"
+)||0
+);
+
+let autoEarned=
+Number(
+localStorage.getItem(
+"vax_autoEarned"
+)||0
+);
+
+let autoProtected=
+Number(
+localStorage.getItem(
+"vax_autoProtected"
+)||0
+);
+
 let currentCase=null;
 let currentWinner=null;
 let spinning=false;
 let detailIndex=-1;
+
+/* =========================================================
+SAVE
+========================================================= */
 
 function save(){
 
@@ -1194,7 +2392,41 @@ localStorage.setItem(
 JSON.stringify(market)
 );
 
+localStorage.setItem(
+"vax_autoSellEnabled",
+autoSellEnabled
+);
+
+localStorage.setItem(
+"vax_autoSellValue",
+autoSellValue
+);
+
+localStorage.setItem(
+"vax_autoSellRarity",
+autoSellRarity
+);
+
+localStorage.setItem(
+"vax_autoSoldCount",
+autoSoldCount
+);
+
+localStorage.setItem(
+"vax_autoEarned",
+autoEarned
+);
+
+localStorage.setItem(
+"vax_autoProtected",
+autoProtected
+);
+
 }
+
+/* =========================================================
+MARKET INIT
+========================================================= */
 
 function initMarket(){
 
@@ -1215,6 +2447,10 @@ save();
 
 }
 
+/* =========================================================
+PRICE
+========================================================= */
+
 function price(w){
 
 return Math.max(
@@ -1227,9 +2463,14 @@ market[w.name]?.price
 
 }
 
+/* =========================================================
+STYLE
+========================================================= */
+
 function setStyle(el,w){
 
-let r=rarity[w.rarity];
+let r=
+rarity[w.rarity];
 
 el.style.setProperty(
 "--r",
@@ -1243,6 +2484,10 @@ r.g
 
 }
 
+/* =========================================================
+COINS
+========================================================= */
+
 function updateCoins(){
 
 document.getElementById(
@@ -1255,6 +2500,10 @@ coins.toLocaleString(
 save();
 
 }
+
+/* =========================================================
+TOAST
+========================================================= */
 
 function toast(t){
 
@@ -1273,11 +2522,17 @@ window.__toast
 
 window.__toast=
 setTimeout(
-()=>e.classList.remove("show"),
+()=>{
+e.classList.remove("show");
+},
 2500
 );
 
 }
+
+/* =========================================================
+RENDER CASES
+========================================================= */
 
 function renderCases(){
 
@@ -1352,6 +2607,209 @@ g.appendChild(e);
 
 }
 
+/* =========================================================
+AUTO SELL UI
+========================================================= */
+
+function renderAutoSell(){
+
+document.getElementById(
+"autoSellEnabled"
+).checked=
+autoSellEnabled;
+
+document.getElementById(
+"autoSellValue"
+).value=
+autoSellValue;
+
+document.getElementById(
+"autoSellRarity"
+).value=
+autoSellRarity;
+
+document.getElementById(
+"autoSoldCount"
+).textContent=
+autoSoldCount.toLocaleString(
+"de-DE"
+);
+
+document.getElementById(
+"autoEarned"
+).textContent=
+autoEarned.toLocaleString(
+"de-DE"
+);
+
+document.getElementById(
+"autoProtected"
+).textContent=
+autoProtected.toLocaleString(
+"de-DE"
+);
+
+let status=
+document.getElementById(
+"autoStatus"
+);
+
+if(autoSellEnabled){
+
+status.className=
+"autoStatus on";
+
+status.innerHTML=
+"● AUTO SELL IST AKTIV — Mindestwert: 🪙 "+
+autoSellValue;
+
+}else{
+
+status.className=
+"autoStatus off";
+
+status.innerHTML=
+"● AUTO SELL IST AUS";
+
+}
+
+}
+
+/* =========================================================
+RARITY PROTECTION
+========================================================= */
+
+const rarityRank={
+
+common:0,
+uncommon:1,
+rare:2,
+epic:3,
+legendary:4,
+mythic:5,
+ancient:6
+
+};
+
+function isProtected(w){
+
+if(
+autoSellRarity==="none"
+){
+return false;
+}
+
+return (
+rarityRank[w.rarity]
+>=
+rarityRank[autoSellRarity]
+);
+
+}
+
+/* =========================================================
+AUTO SELL ENGINE
+========================================================= */
+
+function runAutoSell(){
+
+let threshold=
+Math.max(
+0,
+Number(
+autoSellValue
+)
+||0
+);
+
+let remaining=[];
+let sold=[];
+let protectedItems=0;
+let earned=0;
+
+inventory.forEach(w=>{
+
+let p=price(w);
+
+if(
+isProtected(w)
+){
+
+remaining.push(w);
+
+protectedItems++;
+
+return;
+
+}
+
+if(
+p< threshold
+){
+
+earned+=p;
+
+sold.push({
+...w,
+_soldPrice:p
+});
+
+return;
+
+}
+
+remaining.push(w);
+
+});
+
+inventory=remaining;
+
+if(sold.length){
+
+coins+=earned;
+
+autoSoldCount+=sold.length;
+
+autoEarned+=earned;
+
+}
+
+autoProtected+=protectedItems;
+
+save();
+
+updateCoins();
+
+renderInventory();
+
+renderAutoSell();
+
+renderMarket();
+
+if(sold.length){
+
+toast(
+"⚡ AUTO SELL: "+
+sold.length+
+" Waffen für 🪙 "+
+earned+
+" verkauft"
+);
+
+}else{
+
+toast(
+"✓ Keine Waffen erfüllen die Auto-Sell-Regel."
+);
+
+}
+
+}
+
+/* =========================================================
+RENDER INVENTORY
+========================================================= */
+
 function renderInventory(){
 
 let g=
@@ -1378,6 +2836,13 @@ color:#64758d;
 padding:50px
 ">
 
+<div style="
+font-size:45px;
+margin-bottom:12px
+">
+🛰️
+</div>
+
 Noch keine Waffen im Arsenal.
 
 </div>
@@ -1400,6 +2865,12 @@ e.className="item";
 
 setStyle(e,w);
 
+let p=
+price(w);
+
+let protection=
+isProtected(w);
+
 e.innerHTML=`
 
 <div class="visual">
@@ -1418,9 +2889,31 @@ ${w.name}
 ${rarity[w.rarity].name}
 </div>
 
-<div class="value">
-Marktwert: 🪙 ${price(w)}
+<div
+class="value ${
+p>=autoSellValue
+?"marketValueHigh"
+:"marketValueLow"
+}"
+>
+Marktwert: 🪙 ${p}
 </div>
+
+${
+protection
+?
+`
+<div style="
+margin-top:6px;
+font-size:9px;
+font-weight:1000;
+color:#55e58b;
+">
+🛡 AUTO-SELL GESCHÜTZT
+</div>
+`
+:""
+}
 
 <button
 class="sell"
@@ -1438,6 +2931,10 @@ g.appendChild(e);
 );
 
 }
+
+/* =========================================================
+MARKET
+========================================================= */
 
 function renderMarket(){
 
@@ -1527,6 +3024,10 @@ g.appendChild(e);
 
 }
 
+/* =========================================================
+RANDOM WEAPON
+========================================================= */
+
 function randomWeapon(){
 
 let rr=
@@ -1539,7 +3040,8 @@ currentCase.pool.length
 
 let p=
 weapons.filter(
-w=>w.rarity===rr
+w=>
+w.rarity===rr
 );
 
 return p[
@@ -1549,6 +3051,10 @@ Math.random()*p.length
 ];
 
 }
+
+/* =========================================================
+ROLLER CARD
+========================================================= */
 
 function rollCard(w){
 
@@ -1577,6 +3083,10 @@ return e;
 
 }
 
+/* =========================================================
+CREATE ROLL
+========================================================= */
+
 function createRoll(){
 
 let t=
@@ -1586,8 +3096,7 @@ document.getElementById(
 
 t.innerHTML="";
 
-t.style.transition=
-"none";
+t.style.transition="none";
 
 t.style.transform=
 "translateX(0)";
@@ -1607,6 +3116,10 @@ randomWeapon()
 }
 
 }
+
+/* =========================================================
+OPEN CASE
+========================================================= */
 
 function openCase(i){
 
@@ -1668,6 +3181,10 @@ document.getElementById(
 createRoll();
 
 }
+
+/* =========================================================
+SPIN
+========================================================= */
 
 function spin(){
 
@@ -1734,15 +3251,17 @@ setTimeout(
 
 }
 
+/* =========================================================
+SHOW RESULT
+========================================================= */
+
 function showResult(){
 
 spinning=false;
 
-inventory.push(
-{
+inventory.push({
 ...currentWinner
-}
-);
+});
 
 save();
 
@@ -1809,7 +3328,26 @@ toast(
 currentWinner.name
 );
 
+/*
+AUTO SELL NACH DROP
+*/
+
+if(autoSellEnabled){
+
+setTimeout(
+()=>{
+runAutoSell();
+},
+700
+);
+
 }
+
+}
+
+/* =========================================================
+MANUAL SELL
+========================================================= */
 
 function sell(i){
 
@@ -1868,6 +3406,10 @@ p+
 
 }
 
+/* =========================================================
+BUY
+========================================================= */
+
 function buy(name){
 
 let w=
@@ -1894,11 +3436,9 @@ return;
 
 coins-=p;
 
-inventory.push(
-{
+inventory.push({
 ...w
-}
-);
+});
 
 let old=
 market[name].price;
@@ -1926,6 +3466,10 @@ w.name+
 );
 
 }
+
+/* =========================================================
+DETAIL
+========================================================= */
 
 function openDetail(i){
 
@@ -1982,6 +3526,10 @@ document.getElementById(
 
 }
 
+/* =========================================================
+CASE CLICK
+========================================================= */
+
 document
 .getElementById(
 "caseGrid"
@@ -2007,6 +3555,10 @@ b.dataset.case
 
 }
 );
+
+/* =========================================================
+INVENTORY CLICK
+========================================================= */
 
 document
 .getElementById(
@@ -2054,6 +3606,10 @@ openDetail(
 }
 );
 
+/* =========================================================
+MARKET CLICK
+========================================================= */
+
 document
 .getElementById(
 "marketGrid"
@@ -2078,6 +3634,10 @@ b.dataset.buy
 }
 );
 
+/* =========================================================
+SPIN BUTTON
+========================================================= */
+
 document
 .getElementById(
 "spin"
@@ -2086,6 +3646,10 @@ document
 "click",
 spin
 );
+
+/* =========================================================
+CLOSE OPEN
+========================================================= */
 
 document
 .getElementById(
@@ -2110,6 +3674,10 @@ document
 }
 );
 
+/* =========================================================
+CONTINUE
+========================================================= */
+
 document
 .getElementById(
 "continue"
@@ -2129,6 +3697,10 @@ document
 }
 );
 
+/* =========================================================
+CLOSE DETAIL
+========================================================= */
+
 document
 .getElementById(
 "closeDetail"
@@ -2147,6 +3719,10 @@ document
 
 }
 );
+
+/* =========================================================
+DETAIL SELL
+========================================================= */
 
 document
 .getElementById(
@@ -2176,6 +3752,10 @@ document
 
 }
 );
+
+/* =========================================================
+TABS
+========================================================= */
 
 document
 .querySelector(
@@ -2231,6 +3811,155 @@ b.dataset.view
 }
 );
 
+/* =========================================================
+AUTO SELL TOGGLE
+========================================================= */
+
+document
+.getElementById(
+"autoSellEnabled"
+)
+.addEventListener(
+"change",
+e=>{
+
+autoSellEnabled=
+e.target.checked;
+
+save();
+
+renderAutoSell();
+
+if(autoSellEnabled){
+
+toast(
+"⚡ AUTO SELL AKTIVIERT"
+);
+
+runAutoSell();
+
+}else{
+
+toast(
+"AUTO SELL DEAKTIVIERT"
+);
+
+}
+
+}
+);
+
+/* =========================================================
+AUTO SELL VALUE
+========================================================= */
+
+document
+.getElementById(
+"autoSellValue"
+)
+.addEventListener(
+"change",
+e=>{
+
+autoSellValue=
+Math.max(
+0,
+Number(
+e.target.value
+)||0
+);
+
+save();
+
+renderAutoSell();
+
+if(autoSellEnabled){
+
+runAutoSell();
+
+}
+
+}
+);
+
+/* =========================================================
+AUTO SELL RARITY
+========================================================= */
+
+document
+.getElementById(
+"autoSellRarity"
+)
+.addEventListener(
+"change",
+e=>{
+
+autoSellRarity=
+e.target.value;
+
+save();
+
+renderAutoSell();
+
+if(autoSellEnabled){
+
+runAutoSell();
+
+}
+
+}
+);
+
+/* =========================================================
+MANUAL AUTO SELL
+========================================================= */
+
+document
+.getElementById(
+"runAutoSell"
+)
+.addEventListener(
+"click",
+()=>{
+
+runAutoSell();
+
+}
+);
+
+/* =========================================================
+RESET AUTO STATS
+========================================================= */
+
+document
+.getElementById(
+"resetAutoStats"
+)
+.addEventListener(
+"click",
+()=>{
+
+autoSoldCount=0;
+
+autoEarned=0;
+
+autoProtected=0;
+
+save();
+
+renderAutoSell();
+
+toast(
+"Auto-Sell Statistik zurückgesetzt"
+);
+
+}
+);
+
+/* =========================================================
+DYNAMIC MARKET
+========================================================= */
+
 function moveMarket(){
 
 weapons.forEach(
@@ -2269,7 +3998,17 @@ save();
 
 renderMarket();
 
+if(autoSellEnabled){
+
+runAutoSell();
+
 }
+
+}
+
+/* =========================================================
+START
+========================================================= */
 
 initMarket();
 
@@ -2279,7 +4018,13 @@ renderInventory();
 
 renderMarket();
 
+renderAutoSell();
+
 updateCoins();
+
+/*
+MARKT BEWEGT SICH ALLE 30 SEKUNDEN
+*/
 
 setInterval(
 moveMarket,
@@ -2290,3 +4035,4 @@ moveMarket,
 
 </body>
 </html>
+```
