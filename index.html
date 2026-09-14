@@ -2,2392 +2,1328 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eef2f7">
-<title>iOS 27 Web</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Shorts</title>
 
 <style>
-*{box-sizing:border-box}
-:root{
-  --text:#111;
-  --muted:#777;
-  --glass:rgba(255,255,255,.55);
-  --glass2:rgba(255,255,255,.82);
-  --line:rgba(0,0,0,.08);
-  --blue:#007aff;
-  --green:#34c759;
-  --red:#ff3b30;
-  --shadow:0 20px 60px rgba(20,30,50,.18);
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Arial,sans-serif;
-  color:var(--text);
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#050505;
+    color:white;
 }
 
 body{
-  background:
-    radial-gradient(circle at 15% 15%,#fff 0%,transparent 28%),
-    radial-gradient(circle at 85% 15%,#9ed0ff 0%,transparent 30%),
-    radial-gradient(circle at 70% 85%,#cbb8ff 0%,transparent 32%),
-    linear-gradient(135deg,#dfeaf7,#f6f8fb,#dce6f3);
+    display:flex;
+    flex-direction:column;
 }
 
-body.dark{
-  --text:#fff;
-  --muted:#aaa;
-  --glass:rgba(30,30,35,.58);
-  --glass2:rgba(45,45,50,.82);
-  --line:rgba(255,255,255,.1);
-  background:
-    radial-gradient(circle at 20% 20%,#394b6b,transparent 30%),
-    radial-gradient(circle at 80% 20%,#24294a,transparent 30%),
-    linear-gradient(145deg,#08090d,#171923);
-}
-
-button,input,textarea{
-  font:inherit;
-}
-
-button{
-  border:0;
-  cursor:pointer;
-}
-
-.statusbar{
-  position:fixed;
-  z-index:1000;
-  top:0;
-  left:0;
-  right:0;
-  height:42px;
-  padding:0 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:14px;
-  font-weight:700;
-  pointer-events:none;
-}
-
-.dynamic-island{
-  position:fixed;
-  z-index:1001;
-  top:9px;
-  left:50%;
-  transform:translateX(-50%);
-  width:115px;
-  height:28px;
-  border-radius:20px;
-  background:#050505;
-  box-shadow:0 5px 20px rgba(0,0,0,.35);
-}
-
-.home{
-  height:100vh;
-  padding:58px 18px 115px;
-  overflow:auto;
-}
+/* =========================
+   HEADER
+========================= */
 
 .header{
-  max-width:680px;
-  margin:auto;
-}
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:70px;
+    z-index:1000;
 
-.date{
-  font-size:15px;
-  font-weight:700;
-  color:var(--muted);
-  margin-bottom:6px;
-}
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-.greeting{
-  font-size:36px;
-  font-weight:800;
-  letter-spacing:-1.5px;
-  margin-bottom:18px;
-}
+    padding:0 22px;
 
-.widget-row{
-  display:grid;
-  grid-template-columns:1.3fr .7fr;
-  gap:12px;
-  margin-bottom:22px;
-}
+    background:rgba(5,5,5,.82);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
 
-.widget{
-  min-height:120px;
-  padding:18px;
-  border-radius:30px;
-  background:var(--glass);
-  backdrop-filter:blur(30px);
-  -webkit-backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,.65);
-  box-shadow:var(--shadow);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.weather-temp{
-  font-size:36px;
-  font-weight:800;
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:-1px;
 }
 
-.weather-desc{
-  color:var(--muted);
-  margin-top:4px;
+.logo span{
+    color:#ff1744;
 }
 
-.calendar-big{
-  font-size:35px;
-  font-weight:800;
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.calendar-label{
-  color:var(--muted);
-}
+.search{
+    width:260px;
+    height:42px;
 
-.app-grid{
-  max-width:680px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:21px 13px;
-}
+    border:none;
+    outline:none;
 
-.app{
-  text-align:center;
-  background:none;
-  color:var(--text);
-  min-width:0;
-}
+    padding:0 16px;
 
-.app-icon{
-  width:70px;
-  height:70px;
-  margin:auto;
-  border-radius:21px;
-  display:grid;
-  place-items:center;
-  font-size:34px;
-  background:var(--glass2);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 12px 30px rgba(20,30,50,.17);
-  transition:.15s;
-}
+    border-radius:22px;
 
-.app:active .app-icon{
-  transform:scale(.84);
-}
+    color:white;
+    background:#191919;
 
-.app-name{
-  display:block;
-  margin-top:7px;
-  font-size:12px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+    font-size:15px;
 }
 
-.dock{
-  position:fixed;
-  z-index:900;
-  bottom:17px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:10px;
-  padding:10px;
-  border-radius:31px;
-  background:rgba(255,255,255,.45);
-  backdrop-filter:blur(35px);
-  -webkit-backdrop-filter:blur(35px);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:0 25px 60px rgba(0,0,0,.2);
+.search::placeholder{
+    color:#888;
 }
-
-.dock .app-icon{
-  width:62px;
-  height:62px;
-}
 
-.window{
-  position:fixed;
-  z-index:800;
-  inset:0;
-  display:none;
-  flex-direction:column;
-  background:rgba(242,245,250,.86);
-  backdrop-filter:blur(28px);
-  -webkit-backdrop-filter:blur(28px);
-}
-
-.dark .window{
-  background:rgba(12,13,18,.88);
-}
+.header-button{
+    height:42px;
+    padding:0 17px;
 
-.window.open{
-  display:flex;
-  animation:windowIn .22s ease;
-}
+    border:none;
+    border-radius:22px;
 
-@keyframes windowIn{
-  from{
-    opacity:0;
-    transform:scale(.96);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
+    background:#202020;
+    color:white;
 
-.topbar{
-  height:72px;
-  flex-shrink:0;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:14px 18px;
-  border-bottom:1px solid var(--line);
-  background:rgba(255,255,255,.38);
-  backdrop-filter:blur(25px);
+    cursor:pointer;
+    font-weight:700;
 }
 
-.dark .topbar{
-  background:rgba(30,30,35,.5);
+.header-button:hover{
+    background:#303030;
 }
 
-.topbar h2{
-  margin:0;
-  font-size:21px;
-}
+/* =========================
+   FILTER
+========================= */
 
-.back{
-  width:44px;
-  height:44px;
-  border-radius:16px;
-  background:var(--glass2);
-  color:var(--text);
-  font-size:28px;
-}
+.filterbar{
+    position:fixed;
+    top:70px;
+    left:0;
+    right:0;
 
-.top-right{
-  margin-left:auto;
-}
+    height:58px;
 
-.content{
-  flex:1;
-  overflow:auto;
-  padding:18px;
-}
+    z-index:900;
 
-.card{
-  padding:18px;
-  border-radius:27px;
-  background:var(--glass);
-  border:1px solid rgba(255,255,255,.65);
-  box-shadow:0 15px 40px rgba(20,30,50,.1);
-  margin-bottom:15px;
-}
+    display:flex;
+    align-items:center;
 
-.primary{
-  background:#111;
-  color:#fff;
-  border-radius:17px;
-  padding:13px 18px;
-  font-weight:700;
-}
+    gap:8px;
 
-.blue{
-  background:var(--blue);
-  color:#fff;
-  border-radius:17px;
-  padding:13px 18px;
-  font-weight:700;
-}
+    padding:0 18px;
 
-input,textarea{
-  width:100%;
-  border:1px solid var(--line);
-  outline:none;
-  background:var(--glass2);
-  color:var(--text);
-  padding:14px;
-  border-radius:18px;
-  margin:6px 0;
-}
+    overflow-x:auto;
 
-textarea{
-  min-height:60vh;
-  resize:none;
+    background:rgba(5,5,5,.75);
+    backdrop-filter:blur(18px);
 }
 
-.store-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+.filterbar::-webkit-scrollbar{
+    display:none;
 }
 
-.store-card{
-  padding:18px;
-  border-radius:25px;
-  background:var(--glass2);
-  border:1px solid rgba(255,255,255,.7);
-}
+.filter{
+    flex:none;
 
-.store-icon{
-  font-size:42px;
-}
+    border:1px solid #303030;
 
-.store-card h3{
-  margin:8px 0 4px;
-}
+    background:#171717;
+    color:#ddd;
 
-.store-card p{
-  color:var(--muted);
-  font-size:13px;
-}
+    padding:9px 15px;
 
-.chat{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+    border-radius:20px;
 
-.bubble{
-  max-width:78%;
-  padding:11px 14px;
-  border-radius:20px;
-  line-height:1.4;
-}
+    cursor:pointer;
 
-.bubble.me{
-  align-self:flex-end;
-  color:#fff;
-  background:#007aff;
-  border-bottom-right-radius:6px;
+    font-weight:700;
 }
 
-.bubble.bot{
-  align-self:flex-start;
-  background:var(--glass2);
-  border-bottom-left-radius:6px;
+.filter.active{
+    background:white;
+    color:black;
 }
 
-.chatbar{
-  display:flex;
-  gap:8px;
-  padding:10px;
-  background:var(--glass2);
-  border-top:1px solid var(--line);
-}
+/* =========================
+   SHORTS FEED
+========================= */
+
+.feed{
+    position:absolute;
+
+    top:128px;
+    bottom:0;
+    left:0;
+    right:0;
+
+    overflow-y:auto;
+    overflow-x:hidden;
 
-.chatbar input{
-  margin:0;
+    scroll-snap-type:y mandatory;
+
+    overscroll-behavior-y:contain;
+
+    scrollbar-width:none;
 }
 
-.chatbar button{
-  white-space:nowrap;
+.feed::-webkit-scrollbar{
+    display:none;
 }
+
+/* =========================
+   SHORT
+========================= */
+
+.short{
+    position:relative;
+
+    width:100%;
+    height:calc(100vh - 128px);
+
+    min-height:500px;
+
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
 
-.mail{
-  display:flex;
-  gap:13px;
-  align-items:center;
+    background:#000;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
 }
+
+.video-wrapper{
+    position:relative;
 
-.mail-icon{
-  width:52px;
-  height:52px;
-  display:grid;
-  place-items:center;
-  border-radius:17px;
-  background:var(--glass2);
-  font-size:25px;
+    width:min(100%, 520px);
+    height:100%;
+
+    background:#000;
 }
+
+.video-wrapper iframe{
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    left:0;
+    top:0;
 
-.mail-text{
-  flex:1;
+    border:0;
 }
+
+/* =========================
+   GRADIENTS
+========================= */
+
+.short::before{
+    content:"";
+
+    position:absolute;
+
+    z-index:2;
+
+    pointer-events:none;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:40%;
 
-.mail-text b{
-  display:block;
+    background:linear-gradient(
+        transparent,
+        rgba(0,0,0,.75)
+    );
 }
 
-.mail-text span{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-  margin-top:3px;
+/* =========================
+   INFO
+========================= */
+
+.info{
+    position:absolute;
+
+    z-index:10;
+
+    left:calc(50% - min(50%, 260px) + 18px);
+    bottom:22px;
+
+    width:min(390px,70%);
+
+    text-shadow:0 2px 5px #000;
 }
 
-.photo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+.info h2{
+    font-size:18px;
+    margin-bottom:8px;
 }
 
-.photo{
-  aspect-ratio:1;
-  border-radius:19px;
-  display:grid;
-  place-items:center;
-  font-size:42px;
-  background:
-    linear-gradient(135deg,#75b9ff,#e9f5ff,#b89cff);
-  box-shadow:0 10px 25px rgba(20,30,50,.13);
+.info p{
+    color:#ddd;
+    font-size:14px;
 }
+
+.age{
+    display:inline-block;
 
-.calculator{
-  max-width:450px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:9px;
+    margin-top:10px;
+
+    padding:5px 9px;
+
+    border-radius:8px;
+
+    background:rgba(255,255,255,.16);
+
+    font-size:12px;
+    font-weight:800;
 }
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+    position:absolute;
+
+    z-index:20;
 
-.calc-display{
-  grid-column:1/-1;
-  font-size:32px;
-  text-align:right;
-  height:75px;
+    right:calc(50% - min(50%, 260px) + 12px);
+    bottom:25px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:13px;
 }
+
+.action{
+    width:50px;
+    height:50px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:rgba(25,25,25,.82);
+
+    color:white;
 
-.calc-button{
-  height:65px;
-  border-radius:20px;
-  background:var(--glass2);
-  color:var(--text);
-  font-size:22px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:21px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
 }
 
-.calc-op{
-  background:#111;
-  color:#fff;
+.action:hover{
+    background:rgba(60,60,60,.9);
 }
 
-.game-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
+.action small{
+    display:block;
+    font-size:9px;
 }
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty{
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
 
-.game{
-  min-height:180px;
-  border-radius:28px;
-  padding:20px;
-  color:#fff;
-  background:
-    radial-gradient(circle at 80% 20%,#527dff,transparent 35%),
-    linear-gradient(145deg,#111827,#252b38);
-  box-shadow:var(--shadow);
+    text-align:center;
+
+    padding:30px;
 }
 
-.game-emoji{
-  font-size:45px;
+.empty h1{
+    font-size:30px;
+    margin-bottom:12px;
 }
 
-.game button{
-  margin-top:15px;
-  background:#fff;
-  color:#111;
-  border-radius:16px;
-  padding:11px 15px;
-  font-weight:700;
+.empty p{
+    color:#999;
+    max-width:500px;
+    line-height:1.5;
 }
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-bg{
+    position:fixed;
+
+    z-index:3000;
+
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
 
-.settings-row{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
+    background:rgba(0,0,0,.7);
+
+    backdrop-filter:blur(12px);
 }
+
+.modal{
+    width:min(500px,calc(100% - 30px));
+
+    background:#161616;
 
-.settings-row:last-child{
-  border-bottom:0;
+    border:1px solid #333;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
 }
 
-.settings-icon{
-  width:43px;
-  height:43px;
-  display:grid;
-  place-items:center;
-  border-radius:13px;
-  background:var(--glass2);
+.modal h2{
+    margin-bottom:20px;
 }
+
+.modal label{
+    display:block;
 
-.settings-row div:nth-child(2){
-  flex:1;
+    color:#aaa;
+
+    font-size:13px;
+
+    margin:13px 0 6px;
 }
+
+.modal input,
+.modal select{
+    width:100%;
+
+    height:45px;
+
+    padding:0 13px;
+
+    border:1px solid #333;
+
+    outline:none;
 
-.settings-row small{
-  color:var(--muted);
+    border-radius:10px;
+
+    background:#090909;
+    color:white;
 }
 
-.toggle{
-  width:54px;
-  height:32px;
-  border-radius:20px;
-  background:#bbb;
-  padding:3px;
+.modal-buttons{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+
+    margin-top:20px;
 }
 
-.toggle.on{
-  background:#34c759;
+.cancel{
+    background:#292929;
+    color:white;
 }
 
-.toggle-dot{
-  width:26px;
-  height:26px;
-  border-radius:50%;
-  background:white;
-  transition:.2s;
+.add{
+    background:white;
+    color:black;
 }
+
+.modal button{
+    border:0;
 
-.toggle.on .toggle-dot{
-  transform:translateX(22px);
+    padding:11px 18px;
+
+    border-radius:10px;
+
+    font-weight:800;
+
+    cursor:pointer;
 }
+
+/* =========================
+   TOAST
+========================= */
 
 .toast{
-  position:fixed;
-  z-index:2000;
-  left:50%;
-  bottom:125px;
-  transform:translate(-50%,20px);
-  opacity:0;
-  background:#111;
-  color:#fff;
-  padding:13px 18px;
-  border-radius:19px;
-  pointer-events:none;
-  transition:.25s;
+    position:fixed;
+
+    z-index:5000;
+
+    left:50%;
+    bottom:30px;
+
+    transform:translateX(-50%) translateY(20px);
+
+    opacity:0;
+
+    background:#fff;
+    color:#000;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+    pointer-events:none;
 }
 
 .toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
 }
 
-.lock{
-  position:fixed;
-  z-index:3000;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:
-    radial-gradient(circle at 20% 20%,#fff,transparent 30%),
-    radial-gradient(circle at 80% 20%,#9bd1ff,transparent 35%),
-    linear-gradient(135deg,#dce8f7,#f7f8fa);
-  backdrop-filter:blur(30px);
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .header{
+        height:60px;
+        padding:0 12px;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+    .search{
+        width:150px;
+        height:38px;
+    }
+
+    .header-button{
+        width:38px;
+        padding:0;
+        font-size:0;
+    }
+
+    .header-button::after{
+        content:"+";
+        font-size:22px;
+    }
+
+    .filterbar{
+        top:60px;
+        height:52px;
+    }
+
+    .feed{
+        top:112px;
+    }
+
+    .short{
+        height:calc(100vh - 112px);
+    }
+
+    .info{
+        left:15px;
+        bottom:20px;
+        width:70%;
+    }
+
+    .actions{
+        right:12px;
+        bottom:20px;
+    }
+
+    .action{
+        width:45px;
+        height:45px;
+    }
 }
 
-.lock.show{
-  display:flex;
-}
+/* =========================
+   LANDSCAPE
+========================= */
 
-.lock-time{
-  font-size:90px;
-  font-weight:800;
-  letter-spacing:-6px;
-}
+@media(max-height:550px){
 
-.lock p{
-  color:#666;
-}
+    .short{
+        min-height:420px;
+    }
 
-.unlock{
-  background:#111;
-  color:#fff;
-  padding:15px 25px;
-  border-radius:20px;
-  font-weight:700;
-}
+    .info{
+        bottom:12px;
+    }
 
-.custom-delete{
-  float:right;
-  background:#ff3b30;
-  color:#fff;
-  border-radius:12px;
-  padding:7px 10px;
-}
-
-@media(max-width:430px){
-  .home{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .app-icon{
-    width:62px;
-    height:62px;
-    font-size:30px;
-  }
-
-  .dock .app-icon{
-    width:57px;
-    height:57px;
-  }
-
-  .dock{
-    gap:6px;
-  }
-
-  .greeting{
-    font-size:31px;
-  }
-
-  .widget-row{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .photo-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+    .actions{
+        bottom:12px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="statusbar">
-  <span id="statusTime">09:41</span>
-  <span>▮▮▮　⌁　▰</span>
-</div>
+<!-- =========================
+     HEADER
+========================= -->
 
-<div class="dynamic-island"></div>
+<header class="header">
 
-<div class="lock" id="lockScreen">
-  <div>
-    <div class="lock-time" id="lockTime">09:41</div>
-    <p>iOS 27 Web</p>
-    <button class="unlock" onclick="unlockPhone()">Entsperren</button>
-  </div>
-</div>
-
-<main class="home">
-
-  <div class="header">
-
-    <div class="date" id="dateText">
-      DIENSTAG · 14. SEPTEMBER
+    <div class="logo">
+        Shorts<span>+</span>
     </div>
 
-    <div class="greeting">
-      Hallo 👋
-    </div>
+    <div class="header-right">
 
-    <div class="widget-row">
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Shorts suchen..."
+        >
 
-      <div class="widget">
-        <div>☀️ Wetter</div>
-        <div class="weather-temp">22°</div>
-        <div class="weather-desc">Klarer Himmel</div>
-      </div>
-
-      <div class="widget">
-        <div>Heute</div>
-        <div class="calendar-big" id="dayNumber">14</div>
-        <div class="calendar-label">September</div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="app-grid" id="appGrid"></div>
-
-</main>
-
-<div class="dock" id="dock"></div>
-
-<div class="toast" id="toast"></div>
-
-
-<!-- NACHRICHTEN -->
-
-<section class="window" id="messagesWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Nachrichten</h2>
-    <span class="top-right">● Online</span>
-  </div>
-
-  <div class="content">
-
-    <div class="card">
-      <b>🤖 AI Chat</b>
-      <p style="color:var(--muted)">
-        Schreibe mit einem lokalen Bot.
-      </p>
-    </div>
-
-    <div class="chat" id="chatMessages">
-
-      <div class="bubble bot">
-        Hey! 👋 Ich bin dein Web-Bot.
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="chatbar">
-    <input id="messageInput" placeholder="Nachricht…">
-    <button class="blue" onclick="sendMessage()">Senden</button>
-  </div>
-
-</section>
-
-
-<!-- MAIL -->
-
-<section class="window" id="mailWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Mail</h2>
-  </div>
-
-  <div class="content">
-
-    <div class="card mail">
-      <div class="mail-icon">✉️</div>
-      <div class="mail-text">
-        <b>Willkommen bei iOS 27 Web</b>
-        <span>Dein System ist bereit.</span>
-      </div>
-      <small>Heute</small>
-    </div>
-
-    <div class="card mail">
-      <div class="mail-icon">🛍️</div>
-      <div class="mail-text">
-        <b>App Store</b>
-        <span>Neue Apps sind verfügbar.</span>
-      </div>
-      <small>Heute</small>
-    </div>
-
-    <div class="card mail">
-      <div class="mail-icon">🤖</div>
-      <div class="mail-text">
-        <b>AI Assistant</b>
-        <span>Du hast eine neue Nachricht.</span>
-      </div>
-      <small>Gestern</small>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- FOTOS -->
-
-<section class="window" id="photosWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Fotos</h2>
-    <button class="primary top-right" onclick="addPhoto()">＋</button>
-  </div>
-
-  <div class="content">
-
-    <div class="card">
-      <b>Mediathek</b>
-      <p style="color:var(--muted)">
-        Deine Fotos werden lokal im Browser gespeichert.
-      </p>
-    </div>
-
-    <div class="photo-grid" id="photoGrid"></div>
-
-  </div>
-
-</section>
-
-
-<!-- APP STORE -->
-
-<section class="window" id="storeWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>App Store</h2>
-  </div>
-
-  <div class="content">
-
-    <div class="card">
-
-      <h3>➕ Eigene App hinzufügen</h3>
-
-      <p style="color:var(--muted)">
-        Du kannst Apps direkt auf deinem Homescreen erstellen.
-      </p>
-
-      <input id="newAppName" placeholder="App-Name">
-
-      <input id="newAppIcon" placeholder="Emoji, z.B. 🚀">
-
-      <button class="blue" onclick="createApp()">
-        App installieren
-      </button>
-
-    </div>
-
-    <h3>Empfohlen</h3>
-
-    <div class="store-grid">
-
-      <div class="store-card">
-        <div class="store-icon">🤖</div>
-        <h3>AI Assistant</h3>
-        <p>Dein smarter Web-Assistent.</p>
-        <button class="primary" onclick="installDemo('AI Assistant','🤖')">
-          Laden
+        <button
+            class="header-button"
+            onclick="openAdd()"
+        >
+            + Short
         </button>
-      </div>
-
-      <div class="store-card">
-        <div class="store-icon">🌐</div>
-        <h3>Browser</h3>
-        <p>Schneller Webzugriff.</p>
-        <button class="primary" onclick="openBrowser()">
-          Öffnen
-        </button>
-      </div>
-
-      <div class="store-card">
-        <div class="store-icon">🎨</div>
-        <h3>Studio</h3>
-        <p>Kreative Werkzeuge.</p>
-        <button class="primary" onclick="toast('Studio geöffnet')">
-          Öffnen
-        </button>
-      </div>
-
-      <div class="store-card">
-        <div class="store-icon">☁️</div>
-        <h3>Cloud</h3>
-        <p>Deine Dateien als Demo.</p>
-        <button class="primary" onclick="toast('Cloud geöffnet')">
-          Öffnen
-        </button>
-      </div>
 
     </div>
 
-    <h3>Meine installierten Apps</h3>
-
-    <div id="installedApps"></div>
-
-  </div>
-
-</section>
+</header>
 
 
-<!-- NOTIZEN -->
+<!-- =========================
+     FILTER
+========================= -->
 
-<section class="window" id="notesWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Notizen</h2>
+<nav class="filterbar">
 
     <button
-      class="primary top-right"
-      onclick="saveNotes()">
-      Speichern
+        class="filter active"
+        data-age="all"
+        onclick="setAge('all',this)"
+    >
+        Alle
     </button>
-  </div>
 
-  <div class="content">
+    <button
+        class="filter"
+        data-age="6"
+        onclick="setAge('6',this)"
+    >
+        6+
+    </button>
 
-    <div class="card">
+    <button
+        class="filter"
+        data-age="12"
+        onclick="setAge('12',this)"
+    >
+        12+
+    </button>
 
-      <input
-        id="noteTitle"
-        placeholder="Titel">
+    <button
+        class="filter"
+        data-age="16"
+        onclick="setAge('16',this)"
+    >
+        16+
+    </button>
 
-      <textarea
-        id="noteText"
-        placeholder="Schreibe hier deine Notiz…"></textarea>
+    <button
+        class="filter"
+        data-age="18"
+        onclick="setAge('18',this)"
+    >
+        18+
+    </button>
+
+</nav>
+
+
+<!-- =========================
+     FEED
+========================= -->
+
+<main id="feed" class="feed"></main>
+
+
+<!-- =========================
+     ADD MODAL
+========================= -->
+
+<div id="modalBg" class="modal-bg">
+
+    <div class="modal">
+
+        <h2>Short hinzufügen</h2>
+
+        <label>YouTube-Short-URL</label>
+
+        <input
+            id="urlInput"
+            placeholder="https://youtube.com/shorts/..."
+        >
+
+        <label>Titel</label>
+
+        <input
+            id="titleInput"
+            placeholder="Mein Short"
+        >
+
+        <label>Altersstufe</label>
+
+        <select id="ageInput">
+
+            <option value="6">6+</option>
+            <option value="12" selected>12+</option>
+            <option value="16">16+</option>
+            <option value="18">18+</option>
+
+        </select>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel"
+                onclick="closeAdd()"
+            >
+                Abbrechen
+            </button>
+
+            <button
+                class="add"
+                onclick="addShort()"
+            >
+                Hinzufügen
+            </button>
+
+        </div>
 
     </div>
 
-  </div>
+</div>
 
-</section>
 
-
-<!-- RECHNER -->
-
-<section class="window" id="calculatorWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Rechner</h2>
-  </div>
-
-  <div class="content">
-
-    <div class="calculator">
-
-      <input
-        id="calcDisplay"
-        class="calc-display"
-        readonly>
-
-      <button class="calc-button" onclick="calc('7')">7</button>
-      <button class="calc-button" onclick="calc('8')">8</button>
-      <button class="calc-button" onclick="calc('9')">9</button>
-      <button class="calc-button calc-op" onclick="calc('/')">÷</button>
-
-      <button class="calc-button" onclick="calc('4')">4</button>
-      <button class="calc-button" onclick="calc('5')">5</button>
-      <button class="calc-button" onclick="calc('6')">6</button>
-      <button class="calc-button calc-op" onclick="calc('*')">×</button>
-
-      <button class="calc-button" onclick="calc('1')">1</button>
-      <button class="calc-button" onclick="calc('2')">2</button>
-      <button class="calc-button" onclick="calc('3')">3</button>
-      <button class="calc-button calc-op" onclick="calc('-')">−</button>
-
-      <button class="calc-button" onclick="calc('0')">0</button>
-      <button class="calc-button" onclick="calc('.')">.</button>
-      <button class="calc-button" onclick="calc('C')">C</button>
-      <button class="calc-button calc-op" onclick="calc('+')">+</button>
-
-      <button
-        class="calc-button"
-        style="grid-column:1/-1"
-        onclick="calc('=')">
-        =
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- GAMES -->
-
-<section class="window" id="gamesWindow">
-
-  <div class="topbar">
-    <button class="back" onclick="closeWindows()">‹</button>
-    <h2>Games</h2>
-  </div>
-
-  <div class="content">
-
-    <div class="game-grid">
-
-      <div class="game">
-
-        <div class="game-emoji">🚀</div>
-
-        <h2>Rocket Tap</h2>
-
-        <p>
-          Wie viele Punkte schaffst du?
-        </p>
-
-        <button onclick="rocketGame()">
-          START
-        </button>
-
-      </div>
-
-      <div class="game">
-
-        <div class="game-emoji">🧠</div>
-
-        <h2>Memory</h2>
-
-        <p>
-          Teste dein Gedächtnis.
-        </p>
-
-        <button onclick="memoryGame()">
-          START
-        </button>
-
-      </div>
-
-      <div class="game">
-
-        <div class="game-emoji">🎯</div>
-
-        <h2>Target</h2>
-
-        <p>
-          Triff das Ziel.
-        </p>
-
-        <button onclick="targetGame()">
-          START
-        </button>
-
-      </div>
-
-      <div class="game">
-
-        <div class="game-emoji">🏎️</div>
-
-        <h2>Mini Racer</h2>
-
-        <p>
-          Starte dein Rennen.
-        </p>
-
-        <button onclick="racerGame()">
-          START
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- EINSTELLUNGEN -->
-
-<section class="window" id="settingsWindow">
-
-  <div class="topbar">
-
-    <button class="back" onclick="closeWindows()">‹</button>
-
-    <h2>Einstellungen</h2>
-
-  </div>
-
-  <div class="content">
-
-    <div class="card">
-
-      <div class="settings-row">
-
-        <div class="settings-icon">
-          🌙
-        </div>
-
-        <div>
-          <b>Dunkelmodus</b>
-          <br>
-          <small>Systemdarstellung ändern</small>
-        </div>
-
-        <button
-          id="darkToggle"
-          class="toggle"
-          onclick="toggleDark()">
-
-          <div class="toggle-dot"></div>
-
-        </button>
-
-      </div>
-
-      <div class="settings-row">
-
-        <div class="settings-icon">
-          🔔
-        </div>
-
-        <div>
-          <b>Mitteilungen</b>
-          <br>
-          <small>Web-Benachrichtigungen</small>
-        </div>
-
-        <button
-          id="notifyToggle"
-          class="toggle on"
-          onclick="toggleNotify()">
-
-          <div class="toggle-dot"></div>
-
-        </button>
-
-      </div>
-
-      <div class="settings-row">
-
-        <div class="settings-icon">
-          📱
-        </div>
-
-        <div>
-          <b>iOS Web Edition</b>
-          <br>
-          <small>Version 27.0 Web</small>
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <h3>💾 Speicher</h3>
-
-      <p style="color:var(--muted)">
-        Apps, Notizen und Einstellungen werden
-        lokal auf diesem Gerät gespeichert.
-      </p>
-
-      <button
-        class="primary"
-        onclick="clearData()">
-        Lokale Daten löschen
-      </button>
-
-    </div>
-
-    <div class="card">
-
-      <h3>ℹ️ Über dieses Projekt</h3>
-
-      <p>
-        Dieses Projekt ist eine eigenständige
-        Web-Oberfläche und benötigt keinen Server
-        für die Grundfunktionen.
-      </p>
-
-      <p style="color:var(--muted)">
-        Ideal für GitHub Pages.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =========================================
-   GRUNDKONFIGURATION
-========================================= */
+/* =====================================================
+   DATEN
+===================================================== */
 
-const builtInApps = [
+/*
+   Trage hier deine YouTube-Shorts ein.
 
-  ["Nachrichten","💬","messages"],
+   Du brauchst nur die Video-ID.
 
-  ["Mail","✉️","mail"],
+   Beispiel:
 
-  ["Fotos","🌄","photos"],
+   https://www.youtube.com/shorts/ABC123XYZ
 
-  ["App Store","🛍️","store"],
+   wird zu:
 
-  ["Notizen","📝","notes"],
+   ABC123XYZ
+*/
 
-  ["Rechner","🧮","calculator"],
+let shorts = [
 
-  ["Games","🎮","games"],
-
-  ["Einstellungen","⚙️","settings"],
-
-  ["Safari","🧭","browser"],
-
-  ["Musik","🎵","music"],
-
-  ["Karten","🗺️","maps"],
-
-  ["Wetter","☀️","weather"]
-
-];
-
-const dockApps = [
-
-  ["Telefon","📞","phone"],
-
-  ["Nachrichten","💬","messages"],
-
-  ["Safari","🧭","browser"],
-
-  ["Musik","🎵","music"]
-
-];
-
-let customApps =
-  JSON.parse(
-    localStorage.getItem("ios27_custom_apps") || "[]"
-  );
-
-
-/* =========================================
-   HOMESCREEN
-========================================= */
-
-function renderApps(){
-
-  const grid =
-    document.getElementById("appGrid");
-
-  const all = [
-    ...builtInApps,
-    ...customApps.map(
-      x => [x.name,x.icon,"custom"]
-    )
-  ];
-
-  grid.innerHTML = "";
-
-  all.forEach(app => {
-
-    const button =
-      document.createElement("button");
-
-    button.className = "app";
-
-    button.innerHTML = `
-      <div class="app-icon">
-        ${app[1]}
-      </div>
-
-      <span class="app-name">
-        ${escapeHTML(app[0])}
-      </span>
-    `;
-
-    button.onclick = () =>
-      openApp(
-        app[0],
-        app[1],
-        app[2]
-      );
-
-    grid.appendChild(button);
-
-  });
-
-  renderDock();
-  renderInstalledApps();
-
-}
-
-
-/* =========================================
-   DOCK
-========================================= */
-
-function renderDock(){
-
-  const dock =
-    document.getElementById("dock");
-
-  dock.innerHTML = "";
-
-  dockApps.forEach(app => {
-
-    const button =
-      document.createElement("button");
-
-    button.className = "app";
-
-    button.innerHTML = `
-      <div class="app-icon">
-        ${app[1]}
-      </div>
-    `;
-
-    button.onclick = () =>
-      openApp(
-        app[0],
-        app[1],
-        app[2]
-      );
-
-    dock.appendChild(button);
-
-  });
-
-}
-
-
-/* =========================================
-   APPS ÖFFNEN
-========================================= */
-
-function openApp(name,icon,id){
-
-  if(id === "custom"){
-
-    toast(
-      "📱 " +
-      name +
-      " geöffnet"
-    );
-
-    return;
-  }
-
-  if(id === "browser"){
-
-    openBrowser();
-
-    return;
-  }
-
-  if(id === "phone"){
-
-    toast(
-      "📞 Telefon-Demo"
-    );
-
-    return;
-  }
-
-  if(id === "music"){
-
-    toast(
-      "🎵 Musik-Demo"
-    );
-
-    return;
-  }
-
-  if(id === "maps"){
-
-    toast(
-      "🗺️ Karten-Demo"
-    );
-
-    return;
-  }
-
-  if(id === "weather"){
-
-    toast(
-      "☀️ 22 °C · Klar"
-    );
-
-    return;
-  }
-
-  const map = {
-
-    messages:"messagesWindow",
-
-    mail:"mailWindow",
-
-    photos:"photosWindow",
-
-    store:"storeWindow",
-
-    notes:"notesWindow",
-
-    calculator:"calculatorWindow",
-
-    games:"gamesWindow",
-
-    settings:"settingsWindow"
-
-  };
-
-  if(map[id]){
-
-    closeWindows();
-
-    document
-      .getElementById(map[id])
-      .classList.add("open");
-
-    if(id === "photos")
-      renderPhotos();
-
-    if(id === "notes")
-      loadNotes();
-
-  }
-
-}
-
-
-/* =========================================
-   FENSTER
-========================================= */
-
-function closeWindows(){
-
-  document
-    .querySelectorAll(".window")
-    .forEach(
-      x => x.classList.remove("open")
-    );
-
-}
-
-
-/* =========================================
-   EIGENE APPS
-========================================= */
-
-function createApp(){
-
-  const name =
-    document
-      .getElementById("newAppName")
-      .value
-      .trim();
-
-  let icon =
-    document
-      .getElementById("newAppIcon")
-      .value
-      .trim();
-
-  if(!name){
-
-    toast(
-      "Bitte App-Namen eingeben"
-    );
-
-    return;
-  }
-
-  if(!icon)
-    icon = "📦";
-
-  customApps.push({
-
-    name:name,
-
-    icon:icon
-
-  });
-
-  localStorage.setItem(
-    "ios27_custom_apps",
-    JSON.stringify(customApps)
-  );
-
-  document
-    .getElementById("newAppName")
-    .value = "";
-
-  document
-    .getElementById("newAppIcon")
-    .value = "";
-
-  renderApps();
-
-  toast(
-    "✓ " +
-    name +
-    " installiert"
-  );
-
-}
-
-
-function installDemo(name,icon){
-
-  if(
-    customApps.some(
-      x => x.name === name
-    )
-  ){
-
-    toast(
-      "App bereits installiert"
-    );
-
-    return;
-  }
-
-  customApps.push({
-
-    name:name,
-
-    icon:icon
-
-  });
-
-  localStorage.setItem(
-    "ios27_custom_apps",
-    JSON.stringify(customApps)
-  );
-
-  renderApps();
-
-  toast(
-    "✓ " +
-    name +
-    " installiert"
-  );
-
-}
-
-
-function renderInstalledApps(){
-
-  const box =
-    document.getElementById(
-      "installedApps"
-    );
-
-  if(!customApps.length){
-
-    box.innerHTML = `
-      <div class="card">
-        Noch keine eigenen Apps installiert.
-      </div>
-    `;
-
-    return;
-  }
-
-  box.innerHTML = "";
-
-  customApps.forEach(
-    (app,index) => {
-
-      const card =
-        document.createElement("div");
-
-      card.className = "card";
-
-      card.innerHTML = `
-        <b>
-          ${app.icon}
-          ${escapeHTML(app.name)}
-        </b>
-
-        <button
-          class="custom-delete"
-          onclick="deleteCustomApp(${index})">
-          Löschen
-        </button>
-      `;
-
-      box.appendChild(card);
-
-    }
-  );
-
-}
-
-
-function deleteCustomApp(index){
-
-  customApps.splice(
-    index,
-    1
-  );
-
-  localStorage.setItem(
-    "ios27_custom_apps",
-    JSON.stringify(customApps)
-  );
-
-  renderApps();
-
-  toast(
-    "App gelöscht"
-  );
-
-}
-
-
-/* =========================================
-   NACHRICHTEN / BOT
-========================================= */
-
-function sendMessage(){
-
-  const input =
-    document.getElementById(
-      "messageInput"
-    );
-
-  const text =
-    input.value.trim();
-
-  if(!text)
-    return;
-
-  addMessage(
-    text,
-    "me"
-  );
-
-  input.value = "";
-
-  setTimeout(
-    () => {
-
-      const replies = [
-
-        "Alles klar! 🤖",
-
-        "Interessant! Erzähl mir mehr.",
-
-        "Das habe ich verstanden.",
-
-        "Cool 😎",
-
-        "Ich bin dein Web-Bot und kann hier mit dir chatten.",
-
-        "Okay! Was möchtest du als Nächstes machen?"
-
-      ];
-
-      const answer =
-        replies[
-          Math.floor(
-            Math.random() *
-            replies.length
-          )
-        ];
-
-      addMessage(
-        answer,
-        "bot"
-      );
-
+    {
+        id:"jNQXAC9IVRw",
+        title:"Beispiel Short",
+        channel:"YouTube",
+        age:12
     },
-    450
-  );
 
-}
-
-
-function addMessage(text,type){
-
-  const chat =
-    document.getElementById(
-      "chatMessages"
-    );
-
-  const bubble =
-    document.createElement("div");
-
-  bubble.className =
-    "bubble " + type;
-
-  bubble.textContent =
-    text;
-
-  chat.appendChild(
-    bubble
-  );
-
-  bubble.scrollIntoView({
-    behavior:"smooth"
-  });
-
-}
-
-
-document
-  .getElementById(
-    "messageInput"
-  )
-  .addEventListener(
-    "keydown",
-    event => {
-
-      if(
-        event.key === "Enter"
-      ){
-
-        sendMessage();
-
-      }
-
+    {
+        id:"aqz-KE-bpKQ",
+        title:"Weiteres Beispiel",
+        channel:"YouTube",
+        age:6
     }
-  );
+
+];
 
 
-/* =========================================
-   FOTOS
-========================================= */
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
 
-function renderPhotos(){
+const saved = localStorage.getItem("shortsPlus");
 
-  const grid =
-    document.getElementById(
-      "photoGrid"
-    );
-
-  let photos =
-    JSON.parse(
-      localStorage.getItem(
-        "ios27_photos"
-      ) || "[]"
-    );
-
-  if(!photos.length){
-
-    photos = [
-
-      "🌅",
-
-      "🌌",
-
-      "🌊",
-
-      "🏔️",
-
-      "🌴",
-
-      "📸",
-
-      "🌃",
-
-      "🚀",
-
-      "🌈"
-
-    ];
-
-  }
-
-  grid.innerHTML = "";
-
-  photos.forEach(
-    photo => {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.className =
-        "photo";
-
-      div.textContent =
-        photo;
-
-      grid.appendChild(
-        div
-      );
-
-    }
-  );
-
-}
-
-
-function addPhoto(){
-
-  const value =
-    prompt(
-      "Welches Emoji soll dein Foto darstellen?"
-    );
-
-  if(!value)
-    return;
-
-  let photos =
-    JSON.parse(
-      localStorage.getItem(
-        "ios27_photos"
-      ) || "[]"
-    );
-
-  photos.push(
-    value
-  );
-
-  localStorage.setItem(
-    "ios27_photos",
-    JSON.stringify(photos)
-  );
-
-  renderPhotos();
-
-  toast(
-    "📸 Foto hinzugefügt"
-  );
-
-}
-
-
-/* =========================================
-   NOTIZEN
-========================================= */
-
-function loadNotes(){
-
-  document
-    .getElementById(
-      "noteTitle"
-    )
-    .value =
-    localStorage.getItem(
-      "ios27_note_title"
-    ) || "";
-
-  document
-    .getElementById(
-      "noteText"
-    )
-    .value =
-    localStorage.getItem(
-      "ios27_note_text"
-    ) || "";
-
-}
-
-
-function saveNotes(){
-
-  localStorage.setItem(
-    "ios27_note_title",
-    document
-      .getElementById(
-        "noteTitle"
-      )
-      .value
-  );
-
-  localStorage.setItem(
-    "ios27_note_text",
-    document
-      .getElementById(
-        "noteText"
-      )
-      .value
-  );
-
-  toast(
-    "✓ Notiz gespeichert"
-  );
-
-}
-
-
-/* =========================================
-   RECHNER
-========================================= */
-
-let calcExpression = "";
-
-function calc(value){
-
-  const display =
-    document.getElementById(
-      "calcDisplay"
-    );
-
-  if(value === "C"){
-
-    calcExpression = "";
-
-    display.value = "";
-
-    return;
-
-  }
-
-  if(value === "="){
+if(saved){
 
     try{
 
-      calcExpression =
-        String(
-          Function(
-            "return " +
-            calcExpression
-          )()
-        );
+        const extra = JSON.parse(saved);
 
-      display.value =
-        calcExpression;
+        if(Array.isArray(extra)){
+            shorts = [...shorts,...extra];
+        }
 
-    }
+    }catch(e){
 
-    catch{
-
-      calcExpression = "";
-
-      display.value =
-        "Fehler";
+        console.log("Gespeicherte Shorts konnten nicht geladen werden.");
 
     }
-
-    return;
-
-  }
-
-  calcExpression += value;
-
-  display.value =
-    calcExpression;
 
 }
 
 
-/* =========================================
-   SPIELE
-========================================= */
+/* =====================================================
+   VARIABLEN
+===================================================== */
 
-function rocketGame(){
+let currentAge = "all";
+let searchText = "";
 
-  let score = 0;
 
-  const start =
-    Date.now();
+/* =====================================================
+   VIDEO-ID AUS URL
+===================================================== */
 
-  toast(
-    "🚀 Tippe schnell!"
-  );
+function getVideoId(url){
 
-  const interval =
-    setInterval(
-      () => {
+    if(!url) return null;
 
-        score++;
+    url = url.trim();
+
+    /*
+       Shorts URL
+    */
+
+    let match = url.match(
+        /youtube\.com\/shorts\/([a-zA-Z0-9_-]{6,})/
+    );
+
+    if(match){
+        return match[1];
+    }
+
+    /*
+       normale YouTube URL
+    */
+
+    match = url.match(
+        /youtube\.com\/watch\?v=([a-zA-Z0-9_-]{6,})/
+    );
+
+    if(match){
+        return match[1];
+    }
+
+    /*
+       youtu.be
+    */
+
+    match = url.match(
+        /youtu\.be\/([a-zA-Z0-9_-]{6,})/
+    );
+
+    if(match){
+        return match[1];
+    }
+
+    /*
+       Falls direkt eine ID eingegeben wird
+    */
+
+    if(/^[a-zA-Z0-9_-]{6,}$/.test(url)){
+        return url;
+    }
+
+    return null;
+}
+
+
+/* =====================================================
+   FEED RENDERN
+===================================================== */
+
+function render(){
+
+    const feed = document.getElementById("feed");
+
+    feed.innerHTML = "";
+
+    let filtered = shorts.filter(short => {
+
+        /*
+           Altersfilter
+        */
 
         if(
-          Date.now() -
-          start >
-          3000
+            currentAge !== "all" &&
+            Number(short.age) < Number(currentAge)
         ){
+            return false;
+        }
 
-          clearInterval(
-            interval
-          );
+        /*
+           Suche
+        */
 
-          toast(
-            "🚀 Score: " +
-            score
-          );
+        if(searchText){
+
+            const text = (
+                short.title +
+                " " +
+                short.channel
+            ).toLowerCase();
+
+            if(!text.includes(searchText.toLowerCase())){
+                return false;
+            }
 
         }
 
-      },
-      100
+        return true;
+
+    });
+
+
+    if(filtered.length === 0){
+
+        feed.innerHTML = `
+
+            <section class="empty">
+
+                <h1>Keine Shorts gefunden</h1>
+
+                <p>
+                    Für deinen Filter oder deine Suche
+                    wurden keine Shorts gefunden.
+                    Füge über „+ Short“ ein YouTube Short hinzu.
+                </p>
+
+            </section>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach((short,index)=>{
+
+        const section = document.createElement("section");
+
+        section.className = "short";
+
+        section.innerHTML = `
+
+            <div class="video-wrapper">
+
+                <iframe
+                    src="https://www.youtube.com/embed/${short.id}?rel=0&playsinline=1"
+                    title="${escapeHTML(short.title)}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+
+            <div class="info">
+
+                <h2>
+                    ${escapeHTML(short.title)}
+                </h2>
+
+                <p>
+                    @${escapeHTML(short.channel || "YouTube")}
+                </p>
+
+                <span class="age">
+                    ${short.age}+
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="action"
+                    onclick="likeShort(this)"
+                    title="Gefällt mir"
+                >
+                    ♥
+                </button>
+
+                <button
+                    class="action"
+                    onclick="openYouTube('${short.id}')"
+                    title="Auf YouTube öffnen"
+                >
+                    ▶
+                </button>
+
+                <button
+                    class="action"
+                    onclick="shareShort('${short.id}')"
+                    title="Teilen"
+                >
+                    ↗
+                </button>
+
+            </div>
+
+        `;
+
+        feed.appendChild(section);
+
+    });
+
+}
+
+
+/* =====================================================
+   HTML SICHER MACHEN
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================================
+   ALTERSFILTER
+===================================================== */
+
+function setAge(age,button){
+
+    currentAge = age;
+
+    document.querySelectorAll(".filter")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+    button.classList.add("active");
+
+    render();
+
+}
+
+
+/* =====================================================
+   SUCHE
+===================================================== */
+
+document
+.getElementById("search")
+.addEventListener("input",function(){
+
+    searchText = this.value;
+
+    render();
+
+});
+
+
+/* =====================================================
+   ADD MODAL
+===================================================== */
+
+function openAdd(){
+
+    document
+        .getElementById("modalBg")
+        .style.display = "flex";
+
+    document
+        .getElementById("urlInput")
+        .focus();
+
+}
+
+
+function closeAdd(){
+
+    document
+        .getElementById("modalBg")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   SHORT HINZUFÜGEN
+===================================================== */
+
+function addShort(){
+
+    const url =
+        document.getElementById("urlInput").value;
+
+    const title =
+        document.getElementById("titleInput").value ||
+        "Neues Short";
+
+    const age =
+        Number(
+            document.getElementById("ageInput").value
+        );
+
+    const id = getVideoId(url);
+
+
+    if(!id){
+
+        showToast(
+            "Keine gültige YouTube-URL gefunden."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Prüfen, ob schon vorhanden
+    */
+
+    if(shorts.some(short=>short.id === id)){
+
+        showToast(
+            "Dieses Short ist bereits vorhanden."
+        );
+
+        return;
+
+    }
+
+
+    const newShort = {
+
+        id:id,
+
+        title:title,
+
+        channel:"YouTube",
+
+        age:age
+
+    };
+
+
+    shorts.push(newShort);
+
+
+    /*
+       Nur eigene Shorts speichern.
+       Die beiden Demo-Shorts bleiben im Code.
+    */
+
+    const ownShorts =
+        shorts.slice(2);
+
+    localStorage.setItem(
+        "shortsPlus",
+        JSON.stringify(ownShorts)
+    );
+
+
+    document.getElementById("urlInput").value = "";
+    document.getElementById("titleInput").value = "";
+
+    closeAdd();
+
+    render();
+
+    showToast("Short hinzugefügt.");
+
+}
+
+
+/* =====================================================
+   LIKE
+===================================================== */
+
+function likeShort(button){
+
+    if(button.dataset.liked === "true"){
+
+        button.dataset.liked = "false";
+
+        button.style.transform = "";
+
+        showToast("Gefällt mir entfernt.");
+
+    }else{
+
+        button.dataset.liked = "true";
+
+        button.style.transform = "scale(1.2)";
+
+        showToast("Gefällt mir!");
+
+    }
+
+}
+
+
+/* =====================================================
+   YOUTUBE ÖFFNEN
+===================================================== */
+
+function openYouTube(id){
+
+    window.open(
+        "https://www.youtube.com/shorts/" + id,
+        "_blank"
     );
 
 }
 
 
-function memoryGame(){
+/* =====================================================
+   TEILEN
+===================================================== */
 
-  const symbols =
-    ["🍎","🚀","🐶","⭐","🎮","🌈"];
+async function shareShort(id){
 
-  const shuffled =
-    symbols
-      .sort(
-        () => Math.random()-.5
-      );
-
-  const first =
-    prompt(
-      "Memory: Welche Zahl gehört zu 🚀?\n\n" +
-      shuffled
-        .map(
-          (x,i) =>
-            (i+1) +
-            ": " +
-            x
-        )
-        .join("\n")
-    );
-
-  if(
-    first ==
-    shuffled.indexOf("🚀")+1
-  ){
-
-    toast(
-      "🧠 Richtig!"
-    );
-
-  }else{
-
-    toast(
-      "❌ Nicht ganz!"
-    );
-
-  }
-
-}
+    const url =
+        "https://www.youtube.com/shorts/" + id;
 
 
-function targetGame(){
+    if(navigator.share){
 
-  const number =
-    Math.floor(
-      Math.random()*10
-    )+1;
+        try{
 
-  const answer =
-    prompt(
-      "🎯 Rate eine Zahl von 1 bis 10"
-    );
+            await navigator.share({
 
-  if(
-    Number(answer) === number
-  ){
+                title:"YouTube Short",
+                url:url
 
-    toast(
-      "🎯 Treffer!"
-    );
+            });
 
-  }else{
+        }catch(e){}
 
-    toast(
-      "Die Zahl war " +
-      number
-    );
+    }else{
 
-  }
+        try{
+
+            await navigator.clipboard.writeText(url);
+
+            showToast(
+                "Short-Link kopiert."
+            );
+
+        }catch(e){
+
+            showToast(url);
+
+        }
+
+    }
 
 }
 
 
-function racerGame(){
-
-  toast(
-    "🏎️ Rennen gestartet!"
-  );
-
-  setTimeout(
-    () => {
-
-      toast(
-        "🏁 Du hast den 1. Platz!"
-      );
-
-    },
-    1600
-  );
-
-}
-
-
-/* =========================================
-   EINSTELLUNGEN
-========================================= */
-
-function toggleDark(){
-
-  document
-    .body
-    .classList
-    .toggle("dark");
-
-  const enabled =
-    document.body.classList.contains(
-      "dark"
-    );
-
-  localStorage.setItem(
-    "ios27_dark",
-    enabled
-  );
-
-  document
-    .getElementById(
-      "darkToggle"
-    )
-    .classList
-    .toggle(
-      "on",
-      enabled
-    );
-
-}
-
-
-function toggleNotify(){
-
-  const button =
-    document.getElementById(
-      "notifyToggle"
-    );
-
-  button.classList.toggle(
-    "on"
-  );
-
-  toast(
-    button.classList.contains("on")
-      ? "🔔 Mitteilungen an"
-      : "🔕 Mitteilungen aus"
-  );
-
-}
-
-
-function clearData(){
-
-  if(
-    !confirm(
-      "Alle eigenen Apps, Fotos und Notizen löschen?"
-    )
-  )
-    return;
-
-  localStorage.removeItem(
-    "ios27_custom_apps"
-  );
-
-  localStorage.removeItem(
-    "ios27_photos"
-  );
-
-  localStorage.removeItem(
-    "ios27_note_title"
-  );
-
-  localStorage.removeItem(
-    "ios27_note_text"
-  );
-
-  customApps = [];
-
-  renderApps();
-
-  toast(
-    "Daten gelöscht"
-  );
-
-}
-
-
-/* =========================================
-   BROWSER
-========================================= */
-
-function openBrowser(){
-
-  window.open(
-    "https://www.google.com",
-    "_blank"
-  );
-
-}
-
-
-/* =========================================
-   UHR
-========================================= */
-
-function updateClock(){
-
-  const now =
-    new Date();
-
-  const time =
-    now.toLocaleTimeString(
-      "de-DE",
-      {
-        hour:"2-digit",
-        minute:"2-digit"
-      }
-    );
-
-  document
-    .getElementById(
-      "statusTime"
-    )
-    .textContent =
-    time;
-
-  document
-    .getElementById(
-      "lockTime"
-    )
-    .textContent =
-    time;
-
-  const days = [
-
-    "SONNTAG",
-
-    "MONTAG",
-
-    "DIENSTAG",
-
-    "MITTWOCH",
-
-    "DONNERSTAG",
-
-    "FREITAG",
-
-    "SAMSTAG"
-
-  ];
-
-  const months = [
-
-    "JANUAR",
-
-    "FEBRUAR",
-
-    "MÄRZ",
-
-    "APRIL",
-
-    "MAI",
-
-    "JUNI",
-
-    "JULI",
-
-    "AUGUST",
-
-    "SEPTEMBER",
-
-    "OKTOBER",
-
-    "NOVEMBER",
-
-    "DEZEMBER"
-
-  ];
-
-  document
-    .getElementById(
-      "dateText"
-    )
-    .textContent =
-    days[now.getDay()] +
-    " · " +
-    now.getDate() +
-    ". " +
-    months[now.getMonth()];
-
-  document
-    .getElementById(
-      "dayNumber"
-    )
-    .textContent =
-    now.getDate();
-
-}
-
-
-setInterval(
-  updateClock,
-  1000
-);
-
-updateClock();
-
-
-/* =========================================
+/* =====================================================
    TOAST
-========================================= */
+===================================================== */
 
 let toastTimer;
 
-function toast(text){
+function showToast(text){
 
-  const box =
-    document.getElementById(
-      "toast"
-    );
+    const toast =
+        document.getElementById("toast");
 
-  box.textContent =
-    text;
+    toast.textContent = text;
 
-  box.classList.add(
-    "show"
-  );
+    toast.classList.add("show");
 
-  clearTimeout(
-    toastTimer
-  );
+    clearTimeout(toastTimer);
 
-  toastTimer =
-    setTimeout(
-      () => {
+    toastTimer = setTimeout(()=>{
 
-        box.classList.remove(
-          "show"
-        );
+        toast.classList.remove("show");
 
-      },
-      1800
-    );
+    },2000);
 
 }
 
 
-/* =========================================
-   SPERREN
-========================================= */
+/* =====================================================
+   MODAL AUF BACKGROUND SCHLIESSEN
+===================================================== */
 
-function unlockPhone(){
+document
+.getElementById("modalBg")
+.addEventListener("click",function(e){
 
-  document
-    .getElementById(
-      "lockScreen"
-    )
-    .classList
-    .remove("show");
+    if(e.target === this){
+        closeAdd();
+    }
 
-}
-
-
-/* =========================================
-   HTML SICHER MACHEN
-========================================= */
-
-function escapeHTML(text){
-
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
+});
 
 
-/* =========================================
+/* =====================================================
+   ESC
+===================================================== */
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key === "Escape"){
+        closeAdd();
+    }
+
+});
+
+
+/* =====================================================
    START
-========================================= */
+===================================================== */
 
-if(
-  localStorage.getItem(
-    "ios27_dark"
-  ) === "true"
-){
-
-  document
-    .body
-    .classList
-    .add("dark");
-
-  document
-    .getElementById(
-      "darkToggle"
-    )
-    .classList
-    .add("on");
-
-}
-
-renderApps();
-
-renderPhotos();
+render();
 
 </script>
 
