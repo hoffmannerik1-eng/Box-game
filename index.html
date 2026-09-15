@@ -1,1566 +1,2207 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ShortFlow</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111b21">
+<title>Chatly</title>
 
 <style>
+:root{
+  --green:#00a884;
+  --green2:#06cf9c;
+  --bg:#efeae2;
+  --panel:#ffffff;
+  --header:#f0f2f5;
+  --text:#111b21;
+  --muted:#667781;
+  --line:#e9edef;
+  --bubble:#d9fdd3;
+  --incoming:#fff;
+  --search:#f0f2f5;
+  --sidebar:#fff;
+  --blue:#53bdeb;
+}
+
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+  margin:0;
+  width:100%;
+  height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#d1d7db;
+  color:var(--text);
+  overflow:hidden;
 }
 
 button,input{
-    font:inherit;
+  font:inherit;
 }
 
 button{
-    cursor:pointer;
+  border:0;
+  cursor:pointer;
 }
-
-/* ==============================
-   APP
-============================== */
 
 .app{
-    width:100%;
-    height:100%;
-    position:relative;
-    background:#000;
+  width:100%;
+  height:100%;
+  display:flex;
+  background:var(--bg);
 }
 
-/* ==============================
-   HEADER
-============================== */
+/* SIDEBAR */
 
-.top{
-    position:fixed;
-    z-index:1000;
-
-    top:0;
-    left:0;
-    right:0;
-
-    height:64px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 18px;
-
-    background:linear-gradient(
-        rgba(0,0,0,.8),
-        rgba(0,0,0,0)
-    );
-
-    pointer-events:none;
+.sidebar{
+  width:410px;
+  min-width:320px;
+  height:100%;
+  background:var(--sidebar);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  z-index:5;
 }
 
-.top>*{
-    pointer-events:auto;
+.topbar{
+  height:60px;
+  background:var(--header);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:700;
 }
 
 .logo{
-    font-size:22px;
-    font-weight:900;
-    letter-spacing:-1px;
-
-    text-shadow:0 2px 10px #000;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--green),#008069);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:19px;
+  box-shadow:0 5px 15px #0002;
 }
 
-.logo span{
-    color:#ff1744;
+.top-actions{
+  display:flex;
+  gap:6px;
 }
 
-.searchBox{
-    display:flex;
-    align-items:center;
-    gap:8px;
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:transparent;
+  font-size:20px;
+  color:var(--muted);
+}
+
+.icon-btn:hover{
+  background:#0000000b;
 }
 
 .search{
-    width:260px;
-    height:40px;
-
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:22px;
-
-    outline:none;
-
-    padding:0 16px;
-
-    color:#fff;
-    background:rgba(20,20,20,.75);
-
-    backdrop-filter:blur(15px);
+  padding:8px 12px;
+  background:white;
+  border-bottom:1px solid var(--line);
 }
 
-.search::placeholder{
-    color:#aaa;
+.searchbox{
+  height:40px;
+  border-radius:8px;
+  background:var(--search);
+  display:flex;
+  align-items:center;
+  padding:0 12px;
+  gap:10px;
 }
 
-.searchBtn{
-    width:40px;
-    height:40px;
-
-    border:0;
-    border-radius:50%;
-
-    color:#fff;
-    background:rgba(25,25,25,.8);
-
-    font-size:18px;
+.searchbox input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--text);
 }
 
-/* ==============================
-   FILTER
-============================== */
-
-.filters{
-    position:fixed;
-    z-index:1001;
-
-    top:70px;
-    left:18px;
-
-    display:flex;
-    gap:7px;
-
-    max-width:calc(100% - 36px);
-
-    overflow-x:auto;
-
-    scrollbar-width:none;
+.chat-list{
+  overflow-y:auto;
+  flex:1;
 }
 
-.filters::-webkit-scrollbar{
-    display:none;
+.chat-item{
+  height:74px;
+  display:flex;
+  align-items:center;
+  padding:8px 14px;
+  gap:13px;
+  cursor:pointer;
+  border-bottom:1px solid #f0f2f5;
 }
 
-.filter{
-    flex:none;
-
-    border:1px solid rgba(255,255,255,.16);
-
-    border-radius:18px;
-
-    padding:8px 14px;
-
-    color:#fff;
-
-    background:rgba(20,20,20,.65);
-
-    backdrop-filter:blur(15px);
-
-    font-size:13px;
-    font-weight:700;
+.chat-item:hover{
+  background:#f5f6f6;
 }
 
-.filter.active{
-    color:#000;
-    background:#fff;
+.chat-item.active{
+  background:#f0f2f5;
 }
 
-/* ==============================
-   FEED
-============================== */
-
-.feed{
-    position:absolute;
-
-    inset:0;
-
-    overflow-y:auto;
-    overflow-x:hidden;
-
-    scroll-snap-type:y mandatory;
-
-    scrollbar-width:none;
-
-    overscroll-behavior-y:contain;
+.avatar{
+  width:52px;
+  height:52px;
+  min-width:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:21px;
+  font-weight:bold;
+  background:linear-gradient(135deg,#00a884,#007c68);
 }
 
-.feed::-webkit-scrollbar{
-    display:none;
+.avatar.bot{
+  background:linear-gradient(135deg,#6c63ff,#8b5cf6);
 }
 
-/* ==============================
-   SHORT
-============================== */
-
-.short{
-    position:relative;
-
-    width:100%;
-    height:100dvh;
-
-    scroll-snap-align:start;
-    scroll-snap-stop:always;
-
-    background:#000;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.chat-info{
+  min-width:0;
+  flex:1;
 }
 
-.video{
-    width:100%;
-    height:100%;
-
-    position:absolute;
-    inset:0;
-
-    background:#000;
+.chat-row{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
 }
 
-.video iframe{
-    position:absolute;
-
-    width:100%;
-    height:100%;
-
-    inset:0;
-
-    border:0;
+.chat-name{
+  font-size:16px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-/*
-   Desktop:
-   Video bleibt im vertikalen Short-Format.
-*/
-
-@media(min-width:700px){
-
-    .video{
-        width:min(100vw,560px);
-        height:100vh;
-
-        left:50%;
-        right:auto;
-
-        transform:translateX(-50%);
-    }
+.chat-time{
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
 }
 
-/* ==============================
-   GRADIENT
-============================== */
-
-.gradient{
-    position:absolute;
-
-    z-index:4;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.35),
-            transparent 18%,
-            transparent 60%,
-            rgba(0,0,0,.88) 100%
-        );
+.chat-preview{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:5px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-/* ==============================
-   INFO
-============================== */
+/* MAIN */
 
-.info{
-    position:absolute;
-
-    z-index:10;
-
-    left:max(18px,calc(50% - 270px));
-    bottom:28px;
-
-    width:min(430px,calc(100% - 105px));
-
-    text-shadow:0 2px 8px #000;
+.main{
+  flex:1;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
 }
 
-.channel{
-    font-size:15px;
-    font-weight:800;
-
-    margin-bottom:7px;
+.empty{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:var(--muted);
+  background:
+    radial-gradient(circle at center,#ffffffaa,transparent 45%),
+    #f0f2f5;
 }
 
-.title{
-    font-size:17px;
-    line-height:1.3;
-
-    margin-bottom:8px;
+.empty-logo{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--green),#007c68);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  margin-bottom:20px;
+  box-shadow:0 15px 45px #0002;
 }
 
-.views{
-    color:#ddd;
-
-    font-size:12px;
+.empty h1{
+  margin:0 0 8px;
+  color:var(--text);
 }
 
-/* ==============================
-   ACTIONS
-============================== */
-
-.actions{
-    position:absolute;
-
-    z-index:20;
-
-    right:max(15px,calc(50% - 270px));
-    bottom:25px;
-
-    display:flex;
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:13px;
+.empty p{
+  max-width:450px;
+  line-height:1.5;
 }
 
-.action{
-    width:50px;
-    height:50px;
+/* CHAT HEADER */
 
-    border:0;
-    border-radius:50%;
-
-    color:#fff;
-
-    background:rgba(20,20,20,.72);
-
-    backdrop-filter:blur(14px);
-
-    font-size:22px;
-
-    transition:.15s;
+.chat-header{
+  height:60px;
+  background:var(--header);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:6px 12px;
+  border-bottom:1px solid var(--line);
 }
 
-.action:hover{
-    transform:scale(1.08);
-    background:rgba(55,55,55,.9);
+.back{
+  display:none;
 }
 
-.action.liked{
-    color:#ff1744;
+.chat-header .avatar{
+  width:42px;
+  height:42px;
+  min-width:42px;
+  font-size:17px;
 }
 
-.actionText{
-    margin-top:-8px;
-
-    font-size:11px;
-    font-weight:700;
+.header-info{
+  flex:1;
+  min-width:0;
 }
 
-/* ==============================
-   LOADING
-============================== */
+.header-name{
+  font-size:16px;
+  font-weight:600;
+}
+
+.header-status{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+/* MESSAGES */
+
+.messages{
+  flex:1;
+  overflow-y:auto;
+  padding:22px 6%;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(#00000008 1px,transparent 1px);
+  background-size:18px 18px;
+}
+
+.day{
+  text-align:center;
+  margin:5px 0 18px;
+}
+
+.day span{
+  background:#fff;
+  color:var(--muted);
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:12px;
+  box-shadow:0 1px 2px #0002;
+}
+
+.message{
+  display:flex;
+  margin:3px 0;
+}
+
+.message.out{
+  justify-content:flex-end;
+}
+
+.bubble{
+  max-width:min(70%,620px);
+  padding:7px 9px 5px;
+  border-radius:8px;
+  background:var(--incoming);
+  box-shadow:0 1px 1px #0002;
+  position:relative;
+}
+
+.message.out .bubble{
+  background:var(--bubble);
+}
+
+.message-text{
+  font-size:14.5px;
+  line-height:1.45;
+  white-space:pre-wrap;
+  word-break:break-word;
+  padding-right:45px;
+}
+
+.meta{
+  float:right;
+  margin-left:8px;
+  margin-top:5px;
+  font-size:10px;
+  color:var(--muted);
+  display:flex;
+  gap:3px;
+  align-items:center;
+}
+
+.check{
+  color:var(--blue);
+  font-size:13px;
+}
+
+/* COMPOSER */
+
+.composer{
+  min-height:62px;
+  background:#f0f2f5;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+}
+
+.round{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:transparent;
+  color:var(--muted);
+  font-size:22px;
+}
+
+.message-input{
+  flex:1;
+  min-width:0;
+  background:white;
+  border-radius:22px;
+  border:0;
+  outline:0;
+  padding:12px 16px;
+  color:var(--text);
+}
+
+.send{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:var(--green);
+  color:white;
+  font-size:19px;
+}
+
+.send:hover{
+  background:#008f72;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:20px;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+  width:min(480px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 25px 80px #0005;
+}
+
+.modal-card h2{
+  margin-top:0;
+}
+
+.modal-input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  outline:0;
+  margin:7px 0 12px;
+}
+
+.primary{
+  background:var(--green);
+  color:white;
+  padding:12px 17px;
+  border-radius:9px;
+  font-weight:600;
+}
+
+.secondary{
+  background:#eee;
+  padding:12px 17px;
+  border-radius:9px;
+}
+
+.modal-buttons{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+
+.bot-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.bot-card{
+  border:1px solid #e2e5e7;
+  border-radius:12px;
+  padding:14px;
+  cursor:pointer;
+}
+
+.bot-card:hover{
+  background:#f5f5f5;
+}
+
+.bot-icon{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.bot-title{
+  font-weight:700;
+}
+
+.bot-description{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+/* LINK */
+
+.link-box{
+  background:#f0f2f5;
+  border-radius:10px;
+  padding:12px;
+  word-break:break-all;
+  font-size:13px;
+  margin:12px 0;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:30px;
+  transform:translateX(-50%) translateY(20px);
+  background:#222;
+  color:white;
+  padding:11px 17px;
+  border-radius:9px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:300;
+  font-size:14px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* LOADING */
 
 .loading{
-    position:fixed;
-
-    z-index:5000;
-
-    inset:0;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    background:#000;
+  position:fixed;
+  inset:0;
+  background:#111b21;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:500;
 }
 
-.loader{
-    width:42px;
-    height:42px;
-
-    border:4px solid #333;
-    border-top-color:#fff;
-
-    border-radius:50%;
-
-    animation:spin .8s linear infinite;
+.spinner{
+  width:48px;
+  height:48px;
+  border:4px solid #ffffff33;
+  border-top-color:#00a884;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin-bottom:18px;
 }
 
 @keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
+  to{transform:rotate(360deg)}
 }
 
-/* ==============================
-   EMPTY / ERROR
-============================== */
+/* MOBILE */
 
-.message{
+@media(max-width:800px){
+
+  .sidebar{
     width:100%;
-    height:100%;
+    min-width:0;
+  }
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-
-    padding:30px;
-}
-
-.messageBox{
-    max-width:500px;
-}
-
-.messageBox h1{
-    margin-bottom:12px;
-}
-
-.messageBox p{
-    color:#aaa;
-    line-height:1.5;
-}
-
-.messageBox button{
-    margin-top:20px;
-
-    padding:12px 20px;
-
-    border:0;
-    border-radius:12px;
-
-    background:#fff;
-    color:#000;
-
-    font-weight:800;
-}
-
-/* ==============================
-   SEARCH OVERLAY
-============================== */
-
-.searchPanel{
+  .main{
     position:fixed;
-
-    z-index:3000;
-
     inset:0;
+    transform:translateX(100%);
+    transition:.25s;
+    z-index:20;
+  }
 
-    display:none;
+  .app.chat-open .main{
+    transform:translateX(0);
+  }
 
-    background:rgba(0,0,0,.75);
+  .back{
+    display:block;
+  }
 
-    backdrop-filter:blur(20px);
+  .messages{
+    padding:15px 3%;
+  }
+
+  .bubble{
+    max-width:85%;
+  }
+
+  .topbar{
+    height:60px;
+  }
+
+  .bot-grid{
+    grid-template-columns:1fr;
+  }
 }
 
-.searchPanelInner{
-    width:min(600px,calc(100% - 30px));
-
-    margin:100px auto 0;
-}
-
-.bigSearch{
-    width:100%;
-    height:55px;
-
-    border:1px solid #333;
-    border-radius:18px;
-
-    outline:none;
-
-    padding:0 18px;
-
-    background:#111;
-    color:#fff;
-
-    font-size:17px;
-}
-
-.closeSearch{
-    margin-top:12px;
-
-    border:0;
-
-    border-radius:12px;
-
-    padding:10px 15px;
-
-    background:#222;
-    color:#fff;
-}
-
-/* ==============================
-   MOBILE
-============================== */
-
-@media(max-width:699px){
-
-    .top{
-        height:55px;
-        padding:0 12px;
-    }
-
-    .logo{
-        font-size:20px;
-    }
-
-    .search{
-        width:145px;
-        height:36px;
-    }
-
-    .searchBtn{
-        display:none;
-    }
-
-    .filters{
-        top:62px;
-        left:12px;
-        max-width:calc(100% - 24px);
-    }
-
-    .info{
-        left:15px;
-        bottom:22px;
-        width:72%;
-    }
-
-    .actions{
-        right:10px;
-        bottom:22px;
-    }
-
-    .action{
-        width:46px;
-        height:46px;
-    }
-
-    .title{
-        font-size:15px;
-    }
+.hidden{
+  display:none!important;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="loading" class="loading">
+  <div class="spinner"></div>
+  <div>Chatly wird gestartet…</div>
+</div>
 
-    <!-- HEADER -->
+<div class="app" id="app">
 
-    <header class="top">
+  <!-- SIDEBAR -->
 
-        <div class="logo">
-            Short<span>Flow</span>
-        </div>
+  <aside class="sidebar">
 
-        <div class="searchBox">
+    <div class="topbar">
 
-            <input
-                id="search"
-                class="search"
-                type="search"
-                placeholder="Shorts suchen..."
-            >
+      <div class="brand">
+        <div class="logo">💬</div>
+        Chatly
+      </div>
 
-            <button
-                class="searchBtn"
-                onclick="searchYouTube()"
-            >
-                🔎
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- FILTER -->
-
-    <div class="filters">
-
-        <button
-            class="filter active"
-            onclick="changeTopic('',this)"
-        >
-            Für dich
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('funny',this)"
-        >
-            😂 Lustig
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('gaming',this)"
-        >
-            🎮 Gaming
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('music',this)"
-        >
-            🎵 Musik
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('sport',this)"
-        >
-            ⚽ Sport
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('technology',this)"
-        >
-            💻 Technik
-        </button>
-
-        <button
-            class="filter"
-            onclick="changeTopic('animals',this)"
-        >
-            🐶 Tiere
-        </button>
+      <div class="top-actions">
+        <button class="icon-btn" title="Neuer Chat" onclick="openNewChat()">✚</button>
+        <button class="icon-btn" title="Menü" onclick="openMenu()">⋮</button>
+      </div>
 
     </div>
 
-
-    <!-- FEED -->
-
-    <main
-        id="feed"
-        class="feed"
-    ></main>
-
-
-    <!-- LOADING -->
-
-    <div
-        id="loading"
-        class="loading"
-    >
-        <div class="loader"></div>
+    <div class="search">
+      <div class="searchbox">
+        🔎
+        <input id="searchInput" placeholder="Chats durchsuchen" oninput="filterChats()">
+      </div>
     </div>
+
+    <div id="chatList" class="chat-list"></div>
+
+  </aside>
+
+  <!-- MAIN -->
+
+  <main class="main" id="main">
+
+    <div id="emptyScreen" class="empty">
+
+      <div class="empty-logo">💬</div>
+
+      <h1>Willkommen bei Chatly</h1>
+
+      <p>
+        Schreibe mit Freunden oder starte einen Chat mit einem KI-Bot.
+        Erstelle einen persönlichen Chat-Link und teile ihn mit jemandem.
+      </p>
+
+    </div>
+
+    <section id="chatScreen" class="hidden" style="height:100%;display:flex;flex-direction:column">
+
+      <header class="chat-header">
+
+        <button class="icon-btn back" onclick="closeMobileChat()">‹</button>
+
+        <div id="headerAvatar" class="avatar">?</div>
+
+        <div class="header-info">
+          <div id="headerName" class="header-name">Chat</div>
+          <div id="headerStatus" class="header-status">offline</div>
+        </div>
+
+        <button class="icon-btn" onclick="showChatLink()">🔗</button>
+        <button class="icon-btn" onclick="deleteCurrentChat()">🗑</button>
+
+      </header>
+
+      <div id="messages" class="messages"></div>
+
+      <div class="composer">
+
+        <button class="round" onclick="showEmoji()">😊</button>
+
+        <input
+          id="messageInput"
+          class="message-input"
+          placeholder="Nachricht"
+          autocomplete="off"
+          onkeydown="handleEnter(event)"
+        >
+
+        <button class="send" onclick="sendMessage()">➤</button>
+
+      </div>
+
+    </section>
+
+  </main>
 
 </div>
 
+<!-- NEW CHAT MODAL -->
 
-<script>
+<div id="newChatModal" class="modal">
 
-/* ============================================================
-   KONFIGURATION
-============================================================ */
+  <div class="modal-card">
 
-/*
-   ===========================================================
-   HIER DEINEN YOUTUBE API KEY EINTRAGEN
-   ===========================================================
-*/
+    <h2>Neuer Chat</h2>
 
-const API_KEY = "DEIN_YOUTUBE_API_KEY";
+    <p style="color:#667781">
+      Wähle aus, mit wem du schreiben möchtest.
+    </p>
 
+    <div class="bot-grid">
 
-/*
-   Deutschland
-*/
+      <div class="bot-card" onclick="createBotChat('nova')">
+        <div class="bot-icon">🤖</div>
+        <div class="bot-title">Nova</div>
+        <div class="bot-description">Hilfsbereiter KI-Assistent</div>
+      </div>
 
-const REGION = "DE";
+      <div class="bot-card" onclick="createBotChat('code')">
+        <div class="bot-icon">💻</div>
+        <div class="bot-title">CodeBot</div>
+        <div class="bot-description">Hilft beim Programmieren</div>
+      </div>
 
+      <div class="bot-card" onclick="createBotChat('school')">
+        <div class="bot-icon">📚</div>
+        <div class="bot-title">LernBot</div>
+        <div class="bot-description">Hilft beim Lernen</div>
+      </div>
 
-/*
-   Deutsche Ergebnisse bevorzugen
-*/
+      <div class="bot-card" onclick="createBotChat('fun')">
+        <div class="bot-icon">😎</div>
+        <div class="bot-title">FunBot</div>
+        <div class="bot-description">Locker und unterhaltsam</div>
+      </div>
 
-const LANGUAGE = "de";
+    </div>
 
+    <hr style="border:0;border-top:1px solid #eee;margin:20px 0">
 
-/*
-   Wie viele Videos pro API-Abfrage.
-   Maximal 50.
-*/
+    <h3>Person einladen</h3>
 
-const RESULTS_PER_REQUEST = 25;
+    <p style="color:#667781;font-size:14px">
+      Erstelle einen Link. Wer ihn öffnet, kann dem Chat beitreten.
+    </p>
 
+    <button class="primary" onclick="createPersonChat()">
+      🔗 Chat-Link erstellen
+    </button>
 
-/*
-   YouTube Search API ist nicht gleich ein offizieller
-   "Shorts-only"-Feed.
+    <div style="height:10px"></div>
 
-   Wir verwenden:
-       videoDuration=short
+    <button class="secondary" onclick="closeModal('newChatModal')">
+      Abbrechen
+    </button>
 
-   Dadurch kommen Videos unter 4 Minuten zurück.
+  </div>
 
-   Danach werden sehr kurze Videos bevorzugt.
-*/
+</div>
 
+<!-- LINK MODAL -->
 
-/* ============================================================
-   STATUS
-============================================================ */
+<div id="linkModal" class="modal">
 
-let videos = [];
+  <div class="modal-card">
 
-let nextPageToken = null;
+    <h2>🔗 Chat-Link</h2>
 
-let loading = false;
+    <p>
+      Teile diesen Link mit der Person, mit der du schreiben möchtest.
+    </p>
 
-let currentQuery = "";
+    <div id="generatedLink" class="link-box"></div>
 
-let currentTopic = "";
+    <div class="modal-buttons">
 
-let liked = new Set();
+      <button class="secondary" onclick="closeModal('linkModal')">
+        Schließen
+      </button>
 
-let activeVideo = null;
+      <button class="primary" onclick="copyChatLink()">
+        Kopieren
+      </button>
 
+    </div>
 
-/* ============================================================
-   DOM
-============================================================ */
+  </div>
 
-const feed =
-    document.getElementById("feed");
+</div>
 
-const loadingScreen =
-    document.getElementById("loading");
+<!-- MENU -->
 
-const searchInput =
-    document.getElementById("search");
+<div id="menuModal" class="modal">
 
+  <div class="modal-card">
 
-/* ============================================================
-   API KEY PRÜFEN
-============================================================ */
+    <h2>Chatly</h2>
 
-function hasApiKey(){
+    <p style="color:#667781">
+      Deine Verbindung
+    </p>
 
-    return (
-        API_KEY &&
-        API_KEY !== "DEIN_YOUTUBE_API_KEY" &&
-        API_KEY.length > 20
-    );
+    <div class="link-box">
+      <b>Anonymous ID</b><br>
+      <span id="userIdDisplay">wird geladen…</span>
+    </div>
 
+    <p style="font-size:13px;color:#667781">
+      Du bist anonym angemeldet. Deine Chats werden deinem anonymen
+      Firebase-Konto zugeordnet.
+    </p>
+
+    <button class="secondary" onclick="closeModal('menuModal')">
+      Schließen
+    </button>
+
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged
 }
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  serverTimestamp,
+  arrayUnion
+}
+from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
 
-/* ============================================================
-   YOUTUBE API URL
-============================================================ */
+/* ==========================================================
+   FIREBASE CONFIG
+   HIER DEINE FIREBASE DATEN EINTRAGEN
+   ========================================================== */
 
-function makeSearchURL(pageToken=""){
+const firebaseConfig = {
 
-    const params =
-        new URLSearchParams({
+  apiKey: "DEIN_API_KEY",
 
-            part:"snippet",
+  authDomain: "DEIN-PROJEKT.firebaseapp.com",
 
-            type:"video",
+  projectId: "DEIN-PROJEKT",
 
-            maxResults:String(
-                RESULTS_PER_REQUEST
-            ),
+  storageBucket: "DEIN-PROJEKT.firebasestorage.app",
 
-            order:"relevance",
+  messagingSenderId: "DEINE_MESSAGING_ID",
 
-            regionCode:REGION,
+  appId: "DEINE_APP_ID"
 
-            relevanceLanguage:LANGUAGE,
+};
 
-            videoDuration:"short",
 
-            videoEmbeddable:"true",
+/* ==========================================================
+   FIREBASE START
+   ========================================================== */
 
-            safeSearch:"moderate",
+const firebaseApp = initializeApp(firebaseConfig);
 
-            q:
-                currentQuery ||
-                currentTopic ||
-                "shorts"
+const auth = getAuth(firebaseApp);
 
+const db = getFirestore(firebaseApp);
+
+
+/* ==========================================================
+   GLOBALS
+   ========================================================== */
+
+let currentUser = null;
+
+let currentChatId = null;
+
+let currentChatUnsubscribe = null;
+
+let allChats = [];
+
+let currentChatData = null;
+
+
+/* ==========================================================
+   AUTH
+   ========================================================== */
+
+signInAnonymously(auth)
+.then(() => {
+
+})
+.catch(error => {
+
+  console.error(error);
+
+  alert(
+    "Firebase Anmeldung fehlgeschlagen.\n\n" +
+    error.message
+  );
+
+});
+
+
+onAuthStateChanged(auth, async user => {
+
+  if(!user) return;
+
+  currentUser = user;
+
+  document.getElementById("userIdDisplay").textContent =
+    user.uid;
+
+  await loadChats();
+
+  document.getElementById("loading").classList.add("hidden");
+
+  checkInviteLink();
+
+});
+
+
+/* ==========================================================
+   LOAD CHATS
+   ========================================================== */
+
+async function loadChats(){
+
+  const chatsRef = collection(
+    db,
+    "users",
+    currentUser.uid,
+    "chats"
+  );
+
+  onSnapshot(
+    chatsRef,
+    snapshot => {
+
+      allChats = [];
+
+      snapshot.forEach(item => {
+
+        allChats.push({
+          id:item.id,
+          ...item.data()
         });
 
+      });
 
-    if(pageToken){
+      allChats.sort((a,b)=>{
 
-        params.set(
-            "pageToken",
-            pageToken
-        );
+        const ta =
+          a.updatedAt?.seconds || 0;
+
+        const tb =
+          b.updatedAt?.seconds || 0;
+
+        return tb-ta;
+
+      });
+
+      renderChats();
+
+    },
+    error => {
+
+      console.error(error);
+
+      showToast(
+        "Chats konnten nicht geladen werden."
+      );
 
     }
-
-
-    return (
-        "https://www.googleapis.com/youtube/v3/search?" +
-        params.toString() +
-        "&key=" +
-        encodeURIComponent(API_KEY)
-    );
+  );
 
 }
 
 
-/* ============================================================
-   VIDEOS LADEN
-============================================================ */
+/* ==========================================================
+   RENDER CHAT LIST
+   ========================================================== */
 
-async function loadVideos(reset=false){
+function renderChats(){
 
-    if(loading) return;
+  const list =
+    document.getElementById("chatList");
 
-    if(!hasApiKey()){
+  const search =
+    document.getElementById("searchInput")
+      .value
+      .toLowerCase();
 
-        showApiMessage();
+  list.innerHTML = "";
 
-        return;
+  const filtered =
+    allChats.filter(chat => {
 
-    }
-
-
-    loading = true;
-
-
-    if(reset){
-
-        videos = [];
-
-        nextPageToken = null;
-
-        feed.innerHTML = "";
-
-    }
-
-
-    try{
-
-        const url =
-            makeSearchURL(
-                reset ? "" : nextPageToken
-            );
-
-
-        const response =
-            await fetch(url);
-
-
-        const data =
-            await response.json();
-
-
-        if(!response.ok){
-
-            throw new Error(
-                data?.error?.message ||
-                "YouTube API Fehler"
-            );
-
-        }
-
-
-        const found =
-            (data.items || [])
-                .filter(item =>
-                    item.id &&
-                    item.id.videoId
-                )
-                .map(item => ({
-
-                    id:item.id.videoId,
-
-                    title:
-                        cleanText(
-                            item.snippet?.title ||
-                            "Short"
-                        ),
-
-                    channel:
-                        item.snippet?.channelTitle ||
-                        "YouTube",
-
-                    channelId:
-                        item.snippet?.channelId ||
-                        "",
-
-                    published:
-                        item.snippet?.publishedAt ||
-                        "",
-
-                    description:
-                        item.snippet?.description ||
-                        ""
-
-                }));
-
-
-        /*
-           Doppelte Videos verhindern.
-        */
-
-        for(const video of found){
-
-            if(
-                !videos.some(
-                    x => x.id === video.id
-                )
-            ){
-
-                videos.push(video);
-
-                createShort(video);
-
-            }
-
-        }
-
-
-        nextPageToken =
-            data.nextPageToken || null;
-
-
-        /*
-           Wenn sehr wenige Ergebnisse kommen,
-           direkt nächste Seite nachladen.
-        */
-
-        if(
-            found.length < 5 &&
-            nextPageToken
-        ){
-
-            loading = false;
-
-            await loadVideos(false);
-
-            return;
-
-        }
-
-
-    }catch(error){
-
-        console.error(error);
-
-        showError(
-            error.message ||
-            "Fehler beim Laden der Shorts."
-        );
-
-    }
-
-
-    loading = false;
-
-}
-
-
-/* ============================================================
-   SHORT ERSTELLEN
-============================================================ */
-
-function createShort(video){
-
-    const section =
-        document.createElement("section");
-
-
-    section.className = "short";
-
-
-    section.dataset.id =
-        video.id;
-
-
-    section.innerHTML = `
-
-        <div class="video">
-
-            <iframe
-                src="https://www.youtube.com/embed/${encodeURIComponent(video.id)}?playsinline=1&rel=0&modestbranding=1"
-                title="${escapeHTML(video.title)}"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-
-        <div class="gradient"></div>
-
-
-        <div class="info">
-
-            <div class="channel">
-                @${escapeHTML(video.channel)}
-            </div>
-
-            <div class="title">
-                ${escapeHTML(video.title)}
-            </div>
-
-            <div class="views">
-                YouTube Short
-            </div>
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                class="action likeButton"
-                data-id="${video.id}"
-                onclick="toggleLike('${video.id}',this)"
-            >
-                ♥
-            </button>
-
-            <div class="actionText">
-                Gefällt mir
-            </div>
-
-
-            <button
-                class="action"
-                onclick="shareVideo('${video.id}')"
-            >
-                ↗
-            </button>
-
-            <div class="actionText">
-                Teilen
-            </div>
-
-
-            <button
-                class="action"
-                onclick="openYouTube('${video.id}')"
-            >
-                ▶
-            </button>
-
-            <div class="actionText">
-                YouTube
-            </div>
-
-        </div>
-
-    `;
-
-
-    feed.appendChild(section);
-
-}
-
-
-/* ============================================================
-   SCROLL OBSERVER
-============================================================ */
-
-const observer =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if(!entry.isIntersecting){
-                    return;
-                }
-
-
-                activeVideo =
-                    entry.target.dataset.id;
-
-
-                /*
-                   Wenn wir nahe am Ende sind,
-                   weitere Shorts laden.
-                */
-
-                const sections =
-                    document.querySelectorAll(
-                        ".short"
-                    );
-
-
-                const index =
-                    [...sections]
-                        .indexOf(entry.target);
-
-
-                if(
-                    index >=
-                    sections.length - 4
-                ){
-
-                    if(nextPageToken){
-                        loadVideos(false);
-                    }
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold:.65
-        }
-
-    );
-
-
-/* ============================================================
-   OBSERVER NEU ANWENDEN
-============================================================ */
-
-function observeShorts(){
-
-    document
-        .querySelectorAll(".short")
-        .forEach(short => {
-
-            observer.observe(short);
-
-        });
-
-}
-
-
-/*
-   MutationObserver:
-   Neue Shorts automatisch beobachten.
-*/
-
-const mutationObserver =
-    new MutationObserver(() => {
-
-        observeShorts();
+      return (chat.name || "")
+        .toLowerCase()
+        .includes(search);
 
     });
 
+  filtered.forEach(chat => {
 
-mutationObserver.observe(
-    feed,
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "chat-item" +
+      (chat.id === currentChatId
+        ? " active"
+        : "");
+
+    const avatar =
+      document.createElement("div");
+
+    avatar.className =
+      "avatar" +
+      (chat.type === "bot"
+        ? " bot"
+        : "");
+
+    avatar.textContent =
+      chat.avatar || "👤";
+
+    const info =
+      document.createElement("div");
+
+    info.className = "chat-info";
+
+    const row =
+      document.createElement("div");
+
+    row.className = "chat-row";
+
+    const name =
+      document.createElement("div");
+
+    name.className = "chat-name";
+
+    name.textContent =
+      chat.name || "Chat";
+
+    const time =
+      document.createElement("div");
+
+    time.className = "chat-time";
+
+    time.textContent =
+      formatTime(
+        chat.updatedAt
+      );
+
+    row.appendChild(name);
+
+    row.appendChild(time);
+
+    const preview =
+      document.createElement("div");
+
+    preview.className =
+      "chat-preview";
+
+    preview.textContent =
+      chat.lastMessage ||
+      "Noch keine Nachrichten";
+
+    info.appendChild(row);
+
+    info.appendChild(preview);
+
+    item.appendChild(avatar);
+
+    item.appendChild(info);
+
+    item.onclick =
+      () => openChat(chat.id);
+
+    list.appendChild(item);
+
+  });
+
+}
+
+
+/* ==========================================================
+   CREATE BOT
+   ========================================================== */
+
+window.createBotChat = async function(bot){
+
+  closeModal("newChatModal");
+
+  const bots = {
+
+    nova:{
+      name:"Nova",
+      avatar:"🤖",
+      greeting:
+        "Hey! Ich bin Nova 🤖 Wie kann ich dir helfen?"
+    },
+
+    code:{
+      name:"CodeBot",
+      avatar:"💻",
+      greeting:
+        "Hi! Ich bin CodeBot 💻. Was möchtest du programmieren?"
+    },
+
+    school:{
+      name:"LernBot",
+      avatar:"📚",
+      greeting:
+        "Hallo! 📚 Ich helfe dir beim Lernen. Was steht an?"
+    },
+
+    fun:{
+      name:"FunBot",
+      avatar:"😎",
+      greeting:
+        "Yo 😎 Was geht?"
+    }
+
+  };
+
+  const b =
+    bots[bot];
+
+  const chatsRef =
+    collection(
+      db,
+      "users",
+      currentUser.uid,
+      "chats"
+    );
+
+  const chat =
+    await addDoc(
+      chatsRef,
+      {
+        type:"bot",
+        bot:bot,
+        name:b.name,
+        avatar:b.avatar,
+        lastMessage:b.greeting,
+        updatedAt:serverTimestamp(),
+        members:[currentUser.uid]
+      }
+    );
+
+  await addDoc(
+    collection(
+      db,
+      "users",
+      currentUser.uid,
+      "chats",
+      chat.id,
+      "messages"
+    ),
     {
-        childList:true
+      sender:"bot",
+      senderId:"bot",
+      text:b.greeting,
+      createdAt:serverTimestamp()
     }
-);
+  );
+
+  openChat(chat.id);
+
+};
 
 
-/* ============================================================
-   SUCHE
-============================================================ */
+/* ==========================================================
+   CREATE PERSON CHAT
+   ========================================================== */
 
-function searchYouTube(){
+window.createPersonChat = async function(){
 
-    const value =
-        searchInput.value.trim();
+  closeModal("newChatModal");
 
+  const chatsRef =
+    collection(
+      db,
+      "chats"
+    );
 
-    currentQuery = value;
+  const chat =
+    await addDoc(
+      chatsRef,
+      {
+        type:"person",
+        owner:currentUser.uid,
+        members:[currentUser.uid],
+        createdAt:serverTimestamp()
+      }
+    );
 
-    currentTopic = "";
-
-
-    document
-        .querySelectorAll(".filter")
-        .forEach(x =>
-            x.classList.remove("active")
-        );
-
-
-    if(!currentQuery){
-
-        document
-            .querySelector(".filter")
-            .classList.add("active");
-
+  await setDoc(
+    doc(
+      db,
+      "users",
+      currentUser.uid,
+      "chats",
+      chat.id
+    ),
+    {
+      type:"person",
+      name:"Neuer Chat",
+      avatar:"👤",
+      chatId:chat.id,
+      lastMessage:"",
+      updatedAt:serverTimestamp()
     }
+  );
+
+  const link =
+    location.origin +
+    location.pathname +
+    "?chat=" +
+    encodeURIComponent(chat.id);
+
+  document.getElementById(
+    "generatedLink"
+  ).textContent = link;
+
+  document.getElementById(
+    "linkModal"
+  ).classList.add("show");
+
+  openChat(chat.id);
+
+};
 
 
-    loadVideos(true);
+/* ==========================================================
+   OPEN CHAT
+   ========================================================== */
 
-}
+window.openChat = async function(chatId){
 
+  currentChatId = chatId;
 
-/*
-   Enter-Taste
-*/
+  let chat =
+    allChats.find(
+      x => x.id === chatId
+    );
 
-searchInput.addEventListener(
-    "keydown",
-    event => {
+  /*
+    Wenn es ein geteilter Personenchat ist,
+    kann er eventuell noch nicht in der
+    lokalen Liste stehen.
+  */
 
-        if(event.key === "Enter"){
+  if(!chat){
 
-            searchYouTube();
-
-        }
-
-    }
-);
-
-
-/* ============================================================
-   THEMEN
-============================================================ */
-
-function changeTopic(topic,button){
-
-    currentTopic = topic;
-
-    currentQuery = "";
-
-    searchInput.value = "";
-
-
-    document
-        .querySelectorAll(".filter")
-        .forEach(x =>
-            x.classList.remove("active")
-        );
-
-
-    button.classList.add("active");
-
-
-    loadVideos(true);
-
-}
-
-
-/* ============================================================
-   LIKE
-============================================================ */
-
-function toggleLike(id,button){
-
-    if(liked.has(id)){
-
-        liked.delete(id);
-
-        button.classList.remove("liked");
-
-    }else{
-
-        liked.add(id);
-
-        button.classList.add("liked");
-
-    }
-
-
-    localStorage.setItem(
-        "shortflow_likes",
-        JSON.stringify(
-            [...liked]
+    const ownChat =
+      await getDoc(
+        doc(
+          db,
+          "users",
+          currentUser.uid,
+          "chats",
+          chatId
         )
+      );
+
+    if(ownChat.exists()){
+
+      chat = {
+        id:chatId,
+        ...ownChat.data()
+      };
+
+    }
+
+  }
+
+  if(!chat){
+
+    showToast("Chat nicht gefunden.");
+
+    return;
+
+  }
+
+  currentChatData = chat;
+
+  document
+    .getElementById("emptyScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("chatScreen")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("headerName")
+    .textContent =
+      chat.name || "Chat";
+
+  document
+    .getElementById("headerAvatar")
+    .textContent =
+      chat.avatar || "👤";
+
+  document
+    .getElementById("headerAvatar")
+    .className =
+      "avatar" +
+      (chat.type === "bot"
+        ? " bot"
+        : "");
+
+  if(chat.type === "bot"){
+
+    document
+      .getElementById("headerStatus")
+      .textContent =
+        "Bot";
+
+  }else{
+
+    document
+      .getElementById("headerStatus")
+      .textContent =
+        "Chat-Link";
+
+  }
+
+  document
+    .getElementById("app")
+    .classList.add("chat-open");
+
+  if(currentChatUnsubscribe){
+
+    currentChatUnsubscribe();
+
+  }
+
+  const messagesRef =
+    collection(
+      db,
+      "chats",
+      chatId,
+      "messages"
     );
 
-}
+  /*
+    Bei Bot-Chats liegen die Nachrichten
+    ebenfalls in der globalen Chat-Collection.
+  */
+
+  if(chat.type === "bot"){
+
+    currentChatUnsubscribe =
+      onSnapshot(
+        query(
+          messagesRef,
+          orderBy("createdAt","asc")
+        ),
+        snapshot => {
+
+          const messages =
+            snapshot.docs.map(
+              d => ({
+                id:d.id,
+                ...d.data()
+              })
+            );
+
+          renderMessages(messages);
+
+        }
+      );
+
+  }else{
+
+    currentChatUnsubscribe =
+      onSnapshot(
+        query(
+          messagesRef,
+          orderBy("createdAt","asc")
+        ),
+        async snapshot => {
+
+          const messages =
+            snapshot.docs.map(
+              d => ({
+                id:d.id,
+                ...d.data()
+              })
+            );
+
+          renderMessages(messages);
+
+        }
+      );
+
+  }
+
+  renderChats();
+
+};
 
 
-/* ============================================================
-   LIKES LADEN
-============================================================ */
+/* ==========================================================
+   SEND MESSAGE
+   ========================================================== */
 
-try{
+window.sendMessage = async function(){
 
-    const saved =
-        JSON.parse(
-            localStorage.getItem(
-                "shortflow_likes"
-            ) || "[]"
-        );
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+  const text =
+    input.value.trim();
+
+  if(!text || !currentChatId)
+    return;
+
+  input.value = "";
+
+  const chat =
+    currentChatData;
+
+  await addDoc(
+    collection(
+      db,
+      "chats",
+      currentChatId,
+      "messages"
+    ),
+    {
+      sender:"user",
+      senderId:currentUser.uid,
+      text:text,
+      createdAt:serverTimestamp()
+    }
+  );
+
+  /*
+    BOT-ANTWORT
+  */
+
+  if(chat.type === "bot"){
+
+    setTimeout(
+      () => botReply(text,chat.bot),
+      700
+    );
+
+  }
+
+  /*
+    Eigenen Chat aktualisieren
+  */
+
+  if(chat.type === "person"){
+
+    await updateDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "chats",
+        currentChatId
+      ),
+      {
+        lastMessage:text,
+        updatedAt:serverTimestamp()
+      }
+    );
+
+  }
+
+};
 
 
-    liked =
-        new Set(saved);
+/* ==========================================================
+   BOT REPLY
+   ========================================================== */
 
-}catch(e){}
+async function botReply(text,bot){
 
+  let answer = "";
 
-/* ============================================================
-   SHARE
-============================================================ */
+  const lower =
+    text.toLowerCase();
 
-async function shareVideo(id){
+  if(bot === "nova"){
 
-    const url =
-        "https://www.youtube.com/shorts/" +
-        id;
+    if(
+      lower.includes("hallo") ||
+      lower.includes("hi")
+    ){
 
+      answer =
+        "Hey! 👋 Schön, dass du da bist.";
 
-    if(navigator.share){
+    }else if(
+      lower.includes("wie geht")
+    ){
 
-        try{
-
-            await navigator.share({
-
-                title:"YouTube Short",
-
-                url:url
-
-            });
-
-        }catch(e){}
+      answer =
+        "Mir geht's super 🤖 Danke der Nachfrage!";
 
     }else{
 
-        try{
-
-            await navigator.clipboard.writeText(
-                url
-            );
-
-            alert(
-                "Short-Link kopiert!"
-            );
-
-        }catch(e){
-
-            window.prompt(
-                "Short-Link:",
-                url
-            );
-
-        }
+      answer =
+        "Interessant! 🤖 Erzähl mir gerne mehr darüber.";
 
     }
+
+  }
+
+  if(bot === "code"){
+
+    if(
+      lower.includes("html")
+    ){
+
+      answer =
+        "HTML beschreibt den Aufbau einer Webseite. Wenn du möchtest, kann ich dir auch ein Beispiel erklären.";
+
+    }else if(
+      lower.includes("javascript") ||
+      lower.includes("js")
+    ){
+
+      answer =
+        "JavaScript macht Webseiten interaktiv. Zum Beispiel kannst du damit Buttons, Chats und Spiele programmieren.";
+
+    }else{
+
+      answer =
+        "💻 Klingt nach einem Programmierprojekt! Sag mir, welche Sprache oder welches Problem du hast.";
+
+    }
+
+  }
+
+  if(bot === "school"){
+
+    answer =
+      "📚 Ich helfe dir gerne beim Lernen. Nenne mir einfach das Thema oder die Aufgabe.";
+
+  }
+
+  if(bot === "fun"){
+
+    const answers = [
+
+      "😎 Das klingt interessant!",
+      "😂 Okay, das war gut.",
+      "🔥 Stark!",
+      "👀 Erzähl weiter.",
+      "🤣 Ich bin dabei!"
+
+    ];
+
+    answer =
+      answers[
+        Math.floor(
+          Math.random()*answers.length
+        )
+      ];
+
+  }
+
+  await addDoc(
+    collection(
+      db,
+      "chats",
+      currentChatId,
+      "messages"
+    ),
+    {
+      sender:"bot",
+      senderId:"bot",
+      text:answer,
+      createdAt:serverTimestamp()
+    }
+  );
 
 }
 
 
-/* ============================================================
-   YOUTUBE ÖFFNEN
-============================================================ */
+/* ==========================================================
+   RENDER MESSAGES
+   ========================================================== */
 
-function openYouTube(id){
+function renderMessages(messages){
 
-    window.open(
-        "https://www.youtube.com/shorts/" +
-        id,
-        "_blank",
-        "noopener"
+  const box =
+    document.getElementById(
+      "messages"
+    );
+
+  box.innerHTML = "";
+
+  if(!messages.length){
+
+    const day =
+      document.createElement("div");
+
+    day.className = "day";
+
+    day.innerHTML =
+      "<span>Heute</span>";
+
+    box.appendChild(day);
+
+  }
+
+  messages.forEach(msg => {
+
+    const wrapper =
+      document.createElement("div");
+
+    const own =
+      msg.senderId ===
+      currentUser.uid;
+
+    wrapper.className =
+      "message " +
+      (own ? "out" : "in");
+
+    const bubble =
+      document.createElement("div");
+
+    bubble.className =
+      "bubble";
+
+    const text =
+      document.createElement("span");
+
+    text.className =
+      "message-text";
+
+    text.textContent =
+      msg.text || "";
+
+    const meta =
+      document.createElement("span");
+
+    meta.className =
+      "meta";
+
+    meta.appendChild(
+      document.createTextNode(
+        formatTime(msg.createdAt)
+      )
+    );
+
+    if(own){
+
+      const check =
+        document.createElement("span");
+
+      check.className =
+        "check";
+
+      check.textContent =
+        "✓✓";
+
+      meta.appendChild(check);
+
+    }
+
+    bubble.appendChild(text);
+
+    bubble.appendChild(meta);
+
+    wrapper.appendChild(bubble);
+
+    box.appendChild(wrapper);
+
+  });
+
+  box.scrollTop =
+    box.scrollHeight;
+
+}
+
+
+/* ==========================================================
+   INVITE LINK
+   ========================================================== */
+
+async function checkInviteLink(){
+
+  const params =
+    new URLSearchParams(
+      location.search
+    );
+
+  const chatId =
+    params.get("chat");
+
+  if(!chatId)
+    return;
+
+  try{
+
+    const chatDoc =
+      await getDoc(
+        doc(
+          db,
+          "chats",
+          chatId
+        )
+      );
+
+    if(!chatDoc.exists()){
+
+      showToast(
+        "Dieser Chat existiert nicht."
+      );
+
+      return;
+
+    }
+
+    const data =
+      chatDoc.data();
+
+    /*
+      Nutzer zum Chat hinzufügen
+    */
+
+    const members =
+      data.members || [];
+
+    if(!members.includes(currentUser.uid)){
+
+      await updateDoc(
+        doc(
+          db,
+          "chats",
+          chatId
+        ),
+        {
+          members:
+            arrayUnion(
+              currentUser.uid
+            )
+        }
+      );
+
+    }
+
+    /*
+      Lokalen Chat erstellen
+    */
+
+    await setDoc(
+      doc(
+        db,
+        "users",
+        currentUser.uid,
+        "chats",
+        chatId
+      ),
+      {
+        type:"person",
+        name:
+          members.length > 1
+            ? "Chat"
+            : "Neuer Chat",
+        avatar:"👤",
+        chatId:chatId,
+        lastMessage:"",
+        updatedAt:serverTimestamp()
+      },
+      {merge:true}
+    );
+
+    history.replaceState(
+      {},
+      "",
+      location.pathname
+    );
+
+    await loadChatFromGlobal(chatId);
+
+  }catch(error){
+
+    console.error(error);
+
+    showToast(
+      "Chat konnte nicht geöffnet werden."
+    );
+
+  }
+
+}
+
+
+/* ==========================================================
+   LOAD GLOBAL CHAT
+   ========================================================== */
+
+async function loadChatFromGlobal(chatId){
+
+  const chatDoc =
+    await getDoc(
+      doc(
+        db,
+        "chats",
+        chatId
+      )
+    );
+
+  if(!chatDoc.exists())
+    return;
+
+  const data =
+    chatDoc.data();
+
+  currentChatData = {
+    id:chatId,
+    ...data,
+    type:"person",
+    name:"Chat",
+    avatar:"👤"
+  };
+
+  currentChatId =
+    chatId;
+
+  document
+    .getElementById("emptyScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("chatScreen")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("headerName")
+    .textContent =
+      "Chat";
+
+  document
+    .getElementById("headerAvatar")
+    .textContent =
+      "👤";
+
+  document
+    .getElementById("headerStatus")
+    .textContent =
+      "verbunden";
+
+  document
+    .getElementById("app")
+    .classList.add("chat-open");
+
+  if(currentChatUnsubscribe)
+    currentChatUnsubscribe();
+
+  const messagesRef =
+    collection(
+      db,
+      "chats",
+      chatId,
+      "messages"
+    );
+
+  currentChatUnsubscribe =
+    onSnapshot(
+      query(
+        messagesRef,
+        orderBy(
+          "createdAt",
+          "asc"
+        )
+      ),
+      snapshot => {
+
+        renderMessages(
+          snapshot.docs.map(
+            d => ({
+              id:d.id,
+              ...d.data()
+            })
+          )
+        );
+
+      }
     );
 
 }
 
 
-/* ============================================================
-   API HINWEIS
-============================================================ */
+/* ==========================================================
+   CHAT LINK
+   ========================================================== */
 
-function showApiMessage(){
+window.showChatLink = function(){
 
-    loadingScreen.innerHTML = `
+  if(!currentChatId)
+    return;
 
-        <div class="message">
+  const link =
+    location.origin +
+    location.pathname +
+    "?chat=" +
+    encodeURIComponent(
+      currentChatId
+    );
 
-            <div class="messageBox">
+  document.getElementById(
+    "generatedLink"
+  ).textContent =
+    link;
 
-                <h1>ShortFlow</h1>
+  document.getElementById(
+    "linkModal"
+  ).classList.add("show");
 
-                <p>
-                    Trage deinen YouTube Data API Key
-                    oben im Code bei
-                    <b>API_KEY</b> ein.
-                </p>
+};
 
-                <p style="margin-top:12px">
-                    Danach die Seite neu laden.
-                </p>
 
-            </div>
+window.copyChatLink = async function(){
 
-        </div>
+  const link =
+    document.getElementById(
+      "generatedLink"
+    ).textContent;
 
-    `;
+  try{
+
+    await navigator.clipboard.writeText(
+      link
+    );
+
+    showToast(
+      "Link kopiert ✓"
+    );
+
+  }catch{
+
+    showToast(
+      "Link konnte nicht kopiert werden."
+    );
+
+  }
+
+};
+
+
+/* ==========================================================
+   DELETE CHAT
+   ========================================================== */
+
+window.deleteCurrentChat = async function(){
+
+  if(!currentChatId)
+    return;
+
+  if(
+    !confirm(
+      "Diesen Chat wirklich aus deiner Liste entfernen?"
+    )
+  )
+    return;
+
+  await deleteDoc(
+    doc(
+      db,
+      "users",
+      currentUser.uid,
+      "chats",
+      currentChatId
+    )
+  );
+
+  currentChatId = null;
+
+  currentChatData = null;
+
+  if(currentChatUnsubscribe){
+
+    currentChatUnsubscribe();
+
+    currentChatUnsubscribe =
+      null;
+
+  }
+
+  document
+    .getElementById("chatScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("emptyScreen")
+    .classList.remove("hidden");
+
+  closeMobileChat();
+
+};
+
+
+/* ==========================================================
+   NEW CHAT
+   ========================================================== */
+
+window.openNewChat = function(){
+
+  document
+    .getElementById("newChatModal")
+    .classList.add("show");
+
+};
+
+
+/* ==========================================================
+   MENU
+   ========================================================== */
+
+window.openMenu = function(){
+
+  document
+    .getElementById("menuModal")
+    .classList.add("show");
+
+};
+
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+
+window.closeModal = function(id){
+
+  document
+    .getElementById(id)
+    .classList.remove("show");
+
+};
+
+
+/* ==========================================================
+   SEARCH
+   ========================================================== */
+
+window.filterChats = function(){
+
+  renderChats();
+
+};
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+window.closeMobileChat = function(){
+
+  document
+    .getElementById("app")
+    .classList.remove("chat-open");
+
+};
+
+
+/* ==========================================================
+   ENTER
+   ========================================================== */
+
+window.handleEnter = function(event){
+
+  if(
+    event.key === "Enter" &&
+    !event.shiftKey
+  ){
+
+    event.preventDefault();
+
+    sendMessage();
+
+  }
+
+};
+
+
+/* ==========================================================
+   EMOJI
+   ========================================================== */
+
+window.showEmoji = function(){
+
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+
+  input.value += " 😊";
+
+  input.focus();
+
+};
+
+
+/* ==========================================================
+   HELPERS
+   ========================================================== */
+
+function formatTime(timestamp){
+
+  if(!timestamp)
+    return "";
+
+  try{
+
+    const date =
+      timestamp.toDate();
+
+    return date.toLocaleTimeString(
+      "de-DE",
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    );
+
+  }catch{
+
+    return "";
+
+  }
 
 }
 
 
-/* ============================================================
-   FEHLER
-============================================================ */
+function showToast(text){
 
-function showError(message){
+  const toast =
+    document.getElementById(
+      "toast"
+    );
 
-    feed.innerHTML = `
+  toast.textContent =
+    text;
 
-        <div class="message">
+  toast.classList.add("show");
 
-            <div class="messageBox">
-
-                <h1>Shorts konnten nicht geladen werden</h1>
-
-                <p>
-                    ${escapeHTML(message)}
-                </p>
-
-                <button onclick="loadVideos(true)">
-                    Erneut versuchen
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
+  setTimeout(
+    () =>
+      toast.classList.remove("show"),
+    2500
+  );
 
 }
 
 
-/* ============================================================
-   TEXT BEREINIGEN
-============================================================ */
+/* ==========================================================
+   EXPOSE FUNCTIONS
+   ========================================================== */
 
-function cleanText(text){
-
-    const div =
-        document.createElement("div");
-
-    div.innerHTML = text;
-
-    return div.textContent ||
-           div.innerText ||
-           text;
-
-}
-
-
-/* ============================================================
-   HTML ESCAPE
-============================================================ */
-
-function escapeHTML(value){
-
-    return String(value || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* ============================================================
-   START
-============================================================ */
-
-setTimeout(() => {
-
-    loadingScreen.style.display =
-        "none";
-
-},300);
-
-
-loadVideos(true);
-
-
-/* ============================================================
-   KEYBOARD NAVIGATION
-============================================================ */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        const sections =
-            document.querySelectorAll(
-                ".short"
-            );
-
-
-        if(!sections.length){
-            return;
-        }
-
-
-        let current = 0;
-
-
-        sections.forEach(
-            (section,index) => {
-
-                const rect =
-                    section.getBoundingClientRect();
-
-
-                if(
-                    rect.top >= -100 &&
-                    rect.top <= 100
-                ){
-
-                    current = index;
-
-                }
-
-            }
-        );
-
-
-        if(event.key === "ArrowDown"){
-
-            event.preventDefault();
-
-            sections[
-                Math.min(
-                    current + 1,
-                    sections.length - 1
-                )
-            ].scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }
-
-
-        if(event.key === "ArrowUp"){
-
-            event.preventDefault();
-
-            sections[
-                Math.max(
-                    current - 1,
-                    0
-                )
-            ].scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }
-
-    }
-);
+window.loadChats =
+  loadChats;
 
 </script>
 
 </body>
 </html>
-```
